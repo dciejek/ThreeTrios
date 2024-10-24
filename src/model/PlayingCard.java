@@ -8,20 +8,22 @@ public class PlayingCard implements Card {
 
 
   private final String name;
-  CardValue north;
-  CardValue east;
-  CardValue south;
-  CardValue west;
-  Player owner;
+  private final CardValue north;
+  private final CardValue east;
+  private final CardValue south;
+  private final CardValue west;
+  private final Player owner;
+  private final boolean hasBeenPlayed = false;
 
 
 
-  public PlayingCard(String name, CardValue northVal, CardValue eastVal, CardValue southVal, CardValue westVal) {
+  public PlayingCard(String name, CardValue north, CardValue east, CardValue south, CardValue west, Player owner) {
     this.name = name;
-    north = northVal;
-    east = eastVal;
-    south = southVal;
-    west = westVal;
+    this.north = north;
+    this.east = east;
+    this.south = south;
+    this.west = west;
+    this.owner = owner;
   }
 
 
@@ -47,9 +49,13 @@ public class PlayingCard implements Card {
 
   @Override
   public String toString() {
-
-    return owner.toString();
+    if (hasBeenPlayed) {
+      return owner.toString();
+    }
+    return name
+            + " " + north
+            + " " + south
+            + " " + east
+            + " " + west;
   }
-
-
 }
