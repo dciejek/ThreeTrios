@@ -5,6 +5,13 @@ package model;
  */
 public interface Card {
 
+
+  /**
+   * Gets the name of the card.
+   * @return The string name of the card
+   */
+  public String getName();
+
   /**
    * Gets the north value of the card.
    * @return    The north card's integer value.
