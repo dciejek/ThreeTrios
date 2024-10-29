@@ -4,6 +4,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a simple 2 player ThreeTriosModel
+ */
 public class TTModel implements ThreeTriosModel {
   //Fields:
   //2D ArrayList<Card> representing the game grid
@@ -57,6 +60,11 @@ public class TTModel implements ThreeTriosModel {
   @Override
   public boolean isGameOver() {
     return false;
+  }
+
+  @Override
+  public Player getWinner() {
+
   }
 
   //Methods:

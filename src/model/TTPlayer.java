@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class TTPlayer implements Player {
 
   private final Color color;
-  private final ArrayList<PlayingCard> deck;
+  private final ArrayList<PlayingCard> hand;
 
   /**
    * Constructs a player.
@@ -17,7 +17,7 @@ public class TTPlayer implements Player {
    */
   public TTPlayer(Color color) {
     this.color = color;
-    this.deck = new ArrayList<>();
+    this.hand = new ArrayList<>();
   }
 
   @Override
@@ -27,17 +27,18 @@ public class TTPlayer implements Player {
 
   @Override
   public ArrayList<PlayingCard> getHand() {
-    return new ArrayList<>(this.deck);
+    return new ArrayList<>(this.hand);
   }
 
   @Override
-  public void removeFromHand(PlayingCard card) {
-    this.deck.remove(card);
+  public Card removeFromHand(PlayingCard card) {
+    this.hand.remove(card);
+    return card;
   }
 
   @Override
   public void addToHand(PlayingCard card) {
-    this.deck.add(card);
+    this.hand.add(card);
   }
 
 }

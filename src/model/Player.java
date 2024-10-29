@@ -21,9 +21,11 @@ public interface Player {
 
   /**
    * Removes the given PlayingCard from the player's hand.
+   *
    * @param card removes the specified card from the player's hand
+   * @return
    */
-  public void removeFromHand(PlayingCard card);
+  public Card removeFromHand(PlayingCard card);
 
   /**
    * Adds the given PlayingCard to the player's hand.

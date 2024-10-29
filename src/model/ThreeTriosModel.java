@@ -21,5 +21,5 @@ public interface ThreeTriosModel {
   public boolean isGameOver();
   //isGameOver
   //
-
+  public Player getWinner();
 }
