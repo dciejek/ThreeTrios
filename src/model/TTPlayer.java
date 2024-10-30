@@ -8,20 +8,20 @@ import java.util.ArrayList;
  */
 public class TTPlayer implements Player {
 
-  private final Color color;
+  private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
 
   /**
    * Constructs a player.
    * @param color the color of the player's cards
    */
-  public TTPlayer(Color color) {
+  public TTPlayer(PlayerColor color) {
     this.color = color;
     this.hand = new ArrayList<>();
   }
 
   @Override
-  public Color getColor() {
+  public PlayerColor getColor() {
     return this.color;
   }
 

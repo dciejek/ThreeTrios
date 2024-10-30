@@ -11,7 +11,7 @@ public interface Player {
    * Gets the color of the player.
    * @return the Color of the player
    */
-  public Color getColor();
+  public PlayerColor getColor();
 
   /**
    * Gets the deck of the player's cards.

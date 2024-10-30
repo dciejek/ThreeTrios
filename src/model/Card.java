@@ -36,4 +36,10 @@ public interface Card {
    */
   public int getWest();
 
+  /**
+   * Returns the value of the given direction.
+   * @param dir   A CardinalDirection
+   * @return      An integer representation of the CardValue in the given direction
+   */
+  public int getDirection(CardinalDirection dir);
 }

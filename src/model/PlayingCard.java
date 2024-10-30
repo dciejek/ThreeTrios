@@ -48,6 +48,22 @@ public class PlayingCard implements Card {
   }
 
   @Override
+  public int getDirection(CardinalDirection dir) {
+    switch(dir) {
+      case NORTH:
+        return getNorth();
+      case SOUTH:
+        return getSouth();
+      case EAST:
+        return getEast();
+      case WEST:
+        return getWest();
+      default:
+        throw new IllegalArgumentException("Not a cardinal direction");
+    }
+  }
+
+  @Override
   public String toString() {
     return name
             + " " + north
