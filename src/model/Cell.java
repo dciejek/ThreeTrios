@@ -1,20 +1,20 @@
 package model;
 
-public interface Cell<C extends Card, P extends Player<C>> {
+public interface Cell<C extends Card> {
 
   /**
    * Gets the card in the cell.
    * @return the card in the given cell
    * @throws IllegalStateException if the cell is empty
    */
-  public Card getCard();
+  public C getCard();
 
   /**
    * Updates the cell with the new card & player associated with it.
    * @param card the card now in the cell.
    * @param currentPlayer the player to which the cell now belongs to
    */
-  public void updateCell(C card, P currentPlayer);
+  public void updateCell(C card, Player<C> currentPlayer);
 
   /**
    * Returns the color of this player.

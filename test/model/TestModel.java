@@ -5,9 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TestModel {
-  ThreeTriosModel<PlayingCard, TTPlayer> model;
+  ThreeTriosModel<PlayingCard> model;
 
   @Before
   public void setUp() {
@@ -157,6 +159,6 @@ public class TestModel {
 
   @Test
   public void testGetRow() {
-
+    setUp();
   }
 }
