@@ -41,7 +41,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
     int cols = parseCols(gridFile);
     initializeGrid(gridFile);
     ArrayList<PlayingCard> cards = initializeCards(cardFile);
-    if (grid.size() != rows) {
+    if (cards.size() < playableCells + 1) {
+      throw new IllegalArgumentException("There must be at least playable cells + 1 cards");
+    } else if (grid.size() != rows) {
       throw new IllegalArgumentException("Invalid number of rows");
     } else if (grid.get(0).size() != cols) {
       throw new IllegalArgumentException("Invalid number of columns");

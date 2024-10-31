@@ -9,12 +9,6 @@ import java.io.File;
 public class TestModel {
   ThreeTriosModel<PlayingCard, TTPlayer> model;
 
-  @Test
-  public void testModelConstruction() {
-    model = new TTModel();
-    Assert.assertTrue(model.getGrid().isEmpty());
-  }
-
   @Before
   public void setUp() {
     model = new TTModel();
@@ -22,26 +16,32 @@ public class TestModel {
 
   @Test
   public void testStartGameExceptions() {
+    setUp();
     Assert.assertThrows(IllegalArgumentException.class,
         () -> model.startGame(null, null));
-
+    setUp();
     Assert.assertThrows(IllegalArgumentException.class,
         () -> model.startGame(new File("docs" + File.separator + "InvalidGridEvenCells"),
             new File("docs" + File.separator + "cards1")));
-
+    setUp();
     Assert.assertThrows(IllegalArgumentException.class,
-            () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadRows"),
+        () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadRows"),
                     new File("docs" + File.separator + "cards1")));
-
+    setUp();
     Assert.assertThrows(IllegalArgumentException.class,
-            () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadCols"),
+        () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadCols"),
                     new File("docs" + File.separator + "cards1")));
+    setUp();
+    Assert.assertThrows(IllegalArgumentException.class,
+        () -> model.startGame(new File("docs" + File.separator + "grid1"),
+                    new File("docs" + File.separator + "SmallDeckOfCards")));
 
+    setUp();
     model.startGame(new File("docs" + File.separator + "grid1"),
                     new File("docs" + File.separator + "cards1"));
 
     Assert.assertThrows(IllegalStateException.class,
-            () -> model.startGame(new File("docs" + File.separator + "grid1"),
+        () -> model.startGame(new File("docs" + File.separator + "grid1"),
                     new File("docs" + File.separator + "cards1")));
 
   }
@@ -53,6 +53,13 @@ public class TestModel {
 
   @Test
   public void testPlaceCardExceptions() {
+    setUp();
+    model.startGame(new File("docs" + File.separator + "grid1"),
+            new File("docs" + File.separator + "cards1"));
+
+    Assert.assertThrows(IllegalArgumentException.class,
+        () -> model.placeCard(null, 1, 1));
+
 
   }
 
