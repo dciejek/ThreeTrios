@@ -12,10 +12,10 @@ import java.util.Scanner;
 /**
  * Represents a simple 2 player ThreeTriosModel
  */
-public class TTModel implements ThreeTriosModel<PlayingCard> {
-  private final ArrayList<ArrayList<Cell>> grid;
-  private final Player playerOne, playerTwo;
-  private Player activePlayer;
+public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
+  private final ArrayList<ArrayList<Cell<PlayingCard, TTPlayer>>> grid;
+  private final TTPlayer playerOne, playerTwo;
+  private TTPlayer activePlayer;
   private int playableCells;
   private boolean isStarted;
 
@@ -23,7 +23,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * The default constructor for a model of Three Trios.
    */
   TTModel() {
-    grid = new ArrayList<ArrayList<Cell>>();
+    grid = new ArrayList<ArrayList<Cell<PlayingCard, TTPlayer>>>();
     playerOne = new TTPlayer(PlayerColor.BLUE);
     playerTwo = new TTPlayer(PlayerColor.RED);
     activePlayer = playerOne;
@@ -44,7 +44,6 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     } else if (isStarted) {
       throw new IllegalStateException("Game already started");
     }
-    createGrid(grid);
     if (playableCells % 2 == 0) {
       throw new IllegalArgumentException("Total # of card cells must be an odd number");
     }
@@ -154,7 +153,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    */
   private void createGrid(List<List<String>> grid) {
     playableCells = 0;
-    ArrayList<Cell> cells = new ArrayList<>();
+    ArrayList<Cell<PlayingCard, TTPlayer>> cells = new ArrayList<>();
     for (List<String> row : grid) {
       cells.clear();
       for (String str : row) {
@@ -251,7 +250,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public Player getCurrentPlayer() {
+  public TTPlayer getCurrentPlayer() {
     if (!isStarted) {
       throw new IllegalStateException("Game has not started");
     }
@@ -275,7 +274,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * @param cells list of cells that make up the grid
    * @throws IllegalArgumentException if the String is null or not a valid type ("X" or "C")
    */
-  private void addCellToList(String str, List<Cell> cells) {
+  private void addCellToList(String str, List<Cell<PlayingCard, TTPlayer>> cells) {
     if (str == null) {
       throw new IllegalArgumentException("String cannot be null");
     } else if (str.equals("C")) {
@@ -297,7 +296,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public Player getWinner() {
+  public Player<PlayingCard> getWinner() {
     if (!isGameOver()) {
       throw new IllegalStateException("Game is not over");
     }
@@ -311,9 +310,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public List<List<Cell>> getGrid() {
-    List<List<Cell>> copy = new ArrayList<>();
-    for (List<Cell> row : grid) {
+  public List<List<Cell<PlayingCard, TTPlayer>>> getGrid() {
+    List<List<Cell<PlayingCard, TTPlayer>>> copy = new ArrayList<>();
+    for (List<Cell<PlayingCard, TTPlayer>> row : grid) {
       copy.add(new ArrayList<>(row));
     }
     return copy;
@@ -329,9 +328,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * @param player the player
    * @return the # of cells belonging to the player currently on the grid
    */
-  private int countCells(Player player) {
+  private int countCells(Player<PlayingCard> player) {
     int count = 0;
-    for (ArrayList<Cell> row : grid) {
+    for (ArrayList<Cell<PlayingCard, TTPlayer>> row : grid) {
       for (Cell cell : row) {
         if (cell.getPlayerColor() == player.getColor()) {
           count++;

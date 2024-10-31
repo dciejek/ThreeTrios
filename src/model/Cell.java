@@ -1,6 +1,6 @@
 package model;
 
-public interface Cell {
+public interface Cell<C extends Card, P extends Player<C>> {
 
   /**
    * Gets the card in the cell.
@@ -14,7 +14,7 @@ public interface Cell {
    * @param card the card now in the cell.
    * @param currentPlayer the player to which the cell now belongs to
    */
-  public void updateCell(Card card, Player currentPlayer);
+  public void updateCell(C card, P currentPlayer);
 
   /**
    * Returns the color of this player.

@@ -13,7 +13,11 @@ public class PlayingCard implements Card {
   private final CardValue south;
   private final CardValue west;
 
-  public PlayingCard(String name, CardValue north, CardValue east, CardValue south, CardValue west) {
+  public PlayingCard(String name, CardValue north, CardValue east, CardValue south,
+                     CardValue west) {
+    if (name == null || north == null || east == null || south == null || west == null) {
+      throw new IllegalArgumentException("Null is not a valid argument");
+    }
     this.name = name;
     this.north = north;
     this.east = east;
@@ -29,22 +33,22 @@ public class PlayingCard implements Card {
 
   @Override
   public int getNorth() {
-    return north.ordinal();
+    return north.ordinal() + 1;
   }
 
   @Override
   public int getSouth() {
-    return south.ordinal();
+    return south.ordinal() + 1;
   }
 
   @Override
   public int getEast() {
-    return east.ordinal();
+    return east.ordinal() + 1;
   }
 
   @Override
   public int getWest() {
-    return west.ordinal();
+    return west.ordinal() + 1;
   }
 
   @Override

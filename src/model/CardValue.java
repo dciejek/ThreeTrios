@@ -27,17 +27,6 @@ public enum CardValue {
     this.val = val;
   }
 
-  /**
-   * Compares this CardValue to the given CardValue. Returns a positive
-   * integer if this is greater than the other value, zero if they are the same,
-   * and negative if the other is greater.
-   * @param other   The CardValue to compare this one to
-   * @return        An integer comparison
-   */
-  public int compareCardVal(CardValue other) {
-    return this.ordinal() - other.ordinal();
-  }
-
   @Override
   public String toString() {
     return this.val;
@@ -55,6 +44,7 @@ public enum CardValue {
       case 8: return EIGHT;
       case 9: return NINE;
       case 10: return TEN;
+      default: throw new IllegalArgumentException("Value does not exist: " + val);
     }
   }
 }

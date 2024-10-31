@@ -1,19 +1,20 @@
 package view;
 
 import model.PlayingCard;
+import model.TTPlayer;
 import model.ThreeTriosModel;
 
 /**
  * A text based view for a game of three trios.
  */
 public class TTTextBasedView implements ThreeTriosView<PlayingCard> {
-  ThreeTriosModel<PlayingCard> model;
+  ThreeTriosModel<PlayingCard, TTPlayer> model;
 
   /**
    * Constructor for a text based view.
    * @param model the model of a game of three trios
    */
-  public TTTextBasedView(ThreeTriosModel<PlayingCard> model) {
+  public TTTextBasedView(ThreeTriosModel<PlayingCard, TTPlayer> model) {
     this.model = model;
   }
 

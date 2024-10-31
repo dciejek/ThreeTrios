@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * A player in a game of Three Trios.
  */
-public class TTPlayer implements Player {
+public class TTPlayer implements Player<PlayingCard> {
 
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
@@ -16,6 +16,9 @@ public class TTPlayer implements Player {
    * @param color the color of the player's cards
    */
   public TTPlayer(PlayerColor color) {
+    if (color == null) {
+      throw new IllegalArgumentException("color cannot be null");
+    }
     this.color = color;
     this.hand = new ArrayList<>();
   }
@@ -31,9 +34,8 @@ public class TTPlayer implements Player {
   }
 
   @Override
-  public Card removeFromHand(PlayingCard card) {
+  public void removeFromHand(PlayingCard card) {
     this.hand.remove(card);
-    return card;
   }
 
   @Override

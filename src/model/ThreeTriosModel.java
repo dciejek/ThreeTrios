@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ThreeTriosModel<C extends Card> {
+public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
 
 
   /**
@@ -37,20 +37,20 @@ public interface ThreeTriosModel<C extends Card> {
    * @return the Player who won
    * @throws IllegalStateException if the game isn't over
    */
-  public Player getWinner();
+  public Player<C> getWinner();
 
   /**
    * Gets the player whose turn it currently is.
    * @return the current active player
    * @throws IllegalStateException if the game hasn't started
    */
-  public Player getCurrentPlayer();
+  public Player<C> getCurrentPlayer();
 
   /**
    * Gets the game grid.
    * @return the current state of the grid
    */
-  public List<List<Cell>> getGrid();
+  public List<List<Cell<C, P>>> getGrid();
 
   /**
    * Returns the row of the game grid at the index of the given int.

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Representation of a ThreeTrios player.
  */
-public interface Player {
+public interface Player<C extends Card> {
   /**
    * Gets the color of the player.
    * @return the Color of the player
@@ -17,21 +17,20 @@ public interface Player {
    * Gets the deck of the player's cards.
    * @return the ArrayList of cards that represents the player's hand.
    */
-  public ArrayList<PlayingCard> getHand();
+  public ArrayList<C> getHand();
 
   /**
    * Removes the given PlayingCard from the player's hand.
    *
    * @param card removes the specified card from the player's hand
-   * @return
    */
-  public Card removeFromHand(PlayingCard card);
+  public void removeFromHand(C card);
 
   /**
    * Adds the given PlayingCard to the player's hand.
    * @param card adds the specified card to the player's hand.
    */
-  public void addToHand(PlayingCard card);
+  public void addToHand(C card);
 
 
 }
