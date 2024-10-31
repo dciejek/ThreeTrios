@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+
 public class TestModel {
   ThreeTriosModel<PlayingCard, TTPlayer> model;
 
@@ -15,16 +17,42 @@ public class TestModel {
 
   @Before
   public void setUp() {
-
+    model = new TTModel();
   }
 
   @Test
   public void testStartGameExceptions() {
+    Assert.assertThrows(IllegalArgumentException.class,
+        () -> model.startGame(null, null));
+
+    Assert.assertThrows(IllegalArgumentException.class,
+        () -> model.startGame(new File("docs" + File.separator + "InvalidGridEvenCells"),
+            new File("docs" + File.separator + "cards1")));
+
+    Assert.assertThrows(IllegalArgumentException.class,
+            () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadRows"),
+                    new File("docs" + File.separator + "cards1")));
+
+    Assert.assertThrows(IllegalArgumentException.class,
+            () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadCols"),
+                    new File("docs" + File.separator + "cards1")));
+
+    model.startGame(new File("docs" + File.separator + "grid1"),
+                    new File("docs" + File.separator + "cards1"));
+
+    Assert.assertThrows(IllegalStateException.class,
+            () -> model.startGame(new File("docs" + File.separator + "grid1"),
+                    new File("docs" + File.separator + "cards1")));
 
   }
 
   @Test
   public void testStartGame() {
+
+  }
+
+  @Test
+  public void testPlaceCardExceptions() {
 
   }
 
