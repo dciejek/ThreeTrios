@@ -11,10 +11,10 @@ import java.util.Scanner;
 /**
  * Represents a simple 2 player ThreeTriosModel
  */
-public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
-  private final ArrayList<ArrayList<Cell<PlayingCard, TTPlayer>>> grid;
-  private final TTPlayer playerOne, playerTwo;
-  private TTPlayer activePlayer;
+public class TTModel implements ThreeTriosModel<PlayingCard> {
+  private final ArrayList<ArrayList<Cell>> grid;
+  private final Player<PlayingCard> playerOne, playerTwo;
+  private Player<PlayingCard> activePlayer;
   private int playableCells;
   private boolean isStarted;
 
@@ -22,7 +22,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
    * The default constructor for a model of Three Trios.
    */
   public TTModel() {
-    grid = new ArrayList<ArrayList<Cell<PlayingCard, TTPlayer>>>();
+    grid = new ArrayList<ArrayList<Cell>>();
     playerOne = new TTPlayer(PlayerColor.BLUE);
     playerTwo = new TTPlayer(PlayerColor.RED);
     activePlayer = playerOne;
@@ -41,7 +41,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
     int cols = parseCols(gridFile);
     initializeGrid(gridFile);
     ArrayList<PlayingCard> cards = initializeCards(cardFile);
-    if (grid.size() != rows) {
+    if (cards.size() < playableCells + 1) {
+      throw new IllegalArgumentException("There must be at least playable cells + 1 cards");
+    } else if (grid.size() != rows) {
       throw new IllegalArgumentException("Invalid number of rows");
     } else if (grid.get(0).size() != cols) {
       throw new IllegalArgumentException("Invalid number of columns");
@@ -155,7 +157,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
    */
   private void createGrid(List<List<String>> grid) {
     playableCells = 0;
-    ArrayList<Cell<PlayingCard, TTPlayer>> cells = new ArrayList<>();
+    ArrayList<Cell> cells = new ArrayList<>();
     for (List<String> row : grid) {
       cells.clear();
       for (int idx = 0; idx < row.size(); idx++) {
@@ -169,14 +171,14 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
   public void placeCard(PlayingCard card, int row, int col) {
     if (card == null) {
       throw new IllegalArgumentException("Card cannot be null");
-    } else if (row < 0 || row >= grid.size() || col < 0 || col >= grid.get(row).size()) {
-      throw new IllegalArgumentException("Invalid row or column index");
-    } else if (grid.get(row).get(col) != null) {
-      throw new IllegalArgumentException("Already a card here: " + row + "," + col);
     } else if (!isStarted) {
       throw new IllegalStateException("Game has not started");
     } else if (isGameOver()) { //checks if there are no more cells that can be placed on
       throw new IllegalStateException("Game is over");
+    } else if (row < 0 || row >= grid.size() || col < 0 || col >= grid.get(row).size()) {
+      throw new IllegalArgumentException("Invalid row or column index");
+    } else if (grid.get(row).get(col).getCard() != null) {
+      throw new IllegalArgumentException("Already a card here: " + row + "," + col);
     }
     //Will throw an error if the cell is a hole cell
     grid.get(row).get(col).updateCell(card, getCurrentPlayer());
@@ -206,7 +208,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
       battleOpposingCell(cell, CardinalDirection.EAST,
               cardRow, cardCol + 1);
     }
-    if (opposingCardInBounds(cardRow - 1, cardCol, CardinalDirection.WEST)) {
+    if (opposingCardInBounds(cardRow, cardCol - 1, CardinalDirection.WEST)) {
       battleOpposingCell(cell, CardinalDirection.WEST,
               cardRow - 1, cardCol);
     }
@@ -256,7 +258,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
   }
 
   @Override
-  public TTPlayer getCurrentPlayer() {
+  public Player<PlayingCard> getCurrentPlayer() {
     if (!isStarted) {
       throw new IllegalStateException("Game has not started");
     }
@@ -280,7 +282,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
    * @param cells list of cells that make up the grid
    * @throws IllegalArgumentException if the String is null or not a valid type ("X" or "C")
    */
-  private void addCellToList(String str, List<Cell<PlayingCard, TTPlayer>> cells) {
+  private void addCellToList(String str, List<Cell> cells) {
     if (str == null) {
       throw new IllegalArgumentException("String cannot be null");
     } else if (str.equals("C")) {
@@ -316,12 +318,12 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
   }
 
   @Override
-  public List<List<Cell<PlayingCard, TTPlayer>>> getGrid() {
+  public List<List<Cell>> getGrid() {
     if (!isStarted) {
       throw new IllegalStateException("Game hasn't started");
     }
-    List<List<Cell<PlayingCard, TTPlayer>>> copy = new ArrayList<>();
-    for (List<Cell<PlayingCard, TTPlayer>> row : grid) {
+    List<List<Cell>> copy = new ArrayList<>();
+    for (List<Cell> row : grid) {
       copy.add(new ArrayList<>(row));
     }
     return copy;
@@ -344,7 +346,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
    */
   private int countCells(Player<PlayingCard> player) {
     int count = 0;
-    for (ArrayList<Cell<PlayingCard, TTPlayer>> row : grid) {
+    for (ArrayList<Cell> row : grid) {
       for (Cell cell : row) {
         if (cell.getPlayerColor() == player.getColor()) {
           count++;

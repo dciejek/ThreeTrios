@@ -1,6 +1,6 @@
 package model;
 
-public class HoleCell implements Cell {
+public class HoleCell implements Cell<Card> {
 
   public HoleCell() {
   }
@@ -11,7 +11,7 @@ public class HoleCell implements Cell {
   }
 
   @Override
-  public void updateCell(Card card, Player currentPlayer) {
+  public void updateCell(Card card, Player<Card> currentPlayer) {
     throw new IllegalStateException("Hole cell cannot be updated.");
   }
 

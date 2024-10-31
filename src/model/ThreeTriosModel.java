@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
+public interface ThreeTriosModel<C extends Card> {
 
 
   /**
@@ -13,6 +13,7 @@ public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
    * @param cardFile the file to extract the card info from
    * @throws IllegalStateException if the game has already been started
    * @throws IllegalArgumentException if either File input is null
+   * @throws IllegalArgumentException if there is less than playable cells + 1 cards
    * @throws IllegalArgumentException if row/col dimensions from file is larger than the grid given
    * @throws IllegalArgumentException if the grid does not have an odd # of playable cells
    */
@@ -57,7 +58,7 @@ public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
    * @return the current state of the grid
    * @throws IllegalStateException if the game hasn't started
    */
-  public List<List<Cell<C, P>>> getGrid();
+  public List<List<Cell>> getGrid();
 
   /**
    * Returns the row of the game grid at the index of the given int.

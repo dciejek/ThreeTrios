@@ -8,13 +8,13 @@ import model.ThreeTriosModel;
  * A text based view for a game of three trios.
  */
 public class TTTextBasedView implements ThreeTriosView<PlayingCard> {
-  ThreeTriosModel<PlayingCard, TTPlayer> model;
+  ThreeTriosModel<PlayingCard> model;
 
   /**
    * Constructor for a text based view.
    * @param model the model of a game of three trios
    */
-  public TTTextBasedView(ThreeTriosModel<PlayingCard, TTPlayer> model) {
+  public TTTextBasedView(ThreeTriosModel<PlayingCard> model) {
     this.model = model;
   }
 

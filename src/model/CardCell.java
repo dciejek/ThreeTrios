@@ -1,6 +1,6 @@
 package model;
 
-public class CardCell implements Cell<PlayingCard, TTPlayer> {
+public class CardCell implements Cell<Card> {
 
   private Card card;
   private PlayerColor color;
@@ -16,7 +16,7 @@ public class CardCell implements Cell<PlayingCard, TTPlayer> {
   }
 
   @Override
-  public void updateCell(PlayingCard card, TTPlayer currentPlayer) {
+  public void updateCell(Card card, Player<Card> currentPlayer) {
     this.card = card;
     this.color = currentPlayer.getColor();
   }

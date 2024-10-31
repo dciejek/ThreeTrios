@@ -7,12 +7,11 @@ import java.io.File;
 
 import model.PlayingCard;
 import model.TTModel;
-import model.TTPlayer;
 import model.ThreeTriosModel;
 
 public class TestView {
 
-  ThreeTriosModel<PlayingCard, TTPlayer> model;
+  ThreeTriosModel<PlayingCard> model;
   File cards;
   File grid;
   ThreeTriosView<PlayingCard> view;
