@@ -17,4 +17,99 @@ public class TestModel {
   public void setUp() {
 
   }
+
+  @Test
+  public void testStartGame() {
+
+  }
+
+  @Test
+  public void testParseRows() {
+
+  }
+
+  @Test
+  public void testParseColumns() {
+
+  }
+
+  @Test
+  public void testInitializeCards() {
+
+  }
+
+  @Test
+  public void testInitializeGrid() {
+
+  }
+
+  @Test
+  public void testDealHands() {
+
+  }
+
+  @Test
+  public void testCreateGrid() {
+
+  }
+
+  @Test
+  public void testPlaceCard() {
+
+  }
+
+  @Test
+  public void testBattlePhase() {
+
+  }
+
+  @Test
+  public void testBattleOpposingCell() {
+
+  }
+
+  @Test
+  public void testOpposingCardInBounds() {
+
+  }
+
+  @Test
+  public void testGetCurrentPlayer() {
+
+  }
+
+  @Test
+  public void testSwitchPlayer() {
+
+  }
+
+  @Test
+  public void testAddCellToList() {
+
+  }
+
+  @Test
+  public void testIsGameOver() {
+
+  }
+
+  @Test
+  public void testGameWinner() {
+
+  }
+
+  @Test
+  public void testGetGrid() {
+
+  }
+
+  @Test
+  public void testGetRow() {
+
+  }
+
+  @Test
+  public void testCountCells() {
+
+  }
 }
