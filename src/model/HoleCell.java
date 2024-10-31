@@ -2,10 +2,7 @@ package model;
 
 public class HoleCell implements Cell {
 
-  private final PlayerColor color;
-
   public HoleCell() {
-    this.color = null;
   }
 
   @Override
@@ -20,7 +17,7 @@ public class HoleCell implements Cell {
 
   @Override
   public PlayerColor getPlayerColor() {
-    return color;
+    throw new IllegalStateException("Hole cell cannot have a player color.");
   }
 
   @Override
