@@ -9,6 +9,7 @@ public class HoleCell implements Cell<PlayingCard> {
    * Constructs a HoleCell.
    */
   public HoleCell() {
+    //All behaviors are handled by methods
   }
 
   @Override

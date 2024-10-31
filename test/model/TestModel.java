@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.io.File;
 
+/**
+ * Tests for the model.
+ */
 public class TestModel {
   ThreeTriosModel<PlayingCard> model;
 
