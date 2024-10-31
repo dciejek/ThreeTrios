@@ -121,9 +121,10 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
       Scanner scan = new Scanner(new FileReader(gridFile));
 
       while (scan.hasNextLine()) {
-        String[] line = scan.nextLine().split(" ");
+        String[] line = scan.nextLine().split("");
         grid.add(new ArrayList<String>(List.of(line)));
       }
+      grid.remove(0);
       createGrid(grid);
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("Grid file not found");
