@@ -19,6 +19,11 @@ public class TestModel {
   }
 
   @Test
+  public void testStartGameExceptions() {
+
+  }
+
+  @Test
   public void testStartGame() {
 
   }
