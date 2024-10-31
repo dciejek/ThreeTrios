@@ -1,7 +1,13 @@
 package model;
 
+/**
+ * Represents a Cell that no card can be played to.
+ */
 public class HoleCell implements Cell<PlayingCard> {
 
+  /**
+   * Constructs a HoleCell.
+   */
   public HoleCell() {
   }
 

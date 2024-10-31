@@ -5,9 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TestModel {
   ThreeTriosModel<PlayingCard> model;
@@ -51,7 +48,11 @@ public class TestModel {
 
   @Test
   public void testStartGame() {
-
+    File cardsFile = new File("docs" + File.separator + "cards1");
+    File gridFile = new File("docs" + File.separator + "grid1");
+    model.startGame(gridFile, cardsFile);
+    Assert.assertEquals(5, model.getGrid().size());
+    Assert.assertEquals(4, model.getCurrentPlayer().getHand().size());
   }
 
   @Test
@@ -165,7 +166,7 @@ public class TestModel {
   public void testIsGameOverExceptions() {
     setUp();
     Assert.assertThrows(IllegalStateException.class,
-            () -> model.isGameOver());
+        () -> model.isGameOver());
   }
 
   @Test

@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests for Player.
+ */
 public class TestPlayer {
   Player playerOne;
   Player playerTwo;
@@ -15,7 +18,7 @@ public class TestPlayer {
   public void testPlayerConstruction() {
     Player test;
     Assert.assertThrows(IllegalArgumentException.class,
-            () -> new TTPlayer(null));
+        () -> new TTPlayer(null));
     test = new TTPlayer(PlayerColor.BLUE);
     Assert.assertEquals(PlayerColor.BLUE, test.getColor());
     Assert.assertTrue(test.getHand().isEmpty());

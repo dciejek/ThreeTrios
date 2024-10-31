@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests for Card.
+ */
 public class TestCard {
   Card weakCard;
   Card strongCard;
@@ -12,7 +15,7 @@ public class TestCard {
   @Test
   public void testCardConstruction() {
     Assert.assertThrows(IllegalArgumentException.class,
-            () -> new PlayingCard(null,
+        () -> new PlayingCard(null,
                     CardValue.TEN,
                     CardValue.TEN,
                     CardValue.TEN,

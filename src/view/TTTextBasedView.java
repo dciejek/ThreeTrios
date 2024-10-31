@@ -1,7 +1,6 @@
 package view;
 
 import model.PlayingCard;
-import model.TTPlayer;
 import model.ThreeTriosModel;
 
 /**
@@ -25,7 +24,8 @@ public class TTTextBasedView implements ThreeTriosView<PlayingCard> {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("Player: ").append(model.getCurrentPlayer().toString()).append("\n");
+    sb.append("Player: ").append(
+            model.getCurrentPlayer().getColor().toString().charAt(0)).append("\n");
     for (int row = 0; row < model.getGrid().size(); row++) {
       for (int col = 0; col < model.getRow(0).size(); col++) {
         sb.append(model.getRow(row).get(col).toString());
@@ -34,7 +34,10 @@ public class TTTextBasedView implements ThreeTriosView<PlayingCard> {
     }
     sb.append("Hand: ").append("\n");
     for (int idx = 0; idx < model.getCurrentPlayer().getHand().size(); idx++) {
-      sb.append(model.getCurrentPlayer().getHand().get(idx).toString()).append("\n");
+      sb.append(model.getCurrentPlayer().getHand().get(idx).toString());
+      if (idx < model.getCurrentPlayer().getHand().size() - 1) {
+        sb.append("\n");
+      }
     }
     return sb.toString();
   }

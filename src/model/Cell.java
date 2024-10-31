@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Represents a Cell for a card grid.
+ * @param <C> The type of Card to use
+ */
 public interface Cell<C extends Card> {
 
   /**

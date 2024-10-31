@@ -41,5 +41,4 @@ public class TTPlayer implements Player<PlayingCard> {
   public void addToHand(PlayingCard card) {
     this.hand.add(card);
   }
-
 }

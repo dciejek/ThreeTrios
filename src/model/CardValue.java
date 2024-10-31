@@ -50,7 +50,7 @@ public enum CardValue {
    * @throws IllegalArgumentException if there is not a value associated with the string
    */
   public static CardValue toCardValue(String val) {
-    switch(val){
+    switch (val) {
       case "1": return ONE;
       case "2": return TWO;
       case "3": return THREE;

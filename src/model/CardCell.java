@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Represents a cell that can hold a card.
+ */
 public class CardCell implements Cell<PlayingCard> {
 
   private PlayingCard card;

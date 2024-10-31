@@ -8,11 +8,12 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Represents a simple 2 player ThreeTriosModel
+ * Represents a simple 2 player ThreeTriosModel.
  */
 public class TTModel implements ThreeTriosModel<PlayingCard> {
   private final ArrayList<ArrayList<Cell<PlayingCard>>> grid;
-  private final Player<PlayingCard> playerOne, playerTwo;
+  private final Player<PlayingCard> playerOne;
+  private final Player<PlayingCard> playerTwo;
   private Player<PlayingCard> activePlayer;
   private int playableCells;
   private boolean isStarted;

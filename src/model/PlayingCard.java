@@ -13,6 +13,14 @@ public class PlayingCard implements Card {
   private final CardValue south;
   private final CardValue west;
 
+  /**
+   * Constructs a PlayingCard.
+   * @param name    Name of the card
+   * @param north   The north CardValue
+   * @param east    The east CardValue
+   * @param south   The south CardValue
+   * @param west    The west CardValue
+   */
   public PlayingCard(String name, CardValue north, CardValue east, CardValue south,
                      CardValue west) {
     if (name == null || north == null || east == null || south == null || west == null) {
@@ -53,7 +61,7 @@ public class PlayingCard implements Card {
 
   @Override
   public int getDirection(CardinalDirection dir) {
-    switch(dir) {
+    switch (dir) {
       case NORTH:
         return getNorth();
       case SOUTH:

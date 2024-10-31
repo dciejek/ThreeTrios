@@ -44,7 +44,7 @@ public interface Card {
   public int getDirection(CardinalDirection dir);
 
   /**
-   * Returns true if this cards specific directional value is greater than the opposing
+   * Returns true if this cards specific directional value is greater than the opposing.
    * @param opposing the opposing card.
    * @param dir the direction for this cards value to be compared
    * @return true if this card's value is greater than the opposing

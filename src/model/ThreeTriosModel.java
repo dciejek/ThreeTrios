@@ -1,9 +1,12 @@
 package model;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a model for a ThreeTrios game.
+ * @param <C>   The type of cards to use for the game
+ */
 public interface ThreeTriosModel<C extends Card> {
 
 
@@ -40,7 +43,7 @@ public interface ThreeTriosModel<C extends Card> {
   public boolean isGameOver();
 
   /**
-   * Tells us the winner of a game of three trios
+   * Tells us the winner of a game of three trios.
    * @return the Player who won
    * @throws IllegalStateException if the game isn't over
    */

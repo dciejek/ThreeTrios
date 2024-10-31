@@ -9,6 +9,10 @@ public enum CardinalDirection {
   EAST,
   WEST;
 
+  /**
+   * swaps this cardinal direction for its compass opposite.
+   * @return  the opposite CardinalDirection
+   */
   public CardinalDirection oppositeDirection() {
     switch (this) {
       case NORTH:
