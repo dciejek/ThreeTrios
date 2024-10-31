@@ -151,6 +151,7 @@ public class TestModel {
     setUp();
     Assert.assertThrows(IllegalStateException.class,
         () -> model.getRow(1));
+
     model.startGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Assert.assertThrows(IllegalArgumentException.class,
@@ -160,5 +161,16 @@ public class TestModel {
   @Test
   public void testGetRow() {
     setUp();
+
+    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+            new File("docs" + File.separator + "cards1"));
+    Assert.assertEquals(null, model.getRow(0).get(0).getCard());
+    Assert.assertEquals(null, model.getRow(0).get(0).getPlayerColor());
+
+    Card newCard = model.getCurrentPlayer().getHand().get(0);
+    Player newPlayer = model.getCurrentPlayer();
+    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+    Assert.assertEquals(newCard, model.getRow(0).get(0).getCard());
+    Assert.assertEquals(newPlayer.getColor(), model.getRow(0).get(0).getPlayerColor());
   }
 }
