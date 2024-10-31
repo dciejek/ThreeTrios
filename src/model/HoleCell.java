@@ -1,17 +1,17 @@
 package model;
 
-public class HoleCell implements Cell<Card> {
+public class HoleCell implements Cell<PlayingCard> {
 
   public HoleCell() {
   }
 
   @Override
-  public Card getCard() {
+  public PlayingCard getCard() {
     throw new IllegalStateException("Hole cell does not have card.");
   }
 
   @Override
-  public void updateCell(Card card, Player<Card> currentPlayer) {
+  public void updateCell(PlayingCard card, Player<PlayingCard> currentPlayer) {
     throw new IllegalStateException("Hole cell cannot be updated.");
   }
 

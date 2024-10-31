@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Represents a simple 2 player ThreeTriosModel
  */
 public class TTModel implements ThreeTriosModel<PlayingCard> {
-  private final ArrayList<ArrayList<Cell>> grid;
+  private final ArrayList<ArrayList<Cell<PlayingCard>>> grid;
   private final Player<PlayingCard> playerOne, playerTwo;
   private Player<PlayingCard> activePlayer;
   private int playableCells;
@@ -21,7 +21,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * The default constructor for a model of Three Trios.
    */
   public TTModel() {
-    grid = new ArrayList<ArrayList<Cell>>();
+    grid = new ArrayList<>();
     playerOne = new TTPlayer(PlayerColor.BLUE);
     playerTwo = new TTPlayer(PlayerColor.RED);
     activePlayer = playerOne;
@@ -121,7 +121,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     try {
       Scanner scan = new Scanner(new FileReader(gridFile));
       while (scan.hasNextLine()) {
-        tempGrid.add(new ArrayList<String>(
+        tempGrid.add(new ArrayList<>(
                 List.of(scan.nextLine().split(""))));
       }
       tempGrid.remove(0);
@@ -156,7 +156,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    */
   private void createGrid(List<List<String>> grid) {
     playableCells = 0;
-    ArrayList<Cell> cells = new ArrayList<>();
+    ArrayList<Cell<PlayingCard>> cells = new ArrayList<>();
     for (List<String> row : grid) {
       cells.clear();
       for (int idx = 0; idx < row.size(); idx++) {
@@ -195,21 +195,21 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   private void battlePhase(int cardRow, int cardCol) {
     //Check North neighbor, then South neighbor
     Cell cell = grid.get(cardRow).get(cardCol);
-    if (opposingCardInBounds(cardRow - 1, cardCol, CardinalDirection.NORTH)) {
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)) {
       battleOpposingCell(cell, CardinalDirection.NORTH,
               cardRow - 1, cardCol);
     }
-    if (opposingCardInBounds(cardRow + 1, cardCol, CardinalDirection.SOUTH)) {
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)) {
       battleOpposingCell(cell, CardinalDirection.SOUTH,
               cardRow + 1, cardCol);
     }
-    if (opposingCardInBounds(cardRow, cardCol + 1, CardinalDirection.EAST)) {
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)) {
       battleOpposingCell(cell, CardinalDirection.EAST,
               cardRow, cardCol + 1);
     }
-    if (opposingCardInBounds(cardRow, cardCol - 1, CardinalDirection.WEST)) {
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)) {
       battleOpposingCell(cell, CardinalDirection.WEST,
-              cardRow - 1, cardCol);
+              cardRow, cardCol - 1);
     }
   }
 
@@ -246,9 +246,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
       case NORTH:
         return cardRow - 1 >= 0;
       case SOUTH:
-        return cardRow < grid.size();
+        return cardRow + 1 < grid.size();
       case EAST:
-        return cardCol < grid.get(0).size();
+        return cardCol + 1 < grid.get(0).size();
       case WEST:
         return cardCol - 1 >= 0;
       default:
@@ -281,7 +281,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * @param str "C" if a CardCell or "X" if a HoleCell
    * @throws IllegalArgumentException if the String is null or not a valid type ("X" or "C")
    */
-  private Cell<Card> cellFactory(String str) {
+  private Cell<PlayingCard> cellFactory(String str) {
     if (str == null) {
       throw new IllegalArgumentException("String cannot be null");
     } else if (str.equals("C")) {
@@ -322,7 +322,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
       throw new IllegalStateException("Game hasn't started");
     }
     List<List<Cell>> copy = new ArrayList<>();
-    for (List<Cell> row : grid) {
+    for (List<Cell<PlayingCard>> row : grid) {
       copy.add(new ArrayList<>(row));
     }
     return copy;
@@ -345,7 +345,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    */
   private int countCells(Player<PlayingCard> player) {
     int count = 0;
-    for (ArrayList<Cell> row : grid) {
+    for (ArrayList<Cell<PlayingCard>> row : grid) {
       for (Cell cell : row) {
         if (cell.getPlayerColor() == player.getColor()) {
           count++;
