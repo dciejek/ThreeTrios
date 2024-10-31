@@ -19,62 +19,7 @@ public class TestModel {
   }
 
   @Test
-  public void testParseRows() {
-
-  }
-
-  @Test
-  public void testParseColumns() {
-
-  }
-
-  @Test
-  public void testInitializeCards() {
-
-  }
-
-  @Test
-  public void testInitializeGrid() {
-
-  }
-
-  @Test
-  public void testCreateGrid() {
-
-  }
-
-  @Test
-  public void testAddCellToList() {
-
-  }
-
-  @Test
-  public void testDealHands() {
-
-  }
-
-  @Test
   public void testStartGame() {
-
-  }
-
-  @Test
-  public void testOpposingCardInBounds() {
-
-  }
-
-  @Test
-  public void testBattleOpposingCell() {
-
-  }
-
-  @Test
-  public void testBattlePhase() {
-
-  }
-
-  @Test
-  public void testSwitchPlayer() {
 
   }
 
@@ -95,7 +40,7 @@ public class TestModel {
   }
 
   @Test
-  public void testGameWinner() {
+  public void testGetWinner() {
 
   }
 
@@ -106,11 +51,6 @@ public class TestModel {
 
   @Test
   public void testGetRow() {
-
-  }
-
-  @Test
-  public void testCountCells() {
 
   }
 }
