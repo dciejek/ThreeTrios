@@ -43,18 +43,24 @@ public enum CardValue {
     return this.val;
   }
 
-  public static CardValue toCardValue(int val) {
+  /**
+   * Converts the String to the corresponding CardValue.
+   * @param val   String to convert
+   * @return      the correct CardValue
+   * @throws IllegalArgumentException if there is not a value associated with the string
+   */
+  public static CardValue toCardValue(String val) {
     switch(val){
-      case 1: return ONE;
-      case 2: return TWO;
-      case 3: return THREE;
-      case 4: return FOUR;
-      case 5: return FIVE;
-      case 6: return SIX;
-      case 7: return SEVEN;
-      case 8: return EIGHT;
-      case 9: return NINE;
-      case 10: return TEN;
+      case "1": return ONE;
+      case "2": return TWO;
+      case "3": return THREE;
+      case "4": return FOUR;
+      case "5": return FIVE;
+      case "6": return SIX;
+      case "7": return SEVEN;
+      case "8": return EIGHT;
+      case "9": return NINE;
+      case "A": return TEN;
       default:
         throw new IllegalArgumentException("Invalid card value");
     }

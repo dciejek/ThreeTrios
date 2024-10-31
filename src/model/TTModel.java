@@ -95,10 +95,10 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
 
       while (scan.hasNextLine()) {
         String[] line = scan.nextLine().split(" ");
-        cards.add(new PlayingCard(line[0], CardValue.toCardValue(Integer.parseInt(line[1])),
-                CardValue.toCardValue(Integer.parseInt(line[2])),
-                CardValue.toCardValue(Integer.parseInt(line[3])),
-                CardValue.toCardValue(Integer.parseInt(line[4]))));
+        cards.add(new PlayingCard(line[0], CardValue.toCardValue(line[1]),
+                CardValue.toCardValue(line[2]),
+                CardValue.toCardValue(line[3]),
+                CardValue.toCardValue(line[4])));
       }
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("Cannot find or read card file");
