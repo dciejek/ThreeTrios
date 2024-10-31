@@ -116,16 +116,15 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
    * @param gridFile  the file to get grid data from
    */
   private void initializeGrid(File gridFile) {
-    List<List<String>> grid = new ArrayList<>();
+    List<List<String>> tempGrid = new ArrayList<>();
     try {
       Scanner scan = new Scanner(new FileReader(gridFile));
-
       while (scan.hasNextLine()) {
-        String[] line = scan.nextLine().split("");
-        grid.add(new ArrayList<String>(List.of(line)));
+        tempGrid.add(new ArrayList<String>(
+                List.of(scan.nextLine().split(""))));
       }
-      grid.remove(0);
-      createGrid(grid);
+      tempGrid.remove(0);
+      createGrid(tempGrid);
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("Grid file not found");
     }
@@ -159,8 +158,8 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
     ArrayList<Cell<PlayingCard, TTPlayer>> cells = new ArrayList<>();
     for (List<String> row : grid) {
       cells.clear();
-      for (String str : row) {
-        addCellToList(str, cells);
+      for (int idx = 0; idx < row.size(); idx++) {
+        addCellToList(row.get(idx), cells);
       }
       this.grid.add(cells);
     }

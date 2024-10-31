@@ -28,6 +28,7 @@ public class TestView {
   @Test
   public void testToString() {
     model.startGame(grid, cards);
-    view.toString();
+    System.out.println(view.toString());
+
   }
 }
