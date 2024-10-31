@@ -42,4 +42,12 @@ public interface Card {
    * @return      An integer representation of the CardValue in the given direction
    */
   public int getDirection(CardinalDirection dir);
+
+  /**
+   * Returns true if this cards specific directional value is greater than the opposing
+   * @param opposing the opposing card.
+   * @param dir the direction for this cards value to be compared
+   * @return true if this card's value is greater than the opposing
+   */
+  public boolean isStrongerCard(Card opposing, CardinalDirection dir);
 }

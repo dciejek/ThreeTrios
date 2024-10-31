@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +7,11 @@ import java.util.List;
  * Represents a simple 2 player ThreeTriosModel
  */
 public class TTModel implements ThreeTriosModel<PlayingCard> {
-  //Fields:
-  //2D ArrayList<Card> representing the game grid
-  //ArrayList<Player>
   private final ArrayList<ArrayList<Cell>> grid;
   private final Player playerOne, playerTwo;
   private Player activePlayer;
   private int playableCells;
+  private boolean isStarted;
 
   /**
    * The default constructor for a model of Three Trios.
@@ -24,30 +21,25 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     playerOne = new TTPlayer(PlayerColor.BLUE);
     playerTwo = new TTPlayer(PlayerColor.RED);
     activePlayer = playerOne;
-    playableCells = 0;
+    playableCells = -1;
+    isStarted = false;
   }
 
-  /**
-   * Starts a game of three trios.
-   * @param rows the # of rows in the grid
-   * @param cols the # of cols in the grid
-   * @param grid the 2D array of strings from config file that fill the grid
-   * @param cards the list of every card from config file
-   * @throws IllegalArgumentException if the given grid # of rows/cols do not match the value given
-   * @throws IllegalArgumentException if the total # of card cells is even
-   */
   @Override
   public void startGame(int rows, int cols, List<List<String>> grid, List<PlayingCard> cards) {
     if (grid.size() != rows) {
       throw new IllegalArgumentException("Invalid number of rows");
     } else if (grid.get(0).size() != cols) {
       throw new IllegalArgumentException("Invalid number of columns");
+    } else if (isStarted) {
+      throw new IllegalStateException("Game already started");
     }
     createGrid(grid);
     if (playableCells % 2 == 0) {
       throw new IllegalArgumentException("Total # of card cells must be an odd number");
     }
     dealHands(cards, playableCells);
+    isStarted = true;
   }
 
   /**
@@ -85,60 +77,84 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     }
   }
 
-  /**
-   * Places a given card onto the game grid, then battle initiate the battle phase, once finished
-   * switch the turn to the next player.
-   * @param card the card to be placed on the grid
-   * @param row the row index to be placed in
-   * @param col the column index to be placed in
-   * @throws IllegalArgumentException if a card already exists at the given index
-   * @throws IllegalStateException if the game is over.
-   */
   @Override
   public void placeCard(PlayingCard card, int row, int col) {
     if (grid.get(row).get(col) != null) {
       throw new IllegalArgumentException("Already a card here: " + row + "," + col);
-    }
-    if (isGameOver()) {
+    } else if (!isStarted) {
+      throw new IllegalStateException("Game has not started");
+    } else if (isGameOver()) { //checks if there are no more cells that can be placed on
       throw new IllegalStateException("Game is over");
     }
+    //Will throw an error if the cell is a hole cell
     grid.get(row).get(col).updateCell(card, getCurrentPlayer());
+    playableCells--;
     battlePhase(row, col);
     switchPlayer();
   }
 
-  private void battlePhase(int row, int col) {
-    //Check to make sure cell is valid
-    //Not empty, not hole
-
-
-    //Call isStrongerCard
-    //which checks the card in cell's value against each neighbor
-  }
-
-
-  private void checkNeighbors(int cardRow, int cardCol) {
+  /**
+   * In order N, S, E, W, battles the opposing card in the given direction.
+   * @param cardRow the row of the initial card doing battle
+   * @param cardCol the column of the initial card doing battle
+   */
+  private void battlePhase(int cardRow, int cardCol) {
     //Check North neighbor, then South neighbor
-    compareOpposingCard(cardRow, cardCol, CardinalDirection.NORTH);
-    compareOpposingCard(cardRow, cardCol, CardinalDirection.SOUTH);
-    compareOpposingCard(cardRow, cardCol, CardinalDirection.EAST);
-    compareOpposingCard(cardRow, cardCol, CardinalDirection.WEST);
-  }
-
-  private void compareOpposingCard(int cardRow, int cardCol, CardinalDirection dir) {
-    if (opposingCardInBounds(cardRow, cardCol, dir)) {
-
+    Cell cell = grid.get(cardRow).get(cardCol);
+    if (opposingCardInBounds(cardRow - 1, cardCol, CardinalDirection.NORTH)) {
+      battleOpposingCell(cell, CardinalDirection.NORTH,
+              cardRow - 1, cardCol);
+    }
+    if (opposingCardInBounds(cardRow + 1, cardCol, CardinalDirection.SOUTH)) {
+      battleOpposingCell(cell, CardinalDirection.SOUTH,
+              cardRow + 1, cardCol);
+    }
+    if (opposingCardInBounds(cardRow, cardCol + 1, CardinalDirection.EAST)) {
+      battleOpposingCell(cell, CardinalDirection.EAST,
+              cardRow, cardCol + 1);
+    }
+    if (opposingCardInBounds(cardRow - 1, cardCol, CardinalDirection.WEST)) {
+      battleOpposingCell(cell, CardinalDirection.WEST,
+              cardRow - 1, cardCol);
     }
   }
 
+  /**
+   * Does battle on the cell challenged using the direction value given, so long as:
+   * there is a card in the index given & it belongs to the opposing player.
+   * Then if the initial card is stronger swap the color of the challenged card, and recursively
+   * call battlePhase on said card.
+   * @param cell the cell doing battle
+   * @param dir the direction used to compare the cell doing battle's value
+   * @param cellRow the row index of the cell being challenged
+   * @param cellCol the column index of the cell being challenged
+   */
+  private void battleOpposingCell(Cell cell, CardinalDirection dir,
+                                  int cellRow, int cellCol) {
+    Cell opposing = grid.get(cellRow).get(cellCol);
+    if (opposing.hasCard()
+            && cell.getPlayerColor() != opposing.getPlayerColor()
+            && cell.getCard().isStrongerCard(opposing.getCard(), dir)) {
+      opposing.setPlayerColor(activePlayer.getColor());
+      battlePhase(cellRow, cellCol);
+    }
+  }
+
+  /**
+   * Shows if the opposing index exists on the games grid.
+   * @param cardRow the row index
+   * @param cardCol the column index
+   * @param dir the direction which the opposing card should exist
+   * @return true if the index given exists on the grid
+   */
   private boolean opposingCardInBounds(int cardRow, int cardCol, CardinalDirection dir) {
     switch (dir) {
       case NORTH:
         return cardRow - 1 >= 0;
       case SOUTH:
-        return cardRow + 1 < grid.size();
+        return cardRow < grid.size();
       case EAST:
-        return cardCol + 1 < grid.get(0).size();
+        return cardCol < grid.get(0).size();
       case WEST:
         return cardCol - 1 >= 0;
       default:
@@ -146,56 +162,16 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     }
   }
 
-  private void compareOpposingCardHorizontal(int cardRow, int cardCol, int col, CardinalDirection dir) {
-    switch (col) {
-      case 1:
-        if(isStrongerCard(grid.get(cardRow).get(cardCol).getCard().getDirection(dir),
-                grid.get(cardRow).get(cardCol + col).getCard().getDirection())) {
-          battlePhase(cardRow, cardCol + col);
-        }
-      case -1:
-        if(isStrongerCard(grid.get(cardRow).get(cardCol).getCard().getWest(),
-                grid.get(cardRow).get(cardCol + col).getCard().getEast())) {
-          battlePhase(cardRow, cardCol + col);
-        }
-    }
-  }
-
-  private void compareOpposingCardVertical(int cardRow, int cardCol, int row) {
-    switch (row) {
-      case 1:
-        if(isStrongerCard(grid.get(cardRow).get(cardCol).getCard().getSouth(),
-                grid.get(cardRow + row).get(cardCol).getCard().getNorth())) {
-          battlePhase(cardRow + row, cardCol);
-        }
-      case -1:
-        if(isStrongerCard(grid.get(cardRow).get(cardCol).getCard().getNorth(),
-                grid.get(cardRow + row).get(cardCol).getCard().getSouth())) {
-          battlePhase(cardRow + row, cardCol);
-        }
-    }
-  }
-
-  private boolean isStrongerCard(int card, int card2) {
-    //Have a way to get direction that we are comparing
-    
-    //Call battlePhase on second card if it loses
-
-
-    return false;
-  }
-
-  /**
-   * Gets the player whose turn it currently is.
-   * @return the current active player
-   * @throws IllegalStateException if the game is over or if the game hasn't started
-   */
+  @Override
   public Player getCurrentPlayer() {
+    if (!isStarted) {
+      throw new IllegalStateException("Game has not started");
+    }
     return activePlayer;
   }
 
   /**
-   * Changes the active player to the other player.
+   * Changes the active player to the other non-active player.
    */
   private void switchPlayer() {
     if (activePlayer.equals(playerOne)) {
@@ -226,29 +202,54 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
 
   @Override
   public boolean isGameOver() {
-    return false;
+    if (!isStarted) {
+      throw new IllegalStateException("Game hasn't started");
+    }
+    return playableCells == 0;
   }
 
   @Override
   public Player getWinner() {
-    int p1Count = countTiles(playerOne);
-    int p2Count = countTiles(playerTwo);
+    if (!isGameOver()) {
+      throw new IllegalStateException("Game is not over");
+    }
+    int p1Count = countCells(playerOne);
+    int p2Count = countCells(playerTwo);
+    if (p1Count > p2Count) {
+      return playerOne;
+    } else {
+      return playerTwo;
+    }
   }
 
   @Override
   public List<List<Cell>> getGrid() {
-    return List.of();
+    List<List<Cell>> copy = new ArrayList<>();
+    for (List<Cell> row : grid) {
+      copy.add(new ArrayList<>(row));
+    }
+    return copy;
   }
 
-  private int countTiles(Player player) {
+  @Override
+  public List<Cell> getRow(int row) {
+    return new ArrayList<>(grid.get(row));
+  }
+
+  /**
+   * The number of cells belonging to the player on the grid.
+   * @param player the player
+   * @return the # of cells belonging to the player currently on the grid
+   */
+  private int countCells(Player player) {
     int count = 0;
     for (ArrayList<Cell> row : grid) {
       for (Cell cell : row) {
-        if (cell.)
+        if (cell.getPlayerColor() == player.getColor()) {
+          count++;
+        }
       }
     }
+    return count;
   }
-
-  //Methods:
-  //Constructor
 }

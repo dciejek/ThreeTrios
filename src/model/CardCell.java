@@ -2,7 +2,7 @@ package model;
 
 public class CardCell implements Cell {
 
-  private final Card card;
+  private Card card;
   private PlayerColor color;
 
   public CardCell() {
@@ -16,9 +16,9 @@ public class CardCell implements Cell {
   }
 
   @Override
-  public Card updateCell(Card updatedCard, Player currentPlayer) {
-    //should update card
-    return card;
+  public void updateCell(Card card, Player currentPlayer) {
+    this.card = card;
+    this.color = currentPlayer.getColor();
   }
 
   @Override
@@ -26,8 +26,20 @@ public class CardCell implements Cell {
     return this.color;
   }
 
+  public void setPlayerColor(PlayerColor color) {
+    this.color = color;
+  }
+
   @Override
   public Boolean hasCard() {
     return this.card != null;
+  }
+
+  @Override
+  public String toString() {
+    if (hasCard()) {
+      return this.color.toString().substring(0, 1);
+    }
+    return "_";
   }
 }

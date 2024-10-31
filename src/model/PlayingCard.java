@@ -64,6 +64,14 @@ public class PlayingCard implements Card {
   }
 
   @Override
+  public boolean isStrongerCard(Card opposing, CardinalDirection dir) {
+    return this.getDirection(dir)
+            - opposing.getDirection(dir.oppositeDirection())
+            > 0;
+  }
+
+
+  @Override
   public String toString() {
     return name
             + " " + north

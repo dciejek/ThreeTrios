@@ -10,13 +10,11 @@ public interface Cell {
   public Card getCard();
 
   /**
-   * Updates the cell with the new card.
-   *
-   * @param updatedCard   the new card
-   * @param currentPlayer
-   * @return the card in the cell after update
+   * Updates the cell with the new card & player associated with it.
+   * @param card the card now in the cell.
+   * @param currentPlayer the player to which the cell now belongs to
    */
-  public Card updateCell(Card updatedCard, Player currentPlayer);
+  public void updateCell(Card card, Player currentPlayer);
 
   /**
    * Returns the color of this player.
@@ -29,4 +27,16 @@ public interface Cell {
    * @return true if there is a card, or false if its empty/a hole cell
    */
   public Boolean hasCard();
+
+  /**
+   * Updates the PlayerColor associated with the cell.
+   * @param color   The color to update the cell to
+   */
+  public void setPlayerColor(PlayerColor color);
+
+  /**
+   * The toString method for a cell.
+   * @return the cell's respected to string
+   */
+  public String toString();
 }

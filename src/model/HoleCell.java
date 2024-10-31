@@ -14,7 +14,7 @@ public class HoleCell implements Cell {
   }
 
   @Override
-  public Card updateCell(Card updatedCard, Player currentPlayer) {
+  public void updateCell(Card card, Player currentPlayer) {
     throw new IllegalStateException("Hole cell cannot be updated.");
   }
 
@@ -26,5 +26,15 @@ public class HoleCell implements Cell {
   @Override
   public Boolean hasCard() {
     return false;
+  }
+
+  @Override
+  public void setPlayerColor(PlayerColor color) {
+    throw new IllegalStateException("Hole cell cannot be updated.");
+  }
+
+  @Override
+  public String toString() {
+    return " ";
   }
 }
