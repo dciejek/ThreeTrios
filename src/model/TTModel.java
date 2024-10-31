@@ -1,7 +1,13 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Represents a simple 2 player ThreeTriosModel
@@ -26,7 +32,11 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public void startGame(int rows, int cols, List<List<String>> grid, List<PlayingCard> cards) {
+  public void startGame(File gridFile, File cardFile) {
+    int rows = parseRows(gridFile);
+    int cols = parseCols(gridFile);
+    initializeGrid(gridFile);
+    ArrayList<PlayingCard> cards = initializeCards(cardFile);
     if (grid.size() != rows) {
       throw new IllegalArgumentException("Invalid number of rows");
     } else if (grid.get(0).size() != cols) {
@@ -40,6 +50,83 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     }
     dealHands(cards, playableCells);
     isStarted = true;
+  }
+
+  /**
+   * Gets the row int from the gridFile.
+   * @param gridFile  the file get row data from
+   * @return    the number of rows for the grid
+   */
+  private int parseRows(File gridFile) {
+    try {
+      Scanner scan = new Scanner(new FileReader(gridFile));
+
+      String line = scan.nextLine();
+      return Integer.parseInt(line.substring(0, line.indexOf(" ")));
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("Grid file not found");
+    }
+  }
+
+  /**
+   * Gets the column int from the gridFile.
+   * @param gridFile  the file get column data from
+   * @return    the number of columns for the grid
+   */
+  private int parseCols(File gridFile) {
+    try {
+      Scanner scan = new Scanner(new FileReader(gridFile));
+
+      String[] line = scan.nextLine().split(" ");
+      return Integer.parseInt(line[1]);
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("Grid file not found");
+    }
+  }
+
+  /**
+   * Initializes the cards from the cardFile as PlayingCards.
+   * @param cardFile  file to draw data from. Cards should be written in the form of:
+   *                  CARDNAME NORTH SOUTH EAST WEST
+   * @return          the list of cards to play with
+   */
+  private ArrayList<PlayingCard> initializeCards(File cardFile) {
+    ArrayList<PlayingCard> cards = new ArrayList<>();
+    try {
+      FileReader reader = new FileReader(cardFile);
+      Scanner scan = new Scanner(reader);
+
+      while (scan.hasNextLine()) {
+        String[] line = scan.nextLine().split(" ");
+        cards.add(new PlayingCard(line[0], CardValue.toCardValue(Integer.parseInt(line[1])),
+                CardValue.toCardValue(Integer.parseInt(line[2])),
+                CardValue.toCardValue(Integer.parseInt(line[3])),
+                CardValue.toCardValue(Integer.parseInt(line[4]))));
+      }
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("Cannot find or read card file");
+    }
+    return cards;
+  }
+
+  /**
+   * Initializes the grid according to the gridFile, with
+   * Xs representing holes and Cs representing CardCells.
+   * @param gridFile  the file to get grid data from
+   */
+  private void initializeGrid(File gridFile) {
+    List<List<String>> grid = new ArrayList<>();
+    try {
+      Scanner scan = new Scanner(new FileReader(gridFile));
+
+      while (scan.hasNextLine()) {
+        String[] line = scan.nextLine().split(" ");
+        grid.add(new ArrayList<String>(List.of(line)));
+      }
+      createGrid(grid);
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("Grid file not found");
+    }
   }
 
   /**
@@ -88,6 +175,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     }
     //Will throw an error if the cell is a hole cell
     grid.get(row).get(col).updateCell(card, getCurrentPlayer());
+    getCurrentPlayer().removeFromHand(card);
     playableCells--;
     battlePhase(row, col);
     switchPlayer();

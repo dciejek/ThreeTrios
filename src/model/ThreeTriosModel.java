@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +9,10 @@ public interface ThreeTriosModel<C extends Card> {
 
   /**
    * Starts the game based on the given parameters.
-   * @param rows the # of rows in the grid
-   * @param cols the # of cols in the grid
-   * @param grid the 2D array of strings from config file that fill the grid
+   * @param gridFile the file to extract the grid info from
+   * @param cardFile the file to extract the card info from
    */
-  public void startGame(int rows, int cols, List<List<String>> grid,
-                        List<C> cards);
+  public void startGame(File gridFile, File cardFile);
 
   /**
    * Places a given card onto the game grid, then battle initiate the battle phase, once finished
