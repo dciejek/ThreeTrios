@@ -19,11 +19,6 @@ public class TestModel {
   }
 
   @Test
-  public void testStartGame() {
-
-  }
-
-  @Test
   public void testParseRows() {
 
   }
@@ -44,27 +39,22 @@ public class TestModel {
   }
 
   @Test
-  public void testDealHands() {
-
-  }
-
-  @Test
   public void testCreateGrid() {
 
   }
 
   @Test
-  public void testPlaceCard() {
+  public void testAddCellToList() {
 
   }
 
   @Test
-  public void testBattlePhase() {
+  public void testDealHands() {
 
   }
 
   @Test
-  public void testBattleOpposingCell() {
+  public void testStartGame() {
 
   }
 
@@ -74,7 +64,12 @@ public class TestModel {
   }
 
   @Test
-  public void testGetCurrentPlayer() {
+  public void testBattleOpposingCell() {
+
+  }
+
+  @Test
+  public void testBattlePhase() {
 
   }
 
@@ -84,7 +79,13 @@ public class TestModel {
   }
 
   @Test
-  public void testAddCellToList() {
+  public void testPlaceCard() {
+
+  }
+
+
+  @Test
+  public void testGetCurrentPlayer() {
 
   }
 
