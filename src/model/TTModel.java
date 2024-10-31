@@ -172,14 +172,14 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
   public void placeCard(PlayingCard card, int row, int col) {
     if (card == null) {
       throw new IllegalArgumentException("Card cannot be null");
-    } else if (row < 0 || row >= grid.size() || col < 0 || col >= grid.get(row).size()) {
-      throw new IllegalArgumentException("Invalid row or column index");
-    } else if (grid.get(row).get(col) != null) {
-      throw new IllegalArgumentException("Already a card here: " + row + "," + col);
     } else if (!isStarted) {
       throw new IllegalStateException("Game has not started");
     } else if (isGameOver()) { //checks if there are no more cells that can be placed on
       throw new IllegalStateException("Game is over");
+    } else if (row < 0 || row >= grid.size() || col < 0 || col >= grid.get(row).size()) {
+      throw new IllegalArgumentException("Invalid row or column index");
+    } else if (grid.get(row).get(col).getCard() != null) {
+      throw new IllegalArgumentException("Already a card here: " + row + "," + col);
     }
     //Will throw an error if the cell is a hole cell
     grid.get(row).get(col).updateCell(card, getCurrentPlayer());
@@ -209,7 +209,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
       battleOpposingCell(cell, CardinalDirection.EAST,
               cardRow, cardCol + 1);
     }
-    if (opposingCardInBounds(cardRow - 1, cardCol, CardinalDirection.WEST)) {
+    if (opposingCardInBounds(cardRow, cardCol - 1, CardinalDirection.WEST)) {
       battleOpposingCell(cell, CardinalDirection.WEST,
               cardRow - 1, cardCol);
     }

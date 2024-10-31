@@ -54,13 +54,38 @@ public class TestModel {
   @Test
   public void testPlaceCardExceptions() {
     setUp();
+    Assert.assertThrows(IllegalStateException.class,
+        () -> model.placeCard(new PlayingCard("",
+                    CardValue.ONE,
+                    CardValue.ONE,
+                    CardValue.ONE,
+                    CardValue.ONE), 1, 1));
+
     model.startGame(new File("docs" + File.separator + "grid1"),
             new File("docs" + File.separator + "cards1"));
 
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.placeCard(null, 1, 1));
+        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), -1, 1));
 
+    Assert.assertThrows(IllegalArgumentException.class,
+        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), 1, -1));
 
+    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 1);
+
+    Assert.assertThrows(IllegalArgumentException.class,
+        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 1));
+
+    setUp();
+
+    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+            new File("docs" + File.separator + "cards1"));
+
+    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+
+    Assert.assertTrue(model.isGameOver());
+
+    Assert.assertThrows(IllegalStateException.class,
+        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0));
   }
 
   @Test
@@ -68,9 +93,23 @@ public class TestModel {
 
   }
 
+  @Test
+  public void testGetCurrentPlayerExceptions() {
+    setUp();
+    Assert.assertThrows(IllegalStateException.class,
+        () -> model.getCurrentPlayer());
+  }
 
   @Test
   public void testGetCurrentPlayer() {
+
+  }
+
+  @Test
+  public void testIsGameOverExceptions() {
+    setUp();
+    Assert.assertThrows(IllegalStateException.class,
+            () -> model.isGameOver());
 
   }
 
@@ -80,13 +119,40 @@ public class TestModel {
   }
 
   @Test
+  public void testGetWinnerExceptions() {
+    setUp();
+    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+            new File("docs" + File.separator + "cards1"));
+    Assert.assertThrows(IllegalStateException.class,
+        () -> model.getWinner());
+  }
+
+  @Test
   public void testGetWinner() {
 
   }
 
   @Test
+  public void testGetGridExceptions() {
+    setUp();
+    Assert.assertThrows(IllegalStateException.class,
+        () -> model.getGrid());
+  }
+
+  @Test
   public void testGetGrid() {
 
+  }
+
+  @Test
+  public void testGetRowExceptions() {
+    setUp();
+    Assert.assertThrows(IllegalStateException.class,
+        () -> model.getRow(1));
+    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+            new File("docs" + File.separator + "cards1"));
+    Assert.assertThrows(IllegalArgumentException.class,
+        () -> model.getRow(-1));
   }
 
   @Test
