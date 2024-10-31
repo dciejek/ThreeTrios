@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -161,9 +160,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     for (List<String> row : grid) {
       cells.clear();
       for (int idx = 0; idx < row.size(); idx++) {
-        addCellToList(row.get(idx), cells);
+        cells.add(cellFactory(row.get(idx)));
       }
-      this.grid.add(cells);
+      this.grid.add(new ArrayList<>(cells));
     }
   }
 
@@ -278,18 +277,18 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
 
   /**
    * Adds the correct cell type to the list of cells based on the string input.
+   *
    * @param str "C" if a CardCell or "X" if a HoleCell
-   * @param cells list of cells that make up the grid
    * @throws IllegalArgumentException if the String is null or not a valid type ("X" or "C")
    */
-  private void addCellToList(String str, List<Cell> cells) {
+  private Cell<Card> cellFactory(String str) {
     if (str == null) {
       throw new IllegalArgumentException("String cannot be null");
     } else if (str.equals("C")) {
-      cells.add(new CardCell());
       playableCells++;
+      return new CardCell();
     } else if (str.equals("X")) {
-      cells.add(new HoleCell());
+      return new HoleCell();
     } else {
       throw new IllegalArgumentException("Invalid cell type, given: " + str);
     }
