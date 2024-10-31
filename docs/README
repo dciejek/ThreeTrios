@@ -1,0 +1,53 @@
+Overview:
+Play a complete game of three trios with two players, and code it with room for later modification.
+Playing this game should consist of a place phase, battle phase, and combo phase.
+The entirety of the game should be displayed using a text based view.
+
+Quick start:
+ThreeTriosModel<PlayingCard> model = new TTModel();
+model.startGame(new File("docs" + File.separator + “3x3Grid”),
+        new File("docs" + File.separator + "cards1"))
+model.placeCard(model.getCurrentPlayer().getHand().get(0), 1, 1)
+
+Key Components:
+Grid
+- is arena where three trios is played
+Players (playerOne, playerTwo)
+- the players control a hand of cards
+- they play these cards onto the grid
+- these cards battle adjacent cards of the opposite player
+- if they win the battled card now belongs to the player that won
+- causing a combo effect if multiple cards lose to their adjacent competitor
+
+Key Sub-Components:
+Grid Cells (must be an odd number)
+- Hole Cell is a cell that cannot contain a card
+- Card Cell is a cell that can contain a card and belong to a player
+- # of playable cells is the count of Card Cells in the Grid without a card
+Player Cards
+- Have a color associated with the given player
+- Can exist on the grid or in the players hand
+- # is equal to the (# Card Cells on the grid + 1) / 2 per player
+
+Source Organization:
+MODEL:
+  Card (Interface)
+    - PlayingCard (Class)
+    - CardValue (Enumeration)
+
+  Cell (Interface) <C extends Card>
+    - CardCell (Class) <PlayingCard>
+    - HoleCell (Class) <PlayingCard>
+
+  Player (Interface) <C extends Card>
+     - TTPlayer (Class) <PlayingCard>
+
+  ThreeTriosModel (Interface) <C extends Card>
+    - TTModel (Class) <PlayingCard>
+
+  - PlayerColor (Enumeration)
+  - CardinalDirection (Enumeration)
+
+VIEW:
+  ThreeTriosView (Interface) <C extends Card>
+    - TTTextBasedView (Class) <PlayingCard>
