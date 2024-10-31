@@ -20,7 +20,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
   /**
    * The default constructor for a model of Three Trios.
    */
-  TTModel() {
+  public TTModel() {
     grid = new ArrayList<ArrayList<Cell<PlayingCard, TTPlayer>>>();
     playerOne = new TTPlayer(PlayerColor.BLUE);
     playerTwo = new TTPlayer(PlayerColor.RED);
