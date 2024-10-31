@@ -11,6 +11,10 @@ public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
    * Starts the game based on the given parameters.
    * @param gridFile the file to extract the grid info from
    * @param cardFile the file to extract the card info from
+   * @throws IllegalStateException if the game has already been started
+   * @throws IllegalArgumentException if either File input is null
+   * @throws IllegalArgumentException if row/col dimensions from file is larger than the grid given
+   * @throws IllegalArgumentException if the grid does not have an odd # of playable cells
    */
   public void startGame(File gridFile, File cardFile);
 
@@ -20,6 +24,8 @@ public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
    * @param card the card to be placed on the grid
    * @param row the row index to be placed in
    * @param col the column index to be placed in
+   * @throws IllegalArgumentException if the card is null
+   * @throws IllegalArgumentException if the row/col index is invalid
    * @throws IllegalArgumentException if a card already exists at the given index
    * @throws IllegalStateException if the game is over or if game has not started
    */
@@ -49,6 +55,7 @@ public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
   /**
    * Gets the game grid.
    * @return the current state of the grid
+   * @throws IllegalStateException if the game hasn't started
    */
   public List<List<Cell<C, P>>> getGrid();
 
@@ -57,6 +64,7 @@ public interface ThreeTriosModel<C extends Card, P extends Player<C>> {
    * @param row the index to get
    * @return the row as a List of cells
    * @throws IllegalStateException if the game has not started
+   * @throws IllegalArgumentException if the row index is invalid
    */
   List<Cell> getRow(int row);
 }

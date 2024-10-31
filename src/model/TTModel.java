@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -31,6 +32,11 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
 
   @Override
   public void startGame(File gridFile, File cardFile) {
+    if (isStarted) {
+      throw new IllegalStateException("Game already started");
+    } else if (gridFile == null || cardFile == null) {
+      throw new IllegalArgumentException("Grid and Card files cannot be null");
+    }
     int rows = parseRows(gridFile);
     int cols = parseCols(gridFile);
     initializeGrid(gridFile);
@@ -39,8 +45,6 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
       throw new IllegalArgumentException("Invalid number of rows");
     } else if (grid.get(0).size() != cols) {
       throw new IllegalArgumentException("Invalid number of columns");
-    } else if (isStarted) {
-      throw new IllegalStateException("Game already started");
     }
     if (playableCells % 2 == 0) {
       throw new IllegalArgumentException("Total # of card cells must be an odd number");
@@ -163,7 +167,11 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
 
   @Override
   public void placeCard(PlayingCard card, int row, int col) {
-    if (grid.get(row).get(col) != null) {
+    if (card == null) {
+      throw new IllegalArgumentException("Card cannot be null");
+    } else if (row < 0 || row >= grid.size() || col < 0 || col >= grid.get(row).size()) {
+      throw new IllegalArgumentException("Invalid row or column index");
+    } else if (grid.get(row).get(col) != null) {
       throw new IllegalArgumentException("Already a card here: " + row + "," + col);
     } else if (!isStarted) {
       throw new IllegalStateException("Game has not started");
@@ -309,6 +317,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
 
   @Override
   public List<List<Cell<PlayingCard, TTPlayer>>> getGrid() {
+    if (!isStarted) {
+      throw new IllegalStateException("Game hasn't started");
+    }
     List<List<Cell<PlayingCard, TTPlayer>>> copy = new ArrayList<>();
     for (List<Cell<PlayingCard, TTPlayer>> row : grid) {
       copy.add(new ArrayList<>(row));
@@ -318,6 +329,11 @@ public class TTModel implements ThreeTriosModel<PlayingCard, TTPlayer> {
 
   @Override
   public List<Cell> getRow(int row) {
+    if (!isStarted) {
+      throw new IllegalStateException("Game hasn't started");
+    } else if (row < 0 || row >= grid.size()) {
+      throw new IllegalArgumentException("Invalid row index, given: " + row);
+    }
     return new ArrayList<>(grid.get(row));
   }
 
