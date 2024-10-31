@@ -55,6 +55,8 @@ public enum CardValue {
       case 8: return EIGHT;
       case 9: return NINE;
       case 10: return TEN;
+      default:
+        throw new IllegalArgumentException("Not a valid value");
     }
   }
 }

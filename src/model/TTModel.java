@@ -44,7 +44,6 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     } else if (isStarted) {
       throw new IllegalStateException("Game already started");
     }
-    createGrid(grid);
     if (playableCells % 2 == 0) {
       throw new IllegalArgumentException("Total # of card cells must be an odd number");
     }
