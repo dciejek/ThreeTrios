@@ -10,6 +10,9 @@ import model.PlayingCard;
 import model.TTModel;
 import model.ThreeTriosModel;
 
+/**
+ * Tests for the text based view.
+ */
 public class TestView {
 
   ThreeTriosModel<PlayingCard> model;
