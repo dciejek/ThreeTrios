@@ -32,6 +32,11 @@ public class HoleCell implements Cell<PlayingCard> {
   }
 
   @Override
+  public boolean canPlayHere() {
+    return false;
+  }
+
+  @Override
   public void setPlayerColor(PlayerColor color) {
     throw new IllegalStateException("Hole cell cannot be updated.");
   }

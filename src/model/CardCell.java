@@ -39,6 +39,11 @@ public class CardCell implements Cell<PlayingCard> {
   }
 
   @Override
+  public boolean canPlayHere() {
+    return this.card == null;
+  }
+
+  @Override
   public String toString() {
     if (hasCard()) {
       return this.color.toString().substring(0, 1);

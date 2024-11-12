@@ -33,6 +33,12 @@ public interface Cell<C extends Card> {
   public Boolean hasCard();
 
   /**
+   * Returns true if this card can contain a card.
+   * @return  false if this cell cannot take a card, or is full, true otherwise.
+   */
+  public boolean canPlayHere();
+
+  /**
    * Updates the PlayerColor associated with the cell.
    * @param color   The color to update the cell to
    */

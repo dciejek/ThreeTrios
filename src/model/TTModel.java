@@ -339,6 +339,55 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     return new ArrayList<>(grid.get(row));
   }
 
+  @Override
+  public Cell getCellAt(int row, int col) {
+    return this.grid.get(row).get(col);
+  }
+
+  @Override
+  public int numFlipped(Card card, int cardRow, int cardCol) {
+    int result = 0;
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)) {
+      result += flipCountNext(card, cardRow - 1, cardCol, CardinalDirection.NORTH);
+    }
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)) {
+      result += flipCountNext(card, cardRow + 1, cardCol, CardinalDirection.SOUTH);
+    }
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)) {
+      result += flipCountNext(card, cardRow, cardCol + 1, CardinalDirection.EAST);
+    }
+    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)) {
+      result += flipCountNext(card, cardRow, cardCol - 1, CardinalDirection.WEST);
+    }
+    return result;
+  }
+
+  private int flipCountNext(Card card, int cardRow, int cardCol, CardinalDirection dir) {
+    if (cardRow < 0 || cardCol < 0) {
+      return 0;
+    }
+
+    int result = 0;
+    Card otherCard = this.grid.get(cardRow).get(cardCol).getCard();
+
+    if (card.isStrongerCard(otherCard, dir)) {
+      if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)) {
+        result += flipCountNext(otherCard, cardRow - 1, cardCol, CardinalDirection.NORTH);
+      }
+      if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)) {
+        result += flipCountNext(otherCard, cardRow + 1, cardCol, CardinalDirection.SOUTH);
+      }
+      if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)) {
+        result += flipCountNext(otherCard, cardRow, cardCol + 1, CardinalDirection.EAST);
+      }
+      if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)) {
+        result += flipCountNext(otherCard, cardRow, cardCol - 1, CardinalDirection.WEST);
+      }
+      return result + 1;
+    }
+    return 0;
+  }
+
   /**
    * The number of cells belonging to the player on the grid.
    * @param player the player

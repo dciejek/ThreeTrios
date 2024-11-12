@@ -1,0 +1,24 @@
+What component was responsible for reading files?
+    Model - needs the info from the file
+    Controller - deals with I/O
+    Outside of MCV - relevant for MVC components
+    Solution: Should be in controller because it deals with I/O
+        NEED: rework model playGame and move methods to controller package somehow
+
+What are the behaviors of your model?
+    void startGame(File, File)
+    void placeCard(Card, int, int)
+    void startGame(Optional<Cell>[][], List<Card>, Set<PlayerColor>, boolean (shuffle))
+    void swapPlayers()
+    boolean isRedTurn()
+    boolean isGameOver()
+        Should probably change signature of playToGrid(int int int) to just take in a card index than a card
+
+BattlePhase and PlayCard
+    Should be separate to make variation easier
+    Add BattlePhase to interface
+    Can compromise model integrity, though
+    However you can just rely on your controller
+    Either way is fine though
+
+Player should probably be stored in Card not Cell

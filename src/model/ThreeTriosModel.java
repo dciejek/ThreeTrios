@@ -71,4 +71,22 @@ public interface ThreeTriosModel<C extends Card> {
    * @throws IllegalArgumentException if the row index is invalid
    */
   List<Cell> getRow(int row);
+
+  /**
+   * Returns the cell at the given coordinate.
+   * @param row The row of the cell
+   * @param col The column of the cell
+   * @return  the cell at the coordinate
+   */
+  Cell getCellAt(int row, int col);
+
+  /**
+   * Returns the number of cards that can be flipped by playing the given card
+   * to the given position.
+   * @param card  the card to play
+   * @param row   the row to play to
+   * @param col   the column to play to
+   * @return
+   */
+  int numFlipped(Card card, int row, int col);
 }
