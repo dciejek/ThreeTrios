@@ -7,5 +7,4 @@ import model.Card;
  * @param <C>   The type of card to be used for the game
  */
 public interface ThreeTriosView<C extends Card> {
-
 }
