@@ -2,7 +2,7 @@ package model;
 
 /**
  * Represents a playable card for ThreeTrios. Has 4 values for each
- * cardinal direction.
+ * cardinal direction, as well as a name.
  */
 public class PlayingCard implements Card {
 

@@ -20,7 +20,7 @@ public enum CardValue {
   private final String val;
 
   /**
-   * Constructor for a CardValue, uses a value param for the toString method.
+   * Constructs a CardValue with a hexadecimal representation for its specific value.
    * @param val   Hexadecimal value for the CardValue.
    */
   CardValue(String val) {

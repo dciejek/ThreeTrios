@@ -4,14 +4,14 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Represents a model for a ThreeTrios game.
+ * A game where two players battle upon a Grid of Cells with a variety of
+ * custom Cards. Each player has their own color, red or blue, along with an
+ * equal amount of cards dealt to their Hand to which they do battle with.
  * @param <C>   The type of cards to use for the game
  */
 public interface ThreeTriosModel<C extends Card> {
 
-
   /**
-   * /**
    * Starts the game based on the given parameters.
    * @param grid    the board to play on, uses Cells to hold cards
    * @param cards   the list of cards to play with, are shuffled into hands
@@ -23,8 +23,8 @@ public interface ThreeTriosModel<C extends Card> {
    * @throws IllegalArgumentException if row/col dimensions from file is larger than the grid given
    * @throws IllegalArgumentException if the grid does not have an odd # of playable cells
    */
-  public void startGame(List<List<Cell<PlayingCard>>> grid, List<PlayingCard> cards,
-                        int rows, int cols);
+  void startGame(List<List<Cell<PlayingCard>>> grid, List<PlayingCard> cards,
+                 int rows, int cols);
 
   /**
    * Places a given card onto the game grid, then battle initiate the battle phase, once finished
@@ -37,35 +37,35 @@ public interface ThreeTriosModel<C extends Card> {
    * @throws IllegalArgumentException if a card already exists at the given index
    * @throws IllegalStateException if the game is over or if game has not started
    */
-  public void placeCard(C card, int row, int col);
+  void placeCard(C card, int row, int col);
 
   /**
    * Tells us if the game is over.
    * @return true if the # of playable cells equals 0
    * @throws IllegalStateException if the game has not started
    */
-  public boolean isGameOver();
+  boolean isGameOver();
 
   /**
    * Tells us the winner of a game of three trios.
    * @return the Player who won
    * @throws IllegalStateException if the game isn't over
    */
-  public Player<C> getWinner();
+  Player<C> getWinner();
 
   /**
    * Gets the player whose turn it currently is.
    * @return the current active player
    * @throws IllegalStateException if the game hasn't started
    */
-  public Player<C> getCurrentPlayer();
+  Player<C> getCurrentPlayer();
 
   /**
    * Gets the game grid.
    * @return the current state of the grid
    * @throws IllegalStateException if the game hasn't started
    */
-  public List<List<Cell>> getGrid();
+  List<List<Cell>> getGrid();
 
   /**
    * Returns the row of the game grid at the index of the given int.

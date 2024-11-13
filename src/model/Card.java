@@ -1,7 +1,9 @@
 package model;
 
 /**
- * Card behaviors in a ThreeTrios game.
+ * A card interface for three trios. Each card will have a name represented with a string,
+ * 4 CardValue's belonging to each cardinal direction, which can be compared to another
+ * card's respective CardValue.
  */
 public interface Card {
 
@@ -10,38 +12,38 @@ public interface Card {
    * Gets the name of the card.
    * @return The string name of the card
    */
-  public String getName();
+  String getName();
 
   /**
    * Gets the north value of the card.
    * @return    The north card's integer value.
    */
-  public int getNorth();
+  int getNorth();
 
   /**
    * Gets the south value of the card.
    * @return    The south card's integer value.
    */
-  public int getSouth();
+  int getSouth();
 
   /**
    * Gets the east value of the card.
    * @return    The east card's integer value.
    */
-  public int getEast();
+  int getEast();
 
   /**
    * Gets the west value of the card.
    * @return    The west card's integer value.
    */
-  public int getWest();
+  int getWest();
 
   /**
    * Returns the value of the given direction.
    * @param dir   A CardinalDirection
    * @return      An integer representation of the CardValue in the given direction
    */
-  public int getDirection(CardinalDirection dir);
+  int getDirection(CardinalDirection dir);
 
   /**
    * Returns true if this cards specific directional value is greater than the opposing.
@@ -49,5 +51,5 @@ public interface Card {
    * @param dir the direction for this cards value to be compared
    * @return true if this card's value is greater than the opposing
    */
-  public boolean isStrongerCard(Card opposing, CardinalDirection dir);
+  boolean isStrongerCard(Card opposing, CardinalDirection dir);
 }

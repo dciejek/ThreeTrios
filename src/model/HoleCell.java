@@ -28,7 +28,7 @@ public class HoleCell implements Cell<PlayingCard> {
   }
 
   @Override
-  public Boolean hasCard() {
+  public boolean hasCard() {
     return false;
   }
 
