@@ -1,7 +1,8 @@
 package model;
 
 /**
- * Represents a Cardinal Direction.
+ * Represents a Cardinal Direction that can return the opposite
+ * Cardinal Direction of itself.
  */
 public enum CardinalDirection {
   NORTH,

@@ -10,6 +10,21 @@ model.startGame(new File("docs" + File.separator + “3x3Grid”),
 model.placeCard(model.getCurrentPlayer().getHand().get(0), 1, 1)
 
 Key Components:
+Model
+-Based on a text file input (which is parsed) allocate the specifications for the
+grid and player (size, cards)
+-Instantiates the grid and player hands
+-Play cards from hand to grid to locations as specified by the input from controller
+-Verify game states post move (has the game started, do any cards battle,
+is the game over, who won the game)
+View
+-A Simple text based view that displays the grid, the players hands,
+as well as what color player the card belongs to as denoted by "R" or "B"
+based on the contents as given by the model (grid, hand)
+Controller
+-Not Yet Implemented
+
+Key Sub-Components:
 Grid
 - is arena where three trios is played
 Players (playerOne, playerTwo)
@@ -18,8 +33,6 @@ Players (playerOne, playerTwo)
 - these cards battle adjacent cards of the opposite player
 - if they win the battled card now belongs to the player that won
 - causing a combo effect if multiple cards lose to their adjacent competitor
-
-Key Sub-Components:
 Grid Cells (must be an odd number)
 - Hole Cell is a cell that cannot contain a card
 - Card Cell is a cell that can contain a card and belong to a player

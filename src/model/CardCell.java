@@ -1,13 +1,21 @@
 package model;
 
 /**
- * Represents a cell that can hold a card.
+ * Represents a cell that can hold a card. Cells can have a PlayingCard inside them.
+ * If a playing card is in a cell then the cell will also have a PlayerColor value.
+ * Cells can be updated using
+ * <Code>updateCell(PlayingCard card, Player currentPlayer)</Code>
+ * method.
  */
 public class CardCell implements Cell<PlayingCard> {
 
   private PlayingCard card;
   private PlayerColor color;
 
+  /**
+   * Creates a card cell, upon creation no playing card/player color is assigned.
+   * Therefore, both values are set to null, for later update using updateCell().
+   */
   public CardCell() {
     this.card = null;
     this.color = null;
@@ -34,7 +42,7 @@ public class CardCell implements Cell<PlayingCard> {
   }
 
   @Override
-  public Boolean hasCard() {
+  public boolean hasCard() {
     return this.card != null;
   }
 

@@ -11,8 +11,10 @@ public class TTPlayer implements Player<PlayingCard> {
   private final ArrayList<PlayingCard> hand;
 
   /**
-   * Constructs a player.
+   * Constructs a player that has a PlayerColor for all of its cards, as well
+   * as an empty Hand of PlayingCards.
    * @param color the color of the player's cards
+   * @throws IllegalArgumentException if the PlayerColor is null
    */
   public TTPlayer(PlayerColor color) {
     if (color == null) {
