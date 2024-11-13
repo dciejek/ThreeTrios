@@ -52,7 +52,6 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     for (Card card : model.getCurrentPlayer().getHand()) {
       Shape cardSquare = new Rectangle(posX, posY, SIZE, SIZE);
       g2d.fill(cardSquare);
-      // g2d.drawString(card.getNorth(), );
       posY += SIZE;
     }
     posX += SIZE;
