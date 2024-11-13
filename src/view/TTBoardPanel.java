@@ -11,7 +11,7 @@ import javax.swing.*;
 
 import model.Card;
 import model.Cell;
-import model.Player;
+import model.PlayerColor;
 import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
 
@@ -22,7 +22,7 @@ import model.ReadOnlyThreeTriosModel;
  */
 public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
   ReadOnlyThreeTriosModel<PlayingCard> model;
-  private static final int SIZE = 20;
+  private static final int SIZE = 1;
 
   /**
    * Constructs the game board panel, stores a read only representation of the model
@@ -48,30 +48,75 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
   private void drawBoard(Graphics2D g2d) {
     int posX = 0;
     int posY = 0;
-    g2d.setColor(Color.RED);
-    for (Card card : model.getCurrentPlayer().getHand()) {
-      Shape cardSquare = new Rectangle(posX, posY, SIZE, SIZE);
-      g2d.fill(cardSquare);
+    TTCard cardSquare;
+    //PlayerOne Hand
+    for (Card card : model.getPlayerOne().getHand()) {
+      cardSquare = new TTCard(card, SIZE);
+      cardSquare.drawCard(g2d, getColor(model.getPlayerOne().getColor()), posX, posY);
       posY += SIZE;
     }
-    posX += SIZE;
+    //Add border
+    posX = SIZE;
     posY = 0;
+    //Grid
     for (int i = 0; i < model.getGrid().size(); i++) {
       for (Cell cell : model.getGrid().get(i)) {
-
+        if (cell.toString().equals(" ")) {
+          drawCell(g2d, cell, SIZE, posX, posY);
+        } else if (cell.toString().equals("_")) {
+          drawCell(g2d, cell, SIZE, posX, posY);
+        } else {
+          cardSquare = new TTCard(cell.getCard(), SIZE);
+          cardSquare.drawCard(g2d, getColor(model.getPlayerOne().getColor()), posX, posY);
+        }
+        posX += SIZE;
       }
+      posX = SIZE;
+      posY += SIZE;
     }
-    //Draw Grid
-    for (Card card : model.getCurrentPlayer().getHand()) {
+    //Add border
+    posX = (1 + model.getGrid().size()) * SIZE;
+    posY = 0;
+    //PlayerTwo Hand
+    for (Card card : model.getPlayerTwo().getHand()) {
+      cardSquare = new TTCard(card, SIZE);
+      cardSquare.drawCard(g2d, getColor(model.getPlayerTwo().getColor()), posX, posY);
+      posY += SIZE;
+    }
+  }
 
+  private void drawCell(Graphics2D g2d, Cell cell, int size, int x, int y) {
+    Shape cellSquare;
+    switch (cell.toString()) {
+      case " ":
+        g2d.setColor(Color.GRAY);
+        cellSquare = new Rectangle(x, y, size, size);
+        g2d.fill(cellSquare);
+        break;
+      case "_":
+        g2d.setColor(Color.YELLOW);
+        cellSquare = new Rectangle(x, y, size, size);
+        g2d.fill(cellSquare);
+        break;
     }
-    //Draw blue hand
+  }
+
+  private Color getColor(PlayerColor player) {
+    switch (player) {
+      case BLUE:
+        return Color.BLUE;
+      case RED:
+        return Color.RED;
+      default:
+        throw new IllegalArgumentException("Unsupported player color: " + player);
+    }
   }
 
   private Dimension getLocalDimension() {
-    //10 * each row + 2 (for each hand) x 10 * each column,
-    return new Dimension(model.getGrid().size() + 2 * SIZE,
-            model.getGrid().get(0).size() * SIZE);
+    // each row + 2 (for each hand) x  (max each column/hand size)
+    return new Dimension(model.getGrid().size() + 2,
+            (Math.max(model.getCurrentPlayer().getHand().size(),
+                    model.getGrid().get(0).size())));
   }
 
   private AffineTransform getLogicalToPhysicalTransform() {
