@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Card;
-import model.Cell;
 import model.Player;
-import model.PlayingCard;
 import model.ThreeTriosModel;
 
-public class CornerStrategy implements TTStrategy {
+public class CornerStrategy implements TTStrategy<Card> {
   private int highest = Integer.MIN_VALUE;
+
   @Override
-  public Play playToPoint(ThreeTriosModel model, Player player) {
+  public Play playToPoint(ThreeTriosModel<Card> model, Player<Card> player) {
     List<Play> plays = new ArrayList<Play>();
     for (int row = 0; row < model.getGrid().size(); row+= model.getGrid().size() - 1) {
       for (int col = 0; col < model.getRow(0).size(); col+= model.getRow(0).size() - 1) {
@@ -27,7 +26,7 @@ public class CornerStrategy implements TTStrategy {
     return plays.get(0);
   }
 
-  private Play lastResort(ThreeTriosModel model, Player player) {
+  private Play lastResort(ThreeTriosModel<Card> model, Player<Card> player) {
     for (int row = 0; row < model.getGrid().size(); row+= model.getGrid().size() - 1) {
       for (int col = 0; col < model.getRow(0).size(); col+= model.getRow(0).size() - 1) {
         if (model.getCellAt(row, col).canPlayHere()) {
@@ -38,7 +37,7 @@ public class CornerStrategy implements TTStrategy {
     return null;
   }
 
-  private Play getBestMove(ThreeTriosModel model, Player player, int row, int col) {
+  private Play getBestMove(ThreeTriosModel<Card> model, Player<Card> player, int row, int col) {
     int count = 0;
     List<Card> hand = player.getHand();
     List<Play> best = new ArrayList<Play>();

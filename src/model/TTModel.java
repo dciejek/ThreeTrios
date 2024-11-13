@@ -7,10 +7,16 @@ import java.util.List;
  * Represents a simple 2 player ThreeTriosModel.
  */
 public class TTModel implements ThreeTriosModel<PlayingCard> {
+  /*
+  Grid is 0 indexed
+   */
   private final List<List<Cell<PlayingCard>>> grid;
   private final Player<PlayingCard> playerOne;
   private final Player<PlayingCard> playerTwo;
   private Player<PlayingCard> activePlayer;
+  /*
+  INVARIANT: Must be >= 0, unless the game is not started yet.
+   */
   private int playableCells;
   private boolean isStarted;
 

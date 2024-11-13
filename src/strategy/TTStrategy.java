@@ -7,7 +7,8 @@ import model.Player;
 import model.ThreeTriosModel;
 
 /**
- * Represents a strategy for a CPU player of Three Trios to follow.
+ * Represents a strategy for a player of Three Trios to follow. The strategy can pick
+ * the best possible move given a certain method to follow, or can prompt the user for an input.
  */
 public interface TTStrategy<C extends Card> {
   /**
