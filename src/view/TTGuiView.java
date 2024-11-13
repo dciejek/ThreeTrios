@@ -13,7 +13,7 @@ import model.ReadOnlyThreeTriosModel;
 public class TTGuiView extends JFrame implements ThreeTriosFrame {
   private final ReadOnlyThreeTriosModel<PlayingCard> model;
   private final TTBoardPanel panel;
-  private static final int SIZE = 20;
+  private static final int SIZE = 100;
 
   /**
    * Constructs a GUI based view based off the given read only model of a game of Three Trios.
@@ -27,8 +27,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
     this.model = model;
     this.panel = new TTBoardPanel(model);
     this.setTitle("Current Player: " + model.getCurrentPlayer().getColor().toString());
-    this.setSize((model.getGrid().size() + 2) * SIZE,
-            (model.getGrid().get(0).size() + 2) * SIZE);
+    this.setSize(getPreferredSize().width, getPreferredSize().height);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     this.add(panel);
   }
@@ -48,21 +47,10 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
   }
 
   @Override
-  public Dimension getMinimumSize() {
-    return new Dimension((model.getGrid().size() + 2) * SIZE / 2,
-            (model.getGrid().get(0).size() + 2) * SIZE / 2);
-  }
-
-  @Override
   public Dimension getPreferredSize() {
     return new Dimension((model.getGrid().size() + 2) * SIZE,
-            (model.getGrid().get(0).size() + 2) * SIZE);
-  }
-
-  @Override
-  public Dimension getMaximumSize() {
-    return new Dimension((model.getGrid().size() + 2) * SIZE * 2,
-            (model.getGrid().get(0).size() + 2) * SIZE * 2);
+            (Math.max(model.getCurrentPlayer().getHand().size(),
+                    model.getGrid().get(0).size())) * SIZE);
   }
 
 }

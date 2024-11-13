@@ -39,7 +39,7 @@ public class FileHandler {
       for (String s : row) {
         cells.add(cellFactory(s));
       }
-      ret.add(cells);
+      ret.add(new ArrayList<Cell<PlayingCard>>(cells));
     }
     return ret;
   }

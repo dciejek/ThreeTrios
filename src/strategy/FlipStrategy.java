@@ -17,7 +17,7 @@ public class FlipStrategy implements TTStrategy {
 
   private Play playToPointHelper(ThreeTriosModel<Card> model, Player<Card> player) {
     List<Play> plays = new ArrayList<Play>();
-    ArrayList<Card> hand = player.getHand();
+    ArrayList<Card> hand = new ArrayList<>(player.getHand());
     Cell currCell;
     int currHighest = 0;
     for (int row = 0; row < model.getGrid().size(); row++) {
