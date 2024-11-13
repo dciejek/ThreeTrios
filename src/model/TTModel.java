@@ -230,6 +230,16 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
+  public Player<PlayingCard> getPlayerOne() {
+    return playerOne;
+  }
+
+  @Override
+  public Player<PlayingCard> getPlayerTwo() {
+    return playerTwo;
+  }
+
+  @Override
   public List<List<Cell>> getGrid() {
     if (!isStarted) {
       throw new IllegalStateException("Game hasn't started");

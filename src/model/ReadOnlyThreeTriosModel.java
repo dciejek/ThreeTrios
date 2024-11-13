@@ -23,6 +23,18 @@ public interface ReadOnlyThreeTriosModel<C extends Card> {
   Player<C> getWinner();
 
   /**
+   * Gets the first player for the game.
+   * @return  The first player for the game
+   */
+  Player<C> getPlayerOne();
+
+  /**
+   * Gets the second player for the game.
+   * @return  The second player for the game
+   */
+  Player<C> getPlayerTwo();
+
+  /**
    * Gets the player whose turn it currently is.
    * @return the current active player
    * @throws IllegalStateException if the game hasn't started
