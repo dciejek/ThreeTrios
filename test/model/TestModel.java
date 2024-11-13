@@ -5,6 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.List;
+
+import controller.FileHandler;
+
+import static controller.FileHandler.makeGame;
 
 /**
  * Tests for the model.
@@ -21,7 +26,7 @@ public class TestModel {
   public void testStartGameExceptions() {
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.startGame(null, null));
+        () -> model.startGame(null, null, 1, 1));
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
         () -> model.startGame(new File("docs" + File.separator + "InvalidGridEvenCells"),
@@ -53,7 +58,12 @@ public class TestModel {
   public void testStartGame() {
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "grid1");
-    model.startGame(gridFile, cardsFile);
+    List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);
+    List<PlayingCard> cards = FileHandler.readCards(cardsFile);
+    int rows = FileHandler.readRowNum(gridFile);
+    int cols = FileHandler.readColNum(gridFile);
+
+    model.startGame(grid, cards, rows, cols);
     Assert.assertEquals(5, model.getGrid().size());
     Assert.assertEquals(4, model.getCurrentPlayer().getHand().size());
   }
@@ -68,7 +78,7 @@ public class TestModel {
                     CardValue.ONE,
                     CardValue.ONE), 1, 1));
 
-    model.startGame(new File("docs" + File.separator + "grid1"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "grid1"),
             new File("docs" + File.separator + "cards1"));
 
     Assert.assertThrows(IllegalArgumentException.class,
@@ -84,7 +94,7 @@ public class TestModel {
 
     setUp();
 
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
 
     model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
@@ -99,7 +109,7 @@ public class TestModel {
   public void testPlaceCard() {
     //Test a placing a card places one
     setUp();
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
     Card first = new PlayingCard("BlueMagic",
@@ -117,7 +127,7 @@ public class TestModel {
   @Test
   public void testBattleAndComboStep() {
     setUp();
-    model.startGame(new File("docs" + File.separator + "3x3Grid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "3x3Grid"),
             new File("docs" + File.separator + "cards1"));
     Assert.assertEquals(PlayerColor.BLUE, model.getCurrentPlayer().getColor());
 
@@ -156,7 +166,7 @@ public class TestModel {
 
   @Test
   public void testGetCurrentPlayer() {
-    model.startGame(new File("docs" + File.separator + "grid1"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "grid1"),
             new File("docs" + File.separator + "cards1"));
     Player startingPlayer = new TTPlayer(PlayerColor.BLUE);
     Assert.assertEquals(startingPlayer.getColor(), model.getCurrentPlayer().getColor());
@@ -175,7 +185,7 @@ public class TestModel {
   @Test
   public void testIsGameOver() {
     setUp();
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Assert.assertFalse(model.isGameOver());
     model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
@@ -185,7 +195,7 @@ public class TestModel {
   @Test
   public void testGetWinnerExceptions() {
     setUp();
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Assert.assertThrows(IllegalStateException.class,
         () -> model.getWinner());
@@ -194,7 +204,7 @@ public class TestModel {
   @Test
   public void testGetWinner() {
     setUp();
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Player winner = model.getCurrentPlayer();
     model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
@@ -213,7 +223,7 @@ public class TestModel {
   @Test
   public void testGetGrid() {
     setUp();
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
 
     Assert.assertEquals(1, model.getGrid().size());
@@ -232,7 +242,7 @@ public class TestModel {
     Assert.assertThrows(IllegalStateException.class,
         () -> model.getRow(1));
 
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Assert.assertThrows(IllegalArgumentException.class,
         () -> model.getRow(-1));
@@ -242,7 +252,7 @@ public class TestModel {
   public void testGetRow() {
     setUp();
 
-    model.startGame(new File("docs" + File.separator + "SmallGrid"),
+    model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Assert.assertEquals(null, model.getRow(0).get(0).getCard());
     Assert.assertEquals(null, model.getRow(0).get(0).getPlayerColor());
