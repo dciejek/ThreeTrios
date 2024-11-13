@@ -24,33 +24,43 @@ public class TestModel {
 
   @Test
   public void testStartGameExceptions() {
+    File evenCells = new File("docs" + File.separator + "InvalidGridEvenCells");
+    File badRows = new File("docs" + File.separator + "InvalidGridBadRows");
+    File badCols = new File("docs" + File.separator + "InvalidGridBadCols");
+    File grid1File = new File("docs" + File.separator + "grid1");
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
         () -> model.startGame(null, null, 1, 1));
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.startGame(new File("docs" + File.separator + "InvalidGridEvenCells"),
-            new File("docs" + File.separator + "cards1")));
+        () -> model.startGame(FileHandler.readGrid(evenCells),
+            FileHandler.readCards(new File("docs" + File.separator + "cards1")), FileHandler.readRowNum(evenCells),
+                FileHandler.readColNum(evenCells)));
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadRows"),
-                    new File("docs" + File.separator + "cards1")));
+        () -> model.startGame(FileHandler.readGrid(badRows),
+                    FileHandler.readCards(new File("docs" + File.separator + "cards1")),
+                FileHandler.readRowNum(badRows), FileHandler.readColNum(badRows)));
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.startGame(new File("docs" + File.separator + "InvalidGridBadCols"),
-                    new File("docs" + File.separator + "cards1")));
+        () -> model.startGame(FileHandler.readGrid(badCols),
+                    FileHandler.readCards(new File("docs" + File.separator + "cards1")),
+                FileHandler.readRowNum(badCols), FileHandler.readColNum(badCols)));
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.startGame(new File("docs" + File.separator + "grid1"),
-                    new File("docs" + File.separator + "SmallDeckOfCards")));
+        () -> model.startGame(FileHandler.readGrid(grid1File),
+                    FileHandler.readCards(new File("docs" + File.separator + "SmallDeckOfCards")),
+                FileHandler.readRowNum(grid1File), FileHandler.readColNum(grid1File)));
 
     setUp();
-    model.startGame(new File("docs" + File.separator + "grid1"),
-                    new File("docs" + File.separator + "cards1"));
+    model.startGame(FileHandler.readGrid(grid1File),
+                    FileHandler.readCards(new File("docs" + File.separator + "cards1")),
+            FileHandler.readRowNum(grid1File), FileHandler.readColNum(grid1File));
 
     Assert.assertThrows(IllegalStateException.class,
-        () -> model.startGame(new File("docs" + File.separator + "grid1"),
-                    new File("docs" + File.separator + "cards1")));
+        () -> model.startGame(FileHandler.readGrid(grid1File),
+                FileHandler.readCards(new File("docs" + File.separator + "cards1")),
+                FileHandler.readRowNum(grid1File), FileHandler.readColNum(grid1File)));
 
   }
 
