@@ -13,15 +13,18 @@ public interface ThreeTriosModel<C extends Card> {
 
   /**
    * Starts the game based on the given parameters.
-   * @param gridFile the file to extract the grid info from
-   * @param cardFile the file to extract the card info from
+   * @param grid    the board to play on, uses Cells to hold cards
+   * @param cards   the list of cards to play with, are shuffled into hands
+   * @param rows    the number of rows in the grid
+   * @param cols    the number of columns in the grid
    * @throws IllegalStateException if the game has already been started
    * @throws IllegalArgumentException if either File input is null
    * @throws IllegalArgumentException if there is less than playable cells + 1 cards
    * @throws IllegalArgumentException if row/col dimensions from file is larger than the grid given
    * @throws IllegalArgumentException if the grid does not have an odd # of playable cells
    */
-  void startGame(File gridFile, File cardFile);
+  void startGame(List<List<Cell<PlayingCard>>> grid, List<PlayingCard> cards,
+                 int rows, int cols);
 
   /**
    * Places a given card onto the game grid, then battle initiate the battle phase, once finished
