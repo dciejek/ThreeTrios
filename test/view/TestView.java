@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.File;
 
+import controller.FileHandler;
 import model.PlayingCard;
 import model.TTModel;
 import model.ThreeTriosModel;
@@ -30,7 +31,7 @@ public class TestView {
 
   @Test
   public void testToString() {
-    model.startGame(grid, cards);
+    model = FileHandler.makeGame(grid, cards);
     Assert.assertEquals("Player: B\n" +
             " _ \n" +
             "_  \n" +

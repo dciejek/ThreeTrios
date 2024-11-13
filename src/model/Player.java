@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Representation of a ThreeTrios player. Each player has a PlayerColor that represents
@@ -17,7 +18,7 @@ public interface Player<C extends Card> {
    * Gets the deck of the player's cards.
    * @return the ArrayList of cards that represents the player's hand.
    */
-  ArrayList<C> getHand();
+  List<C> getHand();
 
   /**
    * Removes the given PlayingCard from the player's hand.
@@ -31,6 +32,5 @@ public interface Player<C extends Card> {
    * @param card adds the specified card to the player's hand.
    */
   void addToHand(C card);
-
 
 }
