@@ -7,16 +7,10 @@ import java.util.List;
  * Represents a simple 2 player ThreeTriosModel.
  */
 public class TTModel implements ThreeTriosModel<PlayingCard> {
-  /*
-  Grid is 0 indexed
-   */
   private final List<List<Cell<PlayingCard>>> grid;
   private final Player<PlayingCard> playerOne;
   private final Player<PlayingCard> playerTwo;
   private Player<PlayingCard> activePlayer;
-  /*
-  INVARIANT: Must be >= 0, unless the game is not started yet.
-   */
   private int playableCells;
   private boolean isStarted;
 
@@ -49,8 +43,8 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     } else if (grid == null || cards == null) {
       throw new IllegalArgumentException("Grid or Cards cannot be null");
     }
-
     this.grid.addAll(grid);
+    playableCells = countPlayableCells(this.grid);
     if (cards.size() < playableCells + 1) {
       throw new IllegalArgumentException("There must be at least playable cells + 1 cards");
     } else if (grid.size() != rows) {
@@ -75,7 +69,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     int counter = 0;
     while (!cards.isEmpty()
             && playerOne.getHand().size() <= ((playableCells + 1) / 2)
-            && playerTwo.getHand().size() <= ((playableCells + 1) / 2)) {
+            && playerTwo.getHand().size() < ((playableCells + 1) / 2)) {
       if (counter % 2 == 0) {
         playerOne.addToHand(cards.remove(0));
       } else {
@@ -195,22 +189,19 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   /**
-   * Adds the correct cell type to the list of cells based on the string input.
-   *
-   * @param str "C" if a CardCell or "X" if a HoleCell
-   * @throws IllegalArgumentException if the String is null or not a valid type ("X" or "C")
+   * Counts the # of playable cells in the grid
+   * @return the # playable cells
    */
-  private Cell<PlayingCard> cellFactory(String str) {
-    if (str == null) {
-      throw new IllegalArgumentException("String cannot be null");
-    } else if (str.equals("C")) {
-      playableCells++;
-      return new CardCell();
-    } else if (str.equals("X")) {
-      return new HoleCell();
-    } else {
-      throw new IllegalArgumentException("Invalid cell type, given: " + str);
+  private int countPlayableCells(List<List<Cell<PlayingCard>>> grid) {
+    int playable = 0;
+    for (int i = 0; i < grid.size(); i++) {
+      for (int j = 0; j < grid.get(i).size(); j++) {
+        if (grid.get(i).get(j).canPlayHere()) {
+          playable++;
+        }
+      }
     }
+    return playable;
   }
 
   @Override

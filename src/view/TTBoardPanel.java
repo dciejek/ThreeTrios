@@ -1,0 +1,199 @@
+package view;
+
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+
+import javax.swing.*;
+
+import model.Card;
+import model.Cell;
+import model.PlayerColor;
+import model.PlayingCard;
+import model.ReadOnlyThreeTriosModel;
+
+/**
+ * The panel representation for the whole game board in a game of Three Trios.
+ * Composed of each player's Hand, as well as the Grid itself,
+ * which can be updated via the addClickListener() method.
+ */
+public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
+  ReadOnlyThreeTriosModel<PlayingCard> model;
+  private static final int SIZE = 1;
+
+  /**
+   * Constructs the game board panel, stores a read only representation of the model
+   * for future in displaying the game state visually.
+   * @param model a read only model
+   */
+  public TTBoardPanel(ReadOnlyThreeTriosModel<PlayingCard> model) {
+    this.model = model;
+  }
+
+  @Override
+  protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    Graphics2D g2d = (Graphics2D) g;
+
+    g2d.transform(getLogicalToPhysicalTransform());
+
+    drawBoard(g2d);
+
+  }
+
+  private void drawBoard(Graphics2D g2d) {
+    int posX = 0;
+    int posY = 0;
+    TTCard cardSquare;
+    //PlayerOne Hand
+    for (Card card : model.getPlayerOne().getHand()) {
+      cardSquare = new TTCard(card, SIZE);
+      cardSquare.drawCard(g2d, getColor(model.getPlayerOne().getColor()), posX, posY);
+      posY += SIZE;
+    }
+    //Add border
+    posX = SIZE;
+    posY = 0;
+    //Grid
+    for (int i = 0; i < model.getGrid().size(); i++) {
+      for (Cell cell : model.getGrid().get(i)) {
+        if (cell.toString().equals(" ")) {
+          drawCell(g2d, cell, SIZE, posX, posY);
+        } else if (cell.toString().equals("_")) {
+          drawCell(g2d, cell, SIZE, posX, posY);
+        } else {
+          cardSquare = new TTCard(cell.getCard(), SIZE);
+          cardSquare.drawCard(g2d, getColor(model.getPlayerOne().getColor()), posX, posY);
+        }
+        posX += SIZE;
+      }
+      posX = SIZE;
+      posY += SIZE;
+    }
+    //Add border
+    posX = (1 + model.getGrid().size()) * SIZE;
+    posY = 0;
+    //PlayerTwo Hand
+    for (Card card : model.getPlayerTwo().getHand()) {
+      cardSquare = new TTCard(card, SIZE);
+      cardSquare.drawCard(g2d, getColor(model.getPlayerTwo().getColor()), posX, posY);
+      posY += SIZE;
+    }
+  }
+
+  private void drawCell(Graphics2D g2d, Cell cell, int size, int x, int y) {
+    Shape cellSquare;
+    switch (cell.toString()) {
+      case " ":
+        g2d.setColor(Color.GRAY);
+        cellSquare = new Rectangle(x, y, size, size);
+        g2d.fill(cellSquare);
+        break;
+      case "_":
+        g2d.setColor(Color.YELLOW);
+        cellSquare = new Rectangle(x, y, size, size);
+        g2d.fill(cellSquare);
+        break;
+    }
+  }
+
+  private Color getColor(PlayerColor player) {
+    switch (player) {
+      case BLUE:
+        return Color.BLUE;
+      case RED:
+        return Color.RED;
+      default:
+        throw new IllegalArgumentException("Unsupported player color: " + player);
+    }
+  }
+
+  private Dimension getLocalDimension() {
+    // each row + 2 (for each hand) x  (max each column/hand size)
+    return new Dimension(model.getGrid().size() + 2,
+            (Math.max(model.getCurrentPlayer().getHand().size(),
+                    model.getGrid().get(0).size())));
+  }
+
+  private AffineTransform getLogicalToPhysicalTransform() {
+    AffineTransform transform = new AffineTransform();
+    Dimension local = getLocalDimension();
+    transform.scale(this.getWidth() / local.getWidth(),
+            this.getHeight() / local.getHeight());
+    return transform;
+  }
+
+  private AffineTransform getModelToLogicalTransform() {
+    AffineTransform transform = new AffineTransform();
+    Dimension local = getLocalDimension();
+    transform.scale(local.getWidth() / model.getGrid().size() + 2,
+            local.getHeight() / model.getGrid().get(0).size());
+    return transform;
+  }
+
+  /**
+   * Set up the view to handle click events (highlight cards), later implementations will
+   * allow the controller to handle click events.
+   */
+  public void addClickListener() {
+    this.addMouseListener(new TTClickListener());
+  }
+
+  class TTClickListener implements MouseListener {
+
+    /**
+     * Empty constructor, adjustable in later implementation to input a controller
+     * so its features can be applied.
+     */
+    public TTClickListener() {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      try{
+        AffineTransform physicalToLogical = getLogicalToPhysicalTransform();
+        physicalToLogical.invert();
+
+        AffineTransform logicalToModel = getModelToLogicalTransform();
+        logicalToModel.invert();
+
+        System.err.println(e.getX() + ", " + e.getY());
+        Point2D evtPt = e.getPoint();
+        Point2D modelPt = physicalToLogical.transform(evtPt, null);
+
+        logicalToModel.transform(modelPt, modelPt);
+        System.err.println(e.getX() + ", " + e.getY());
+
+        //Highlight card
+
+        //controller on click action will go here
+      } catch (NoninvertibleTransformException ex) {
+        throw new RuntimeException(ex);
+      }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+      //ignore
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+      //ignore
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+      //ignore
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+      //ignore
+    }
+  }
+}

@@ -22,7 +22,7 @@ public interface ThreeTriosModel<C extends Card> extends ReadOnlyThreeTriosModel
    * @throws IllegalArgumentException if row/col dimensions from file is larger than the grid given
    * @throws IllegalArgumentException if the grid does not have an odd # of playable cells
    */
-  void startGame(List<List<Cell<C>>> grid, List<C> cards,
+  void startGame(List<List<Cell<PlayingCard>>> grid, List<PlayingCard> cards,
                  int rows, int cols);
 
   /**
