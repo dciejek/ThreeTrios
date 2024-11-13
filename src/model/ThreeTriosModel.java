@@ -1,6 +1,5 @@
 package model;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -9,7 +8,7 @@ import java.util.List;
  * equal amount of cards dealt to their Hand to which they do battle with.
  * @param <C>   The type of cards to use for the game
  */
-public interface ThreeTriosModel<C extends Card> {
+public interface ThreeTriosModel<C extends Card> extends ReadOnlyThreeTriosModel<C> {
 
   /**
    * Starts the game based on the given parameters.
@@ -90,7 +89,7 @@ public interface ThreeTriosModel<C extends Card> {
    * @param card  the card to play
    * @param row   the row to play to
    * @param col   the column to play to
-   * @return
+   * @return number of cards that can be flipped playing card to position
    */
   int numFlipped(Card card, int row, int col);
 }
