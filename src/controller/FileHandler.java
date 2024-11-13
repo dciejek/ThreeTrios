@@ -11,6 +11,8 @@ import model.CardValue;
 import model.Cell;
 import model.HoleCell;
 import model.PlayingCard;
+import model.TTModel;
+import model.ThreeTriosModel;
 
 /**
  * Contains static methods to determine fields for a ThreeTriosModel by parsing
@@ -18,7 +20,7 @@ import model.PlayingCard;
  */
 public class FileHandler {
 
-  public static List<ArrayList<Cell<PlayingCard>>> readGrid(File gridFile) {
+  public static List<List<Cell<PlayingCard>>> readGrid(File gridFile) {
     List<List<String>> tempGrid = new ArrayList<>();
     try {
       Scanner scan = new Scanner(new FileReader(gridFile));
@@ -30,8 +32,8 @@ public class FileHandler {
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("Grid file not found");
     }
-    ArrayList<ArrayList<Cell<PlayingCard>>> ret = new ArrayList<>();
-    ArrayList<Cell<PlayingCard>> cells = new ArrayList<>();
+    List<List<Cell<PlayingCard>>> ret = new ArrayList<>();
+    List<Cell<PlayingCard>> cells = new ArrayList<>();
     for (List<String> row : tempGrid) {
       cells.clear();
       for (String s : row) {
@@ -48,7 +50,7 @@ public class FileHandler {
    * @param str "C" if a CardCell or "X" if a HoleCell
    * @throws IllegalArgumentException if the String is null or not a valid type ("X" or "C")
    */
-  public static Cell<PlayingCard> cellFactory(String str) {
+  private static Cell<PlayingCard> cellFactory(String str) {
     if (str == null) {
       throw new IllegalArgumentException("String cannot be null");
     } else if (str.equals("C")) {
@@ -60,8 +62,8 @@ public class FileHandler {
     }
   }
 
-  public static ArrayList<PlayingCard> readCards(File cardFile) {
-    ArrayList<PlayingCard> cards = new ArrayList<>();
+  public static List<PlayingCard> readCards(File cardFile) {
+    List<PlayingCard> cards = new ArrayList<>();
     try {
       FileReader reader = new FileReader(cardFile);
       Scanner scan = new Scanner(reader);
@@ -99,5 +101,12 @@ public class FileHandler {
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("Grid file not found");
     }
+  }
+
+  public static ThreeTriosModel makeGame(File gridFile, File cardFile) {
+    ThreeTriosModel game = new TTModel();
+    game.startGame(readGrid(gridFile), readCards(cardFile),
+            readRowNum(gridFile), readColNum(gridFile));
+    return game;
   }
 }

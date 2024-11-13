@@ -6,7 +6,6 @@ import java.util.List;
 import model.Card;
 import model.Cell;
 import model.Player;
-import model.PlayingCard;
 import model.ThreeTriosModel;
 
 public class FlipStrategy implements TTStrategy {

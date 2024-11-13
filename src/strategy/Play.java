@@ -5,7 +5,7 @@ import model.Card;
 /**
  * Represents a position and card to play to in a game of ThreeTrios.
  */
-public final class Play {
+public class Play {
   public final int row;
   public final int col;
   public final int handIdx;
