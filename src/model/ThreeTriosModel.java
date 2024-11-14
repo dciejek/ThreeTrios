@@ -28,7 +28,7 @@ public interface ThreeTriosModel<C extends Card> extends ReadOnlyThreeTriosModel
   /**
    * Places a given card onto the game grid, then battle initiate the battle phase, once finished
    * switch the turn to the next player.
-   * @param card the card to be placed on the grid
+   * @param cardIdx the index of card in the active player's hand to be placed on the grid
    * @param row the row index to be placed in
    * @param col the column index to be placed in
    * @throws IllegalArgumentException if the card is null
@@ -36,7 +36,7 @@ public interface ThreeTriosModel<C extends Card> extends ReadOnlyThreeTriosModel
    * @throws IllegalArgumentException if a card already exists at the given index
    * @throws IllegalStateException if the game is over or if game has not started
    */
-  void placeCard(C card, int row, int col);
+  void placeCard(int cardIdx, int row, int col);
 
   /**
    * Tells us if the game is over.

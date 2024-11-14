@@ -1,0 +1,11 @@
+For flip strategy:
+Checks every point on the grid and checks how many to flip
+0, 0
+0, 1
+0, 2
+1, 0
+1, 1
+1, 2
+2, 0
+2, 1
+2, 2

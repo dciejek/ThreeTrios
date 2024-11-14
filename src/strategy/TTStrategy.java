@@ -16,6 +16,8 @@ public interface TTStrategy<C extends Card> {
    * @param model   The model being played to
    * @param player  The active player
    * @return        The best play possible, or the leftmost and upmost play
+   * @throws IllegalArgumentException If either argument is null
+   * @throws IllegalStateException    If the player given is not the active player in the model
    */
   public Play playToPoint(ThreeTriosModel<C> model, Player<C> player);
 }

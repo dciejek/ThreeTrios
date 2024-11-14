@@ -23,15 +23,14 @@ public class TestView {
 
   @Before
   public void setUp() {
-    model = new TTModel();
     cards = new File("docs" + File.separator + "cards1");
     grid = new File("docs" + File.separator + "grid1");
+    model = FileHandler.makeGame(grid, cards);
     view = new TTTextBasedView(model);
   }
 
   @Test
   public void testToString() {
-    model = FileHandler.makeGame(grid, cards);
     Assert.assertEquals("Player: B\n" +
             " _ \n" +
             "_  \n" +
@@ -41,10 +40,9 @@ public class TestView {
             "Hand: \n" +
             "BlueMagic 1 2 A 1\n" +
             "FireDancer 2 2 3 9\n" +
-            "ReeceDiGiacomo 3 7 1 8\n" +
-            "Finn 9 9 1 9", view.toString());
+            "ReeceDiGiacomo 3 7 1 8", view.toString());
 
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 1);
+    model.placeCard(0, 0, 1);
 
     Assert.assertEquals("Player: R\n" +
             " B \n" +

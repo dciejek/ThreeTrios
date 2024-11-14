@@ -80,10 +80,12 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public void placeCard(PlayingCard card, int row, int col) {
-    if (card == null) {
-      throw new IllegalArgumentException("Card cannot be null");
-    } else if (!isStarted) {
+  public void placeCard(int cardIdx, int row, int col) {
+    if (cardIdx > getCurrentPlayer().getHand().size()) {
+      throw new IllegalArgumentException("Invalid card index");
+    }
+    PlayingCard card = this.getCurrentPlayer().getHand().get(cardIdx);
+    if (!isStarted) {
       throw new IllegalStateException("Game has not started");
     } else if (isGameOver()) { //checks if there are no more cells that can be placed on
       throw new IllegalStateException("Game is over");
@@ -282,7 +284,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   private int flipCountNext(Card card, int cardRow, int cardCol, CardinalDirection dir) {
-    if (cardRow < 0 || cardCol < 0) {
+    if (cardRow < 0 || cardCol < 0 || !this.grid.get(cardRow).get(cardCol).hasCard()) {
       return 0;
     }
 
