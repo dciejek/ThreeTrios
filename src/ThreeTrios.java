@@ -25,8 +25,11 @@ public final class ThreeTrios {
     int cols = FileHandler.readColNum(gridFile);
 
     model.startGame(grid, cards, rows, cols);
+    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+    model.placeCard(model.getCurrentPlayer().getHand().get(1), 2, 0);
+    model.placeCard(model.getCurrentPlayer().getHand().get(1), 1, 1);
+    model.placeCard(model.getCurrentPlayer().getHand().get(1), 2, 2);
     ThreeTriosFrame view = new TTGuiView(model);
     view.makeVisible();
-    view.addClickListener();
   }
 }

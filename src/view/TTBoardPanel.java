@@ -21,8 +21,11 @@ import model.ReadOnlyThreeTriosModel;
  * which can be updated via the addClickListener() method.
  */
 public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
-  ReadOnlyThreeTriosModel<PlayingCard> model;
-  private static final int SIZE = 1;
+  private final ReadOnlyThreeTriosModel<PlayingCard> model;
+  private final int SIZE = 100;
+  private final int maxHandSize;
+  private Graphics2D g2d;
+  private Point2D highlightedCard;
 
   /**
    * Constructs the game board panel, stores a read only representation of the model
@@ -31,6 +34,8 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
    */
   public TTBoardPanel(ReadOnlyThreeTriosModel<PlayingCard> model) {
     this.model = model;
+    maxHandSize = model.getCurrentPlayer().getHand().size();
+    highlightedCard = null;
   }
 
   @Override
@@ -38,10 +43,13 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     super.paintComponent(g);
 
     Graphics2D g2d = (Graphics2D) g;
+    this.g2d = g2d;
 
     g2d.transform(getLogicalToPhysicalTransform());
 
     drawBoard(g2d);
+
+    addClickListener();
 
   }
 
@@ -55,7 +63,11 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
       cardSquare.drawCard(g2d, getColor(model.getPlayerOne().getColor()), posX, posY);
       posY += SIZE;
     }
-    //Add border
+    //Add first border
+    g2d.setColor(Color.BLACK);
+    Shape borderOne = new Rectangle(SIZE - 5, 0,
+            5, Math.max(maxHandSize * SIZE, model.getGrid().get(0).size() * SIZE));
+    g2d.fill(borderOne);
     posX = SIZE;
     posY = 0;
     //Grid
@@ -67,14 +79,13 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
           drawCell(g2d, cell, SIZE, posX, posY);
         } else {
           cardSquare = new TTCard(cell.getCard(), SIZE);
-          cardSquare.drawCard(g2d, getColor(model.getPlayerOne().getColor()), posX, posY);
+          cardSquare.drawCard(g2d, getColor(cell.getPlayerColor()), posX, posY);
         }
         posX += SIZE;
       }
       posX = SIZE;
       posY += SIZE;
     }
-    //Add border
     posX = (1 + model.getGrid().size()) * SIZE;
     posY = 0;
     //PlayerTwo Hand
@@ -82,6 +93,14 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
       cardSquare = new TTCard(card, SIZE);
       cardSquare.drawCard(g2d, getColor(model.getPlayerTwo().getColor()), posX, posY);
       posY += SIZE;
+    }
+    //Add second border (after PlayerTwo hand so that it is not covered)
+    g2d.setColor(Color.BLACK);
+    Shape borderTwo = new Rectangle((1 + model.getGrid().size()) * SIZE, 0,
+            5, Math.max(maxHandSize * SIZE, model.getGrid().get(0).size() * SIZE));
+    g2d.fill(borderTwo);
+    if (highlightedCard != null) {
+      drawHighlightedCard((int) highlightedCard.getX(), (int) highlightedCard.getY());
     }
   }
 
@@ -114,9 +133,9 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
 
   private Dimension getLocalDimension() {
     // each row + 2 (for each hand) x  (max each column/hand size)
-    return new Dimension(model.getGrid().size() + 2,
-            (Math.max(model.getCurrentPlayer().getHand().size(),
-                    model.getGrid().get(0).size())));
+    return new Dimension((model.getGrid().size() + 2) * SIZE,
+            (Math.max(maxHandSize,
+                    model.getGrid().get(0).size())) * SIZE);
   }
 
   private AffineTransform getLogicalToPhysicalTransform() {
@@ -130,9 +149,16 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
   private AffineTransform getModelToLogicalTransform() {
     AffineTransform transform = new AffineTransform();
     Dimension local = getLocalDimension();
-    transform.scale(local.getWidth() / model.getGrid().size() + 2,
+    transform.scale(local.getWidth() / (model.getGrid().size() + 2),
             local.getHeight() / model.getGrid().get(0).size());
     return transform;
+  }
+
+  private void drawHighlightedCard(int x, int y) {
+    TTCard cardSquare = new TTCard(model.getCurrentPlayer().getHand().get(y), SIZE);
+    cardSquare.select();
+    cardSquare.drawCard(g2d, getColor(model.getCurrentPlayer().getColor()),
+              x * SIZE, y * SIZE);
   }
 
   /**
@@ -154,26 +180,62 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-      try{
+      try {
         AffineTransform physicalToLogical = getLogicalToPhysicalTransform();
         physicalToLogical.invert();
 
         AffineTransform logicalToModel = getModelToLogicalTransform();
         logicalToModel.invert();
 
-        System.err.println(e.getX() + ", " + e.getY());
-        Point2D evtPt = e.getPoint();
-        Point2D modelPt = physicalToLogical.transform(evtPt, null);
+        Point2D physicalPt = e.getPoint();
+        Point2D logicalPt = physicalToLogical.transform(physicalPt, null);
+        Point2D modelPt = logicalToModel.transform(logicalPt, null);
 
-        logicalToModel.transform(modelPt, modelPt);
-        System.err.println(e.getX() + ", " + e.getY());
+        printIndexIfGrid(modelPt);
 
         //Highlight card
+        if (highlightInBounds(modelPt)) {
+          int x = (int) modelPt.getX();
+          int y = (int) modelPt.getY();
+
+          if (highlightedCard != null) {
+            if (highlightedCard.getX() == x && highlightedCard.getY() == y) {
+              highlightedCard = null;
+            }
+          } else {
+            highlightedCard = new Point(x, y);
+            drawBoard(g2d);
+          }
+
+        }
 
         //controller on click action will go here
       } catch (NoninvertibleTransformException ex) {
         throw new RuntimeException(ex);
       }
+    }
+
+    private void printIndexIfGrid(Point2D modelPt) {
+      if ((int) modelPt.getX() != 0
+              && (int) modelPt.getX() != model.getGrid().get(0).size() + 1
+              && (int) modelPt.getY() <= model.getGrid().size()) {
+        int gridX = (int) modelPt.getX() - 1;
+        int gridY = (int) modelPt.getY();
+        System.out.println(gridX + ", " + gridY);
+      }
+    }
+
+    private boolean highlightInBounds(Point2D modelPt) {
+      int x = (int) modelPt.getX();
+      int y = (int) modelPt.getY();
+
+      if (x == 0 && model.getPlayerOne() == model.getCurrentPlayer()) {
+        return y < model.getPlayerOne().getHand().size();
+      } else if (x == model.getGrid().size() + 1
+              && model.getPlayerTwo() == model.getCurrentPlayer()) {
+        return y < model.getPlayerTwo().getHand().size();
+      }
+      return false;
     }
 
     @Override
