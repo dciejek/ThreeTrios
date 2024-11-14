@@ -64,3 +64,10 @@ MODEL:
 VIEW:
   ThreeTriosView (Interface) <C extends Card>
     - TTTextBasedView (Class) <PlayingCard>
+
+Changes for part 2
+- Added numFlipped() to count the number of cards flipped with a turn.
+- Changed the signatures of playGame and playCard to be in line with
+  what was discussed in class.
+- made FileHandler as a helper class to extract relevant data from files.
+- Added an invariant as that was left out.

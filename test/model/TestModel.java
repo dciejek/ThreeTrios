@@ -16,6 +16,10 @@ import static controller.FileHandler.makeGame;
  */
 public class TestModel {
   ThreeTriosModel<PlayingCard> model;
+  File evenCells = new File("docs" + File.separator + "InvalidGridEvenCells");
+  File badRows = new File("docs" + File.separator + "InvalidGridBadRows");
+  File badCols = new File("docs" + File.separator + "InvalidGridBadCols");
+  File grid1File = new File("docs" + File.separator + "grid1");
 
   @Before
   public void setUp() {
@@ -24,10 +28,6 @@ public class TestModel {
 
   @Test
   public void testStartGameExceptions() {
-    File evenCells = new File("docs" + File.separator + "InvalidGridEvenCells");
-    File badRows = new File("docs" + File.separator + "InvalidGridBadRows");
-    File badCols = new File("docs" + File.separator + "InvalidGridBadCols");
-    File grid1File = new File("docs" + File.separator + "grid1");
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
         () -> model.startGame(null, null, 1, 1));
@@ -82,37 +82,33 @@ public class TestModel {
   public void testPlaceCardExceptions() {
     setUp();
     Assert.assertThrows(IllegalStateException.class,
-        () -> model.placeCard(new PlayingCard("",
-                    CardValue.ONE,
-                    CardValue.ONE,
-                    CardValue.ONE,
-                    CardValue.ONE), 1, 1));
+        () -> model.placeCard(1, 1, 1));
 
     model = FileHandler.makeGame(new File("docs" + File.separator + "grid1"),
             new File("docs" + File.separator + "cards1"));
 
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), -1, 1));
+        () -> model.placeCard(0, -1, 1));
 
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), 1, -1));
+        () -> model.placeCard(0, 1, -1));
 
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 1);
+    model.placeCard(0, 0, 1);
 
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 1));
+        () -> model.placeCard(0, 0, 1));
 
     setUp();
 
     model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
 
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+    model.placeCard(0, 0, 0);
 
     Assert.assertTrue(model.isGameOver());
 
     Assert.assertThrows(IllegalStateException.class,
-        () -> model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0));
+        () -> model.placeCard(0, 0, 0));
   }
 
   @Test
@@ -121,7 +117,7 @@ public class TestModel {
     setUp();
     model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+    model.placeCard(0, 0, 0);
     Card first = new PlayingCard("BlueMagic",
             CardValue.ONE,
             CardValue.TEN,
@@ -141,9 +137,9 @@ public class TestModel {
             new File("docs" + File.separator + "cards1"));
     Assert.assertEquals(PlayerColor.BLUE, model.getCurrentPlayer().getColor());
 
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 2, 2);
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 1);
+    model.placeCard(0, 0, 0);
+    model.placeCard(0, 2, 2);
+    model.placeCard(0, 0, 1);
     //Cells belong to same player
     Assert.assertEquals(PlayerColor.BLUE, model.getGrid().get(0).get(0).getPlayerColor());
     Assert.assertEquals(PlayerColor.BLUE, model.getGrid().get(0).get(1).getPlayerColor());
@@ -162,7 +158,7 @@ public class TestModel {
     Assert.assertEquals(new CardCell().toString(), model.getGrid().get(1).get(0).toString());
 
     //A combo is called an Cell 0 0, and Cell 0 1 are now red cells
-    model.placeCard(model.getCurrentPlayer().getHand().get(1), 1, 0);
+    model.placeCard(1, 1, 0);
     Assert.assertEquals(PlayerColor.RED, model.getGrid().get(0).get(0).getPlayerColor());
     Assert.assertEquals(PlayerColor.RED, model.getGrid().get(0).get(1).getPlayerColor());
   }
@@ -180,7 +176,7 @@ public class TestModel {
             new File("docs" + File.separator + "cards1"));
     Player startingPlayer = new TTPlayer(PlayerColor.BLUE);
     Assert.assertEquals(startingPlayer.getColor(), model.getCurrentPlayer().getColor());
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 1);
+    model.placeCard(0, 0, 1);
     Player nextPlayer = new TTPlayer(PlayerColor.RED);
     Assert.assertEquals(nextPlayer.getColor(), model.getCurrentPlayer().getColor());
   }
@@ -198,7 +194,7 @@ public class TestModel {
     model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Assert.assertFalse(model.isGameOver());
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+    model.placeCard(0, 0, 0);
     Assert.assertTrue(model.isGameOver());
   }
 
@@ -217,7 +213,7 @@ public class TestModel {
     model = FileHandler.makeGame(new File("docs" + File.separator + "SmallGrid"),
             new File("docs" + File.separator + "cards1"));
     Player winner = model.getCurrentPlayer();
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+    model.placeCard(0, 0, 0);
 
     Assert.assertTrue(model.isGameOver());
     Assert.assertEquals(winner, model.getWinner());
@@ -269,8 +265,16 @@ public class TestModel {
 
     Card newCard = model.getCurrentPlayer().getHand().get(0);
     Player newPlayer = model.getCurrentPlayer();
-    model.placeCard(model.getCurrentPlayer().getHand().get(0), 0, 0);
+    model.placeCard(0, 0, 0);
     Assert.assertEquals(newCard, model.getRow(0).get(0).getCard());
     Assert.assertEquals(newPlayer.getColor(), model.getRow(0).get(0).getPlayerColor());
+  }
+
+  @Test
+  public void testNumFlipped() {
+    model = FileHandler.makeGame(grid1File, new File("docs" + File.separator + "cards1"));
+    Assert.assertEquals(0, model.numFlipped(model.getCurrentPlayer().getHand().get(1), 0, 0));
+    model.placeCard(1, 1, 0);
+    Assert.assertEquals(1, model.numFlipped(model.getCurrentPlayer().getHand().get(0), 0, 0));
   }
 }

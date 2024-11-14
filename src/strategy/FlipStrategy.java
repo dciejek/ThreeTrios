@@ -8,16 +8,16 @@ import model.Cell;
 import model.Player;
 import model.ThreeTriosModel;
 
-public class FlipStrategy implements TTStrategy {
+/**
+ * Strategy to pick the spot where the most cards will be flipped as a result. Defaults
+ * to the top left-most move if there is a tie, and uses the same logic and the card at
+ * index 0 in the player's hand if there is no best move.
+ */
+public class FlipStrategy implements TTStrategy<Card> {
 
   @Override
-  public Play playToPoint(ThreeTriosModel model, Player player) {
-    return playToPointHelper(model, player);
-  }
-
-  private Play playToPointHelper(ThreeTriosModel<Card> model, Player<Card> player) {
+  public Play playToPoint(ThreeTriosModel<Card> model, Player<Card> player) {
     List<Play> plays = new ArrayList<Play>();
-    ArrayList<Card> hand = new ArrayList<>(player.getHand());
     Cell currCell;
     int currHighest = 0;
     for (int row = 0; row < model.getGrid().size(); row++) {
