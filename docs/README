@@ -71,3 +71,4 @@ Changes for part 2
   what was discussed in class.
 - made FileHandler as a helper class to extract relevant data from files.
 - Added an invariant as that was left out.
+- Added GUI view, built with JFrame extensions and JPanels for cards/cells
