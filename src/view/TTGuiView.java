@@ -1,8 +1,8 @@
 package view;
 
-import java.awt.*;
+import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
@@ -12,7 +12,6 @@ import model.ReadOnlyThreeTriosModel;
  */
 public class TTGuiView extends JFrame implements ThreeTriosFrame {
   private final ReadOnlyThreeTriosModel<PlayingCard> model;
-  private final TTBoardPanel panel;
   private static final int SIZE = 100;
 
   /**
@@ -25,7 +24,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
       throw new IllegalArgumentException("read only model cannot be null");
     }
     this.model = model;
-    this.panel = new TTBoardPanel(model);
+    TTBoardPanel panel = new TTBoardPanel(model);
     this.setTitle("Current Player: " + model.getCurrentPlayer().getColor().toString());
     this.setSize(getPreferredSize().width, getPreferredSize().height);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);

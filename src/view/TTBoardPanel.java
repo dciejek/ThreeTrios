@@ -1,13 +1,19 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import model.Card;
 import model.Cell;
@@ -106,17 +112,14 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
 
   private void drawCell(Graphics2D g2d, Cell cell, int size, int x, int y) {
     Shape cellSquare;
-    switch (cell.toString()) {
-      case " ":
-        g2d.setColor(Color.GRAY);
-        cellSquare = new Rectangle(x, y, size, size);
-        g2d.fill(cellSquare);
-        break;
-      case "_":
-        g2d.setColor(Color.YELLOW);
-        cellSquare = new Rectangle(x, y, size, size);
-        g2d.fill(cellSquare);
-        break;
+    if (cell.toString().equals(" ")) {
+      g2d.setColor(Color.GRAY);
+      cellSquare = new Rectangle(x, y, size, size);
+      g2d.fill(cellSquare);
+    } else if (cell.toString().equals("_")) {
+      g2d.setColor(Color.YELLOW);
+      cellSquare = new Rectangle(x, y, size, size);
+      g2d.fill(cellSquare);
     }
   }
 
@@ -176,6 +179,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
      * so its features can be applied.
      */
     public TTClickListener() {
+      //to be implemented with controller
     }
 
     @Override

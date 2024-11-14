@@ -20,6 +20,11 @@ import model.ThreeTriosModel;
  */
 public class FileHandler {
 
+  /**
+   * Reads a file as given from docs and translate the information to the model.
+   * @param gridFile the given file.
+   * @return A list of cells that represent the grid.
+   */
   public static List<List<Cell<PlayingCard>>> readGrid(File gridFile) {
     List<List<String>> tempGrid = new ArrayList<>();
     try {
@@ -62,6 +67,11 @@ public class FileHandler {
     }
   }
 
+  /**
+   * Reads the cards as given from the card file and translates it for the model.
+   * @param cardFile the card file
+   * @return a list of playing cards to be used in the model
+   */
   public static List<PlayingCard> readCards(File cardFile) {
     List<PlayingCard> cards = new ArrayList<>();
     try {
@@ -81,6 +91,11 @@ public class FileHandler {
     return cards;
   }
 
+  /**
+   * Gets the row number from a given doc file for the model.
+   * @param rowFile the doc file
+   * @return the row number for the model to use
+   */
   public static int readRowNum(File rowFile) {
     try {
       Scanner scan = new Scanner(new FileReader(rowFile));
@@ -92,6 +107,11 @@ public class FileHandler {
     }
   }
 
+  /**
+   * Gets the col number from a given doc file for the model.
+   * @param colFile the doc file
+   * @return the col number for the model to use
+   */
   public static int readColNum(File colFile) {
     try {
       Scanner scan = new Scanner(new FileReader(colFile));
@@ -103,6 +123,11 @@ public class FileHandler {
     }
   }
 
+  /**
+   * Starts a game based off of the given inputs from the doc files, which translated
+   * by the appropriate methods.
+   * @return a game of Three trios
+   */
   public static ThreeTriosModel makeGame(File gridFile, File cardFile) {
     ThreeTriosModel game = new TTModel();
     game.startGame(readGrid(gridFile), readCards(cardFile),

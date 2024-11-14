@@ -1,7 +1,5 @@
 package strategy;
 
-import java.awt.*;
-
 import model.Card;
 import model.Player;
 import model.ThreeTriosModel;

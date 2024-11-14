@@ -5,12 +5,15 @@ import java.util.List;
 
 import strategy.TTStrategy;
 
+/**
+ * A basic AI model that creates the best move set it can compute for a game
+ * of three trios based on the game state. Orders the moves in a point based system.
+ */
 public class StrategyPlayer implements Player<PlayingCard> {
 
 
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
-  private final TTStrategy<PlayingCard> strategy;
 
   /**
    * Constructs a player that has a PlayerColor for all of its cards, as well
@@ -24,7 +27,6 @@ public class StrategyPlayer implements Player<PlayingCard> {
     }
     this.color = color;
     this.hand = new ArrayList<>();
-    this.strategy = strategy;
   }
 
   @Override

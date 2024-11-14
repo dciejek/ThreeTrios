@@ -8,7 +8,6 @@ import java.io.File;
 
 import controller.FileHandler;
 import model.PlayingCard;
-import model.TTModel;
 import model.ThreeTriosModel;
 
 /**

@@ -26,6 +26,11 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     isStarted = false;
   }
 
+  /**
+   * A constructor for the model for a 2-player game of Three Trios.
+   * @param p1 player one
+   * @param p2 player two
+   */
   public TTModel(Player p1, Player p2) {
     grid = new ArrayList<>();
     playerOne = p1;
@@ -191,7 +196,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   /**
-   * Counts the # of playable cells in the grid
+   * Counts the # of playable cells in the grid.
    * @return the # playable cells
    */
   private int countPlayableCells(List<List<Cell<PlayingCard>>> grid) {

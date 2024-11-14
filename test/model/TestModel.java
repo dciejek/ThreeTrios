@@ -9,8 +9,6 @@ import java.util.List;
 
 import controller.FileHandler;
 
-import static controller.FileHandler.makeGame;
-
 /**
  * Tests for the model.
  */
@@ -34,7 +32,8 @@ public class TestModel {
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,
         () -> model.startGame(FileHandler.readGrid(evenCells),
-            FileHandler.readCards(new File("docs" + File.separator + "cards1")), FileHandler.readRowNum(evenCells),
+            FileHandler.readCards(new File("docs" + File.separator + "cards1")),
+                FileHandler.readRowNum(evenCells),
                 FileHandler.readColNum(evenCells)));
     setUp();
     Assert.assertThrows(IllegalArgumentException.class,

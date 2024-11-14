@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Card;
-import model.Cell;
 import model.Player;
-import model.PlayingCard;
 import model.ThreeTriosModel;
 
 /**
@@ -22,8 +20,8 @@ public class CornerStrategy implements TTStrategy<Card> {
   public Play playToPoint(ThreeTriosModel<Card> model, Player<Card> player) {
     List<Play> plays = new ArrayList<Play>();
     Play move;
-    for (int row = 0; row < model.getGrid().size(); row+= model.getGrid().size() - 1) {
-      for (int col = 0; col < model.getRow(0).size(); col+= model.getRow(0).size() - 1) {
+    for (int row = 0; row < model.getGrid().size(); row += model.getGrid().size() - 1) {
+      for (int col = 0; col < model.getRow(0).size(); col += model.getRow(0).size() - 1) {
         if (model.getCellAt(row, col).canPlayHere()) {
           move = getBestMove(model, player, row, col);
           if (move != null) {
@@ -40,8 +38,8 @@ public class CornerStrategy implements TTStrategy<Card> {
   }
 
   private Play lastResort(ThreeTriosModel<Card> model, Player<Card> player) {
-    for (int row = 0; row < model.getGrid().size(); row+= model.getGrid().size() - 1) {
-      for (int col = 0; col < model.getRow(0).size(); col+= model.getRow(0).size() - 1) {
+    for (int row = 0; row < model.getGrid().size(); row += model.getGrid().size() - 1) {
+      for (int col = 0; col < model.getRow(0).size(); col += model.getRow(0).size() - 1) {
         if (model.getCellAt(row, col).canPlayHere()) {
           return new Play(row, col, 0);
         }
