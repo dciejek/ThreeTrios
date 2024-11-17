@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import model.Card;
-import model.CardCell;
 import model.Cell;
 import model.Player;
 import model.PlayingCard;
@@ -22,14 +21,16 @@ public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<PlayingCa
     this.transcript = transcript;
     this.base = new TTModel();
   }
+
   @Override
-  public void startGame(List<List<Cell<PlayingCard>>> grid, List<PlayingCard> cards, int rows, int cols) {
+  public void startGame(List<List<Cell<PlayingCard>>> grid,
+                        List<PlayingCard> cards, int rows, int cols) {
     base.startGame(grid, cards, rows, cols);
   }
 
   @Override
   public void placeCard(int cardIdx, int row, int col) {
-
+    //Is a mock
   }
 
   @Override

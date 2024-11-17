@@ -12,6 +12,7 @@ import model.ReadOnlyThreeTriosModel;
  */
 public class TTGuiView extends JFrame implements ThreeTriosFrame {
   private final ReadOnlyThreeTriosModel<PlayingCard> model;
+  private final TTBoardPanel panel;
   private static final int SIZE = 100;
 
   /**
@@ -24,7 +25,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
       throw new IllegalArgumentException("read only model cannot be null");
     }
     this.model = model;
-    TTBoardPanel panel = new TTBoardPanel(model);
+    panel = new TTBoardPanel(model);
     this.setTitle("Current Player: " + model.getCurrentPlayer().getColor().toString());
     this.setSize(getPreferredSize().width, getPreferredSize().height);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -33,12 +34,12 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
 
   @Override
   public void addClickListener() {
-    //ignore, use in later implementation
+    this.panel.addClickListener(this);
   }
 
   @Override
   public void refresh() {
-    //ignore, use in later implementation
+    this.repaint();
   }
 
   public void makeVisible() {

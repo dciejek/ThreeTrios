@@ -54,9 +54,6 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     g2d.transform(getLogicalToPhysicalTransform());
 
     drawBoard(g2d);
-
-    addClickListener();
-
   }
 
   private void drawBoard(Graphics2D g2d) {
@@ -168,18 +165,19 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
    * Set up the view to handle click events (highlight cards), later implementations will
    * allow the controller to handle click events.
    */
-  public void addClickListener() {
-    this.addMouseListener(new TTClickListener());
+  public void addClickListener(ThreeTriosFrame view) {
+    this.addMouseListener(new TTClickListener(view));
   }
 
   class TTClickListener implements MouseListener {
-
+    //Fill in for controller until it is implemented
+    ThreeTriosFrame view;
     /**
      * Empty constructor, adjustable in later implementation to input a controller
      * so its features can be applied.
      */
-    public TTClickListener() {
-      //to be implemented with controller
+    public TTClickListener(ThreeTriosFrame view) {
+      this.view = view;
     }
 
     @Override
@@ -205,18 +203,19 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
           if (highlightedCard != null) {
             if (highlightedCard.getX() == x && highlightedCard.getY() == y) {
               highlightedCard = null;
+            } else if (highlightedCard.getX() != x || highlightedCard.getY() != y) {
+              highlightedCard = new Point(x, y);
             }
           } else {
             highlightedCard = new Point(x, y);
-            drawBoard(g2d);
           }
-
         }
 
         //controller on click action will go here
       } catch (NoninvertibleTransformException ex) {
         throw new RuntimeException(ex);
       }
+      view.refresh();
     }
 
     private void printIndexIfGrid(Point2D modelPt) {

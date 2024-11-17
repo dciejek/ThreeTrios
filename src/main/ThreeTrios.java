@@ -1,3 +1,5 @@
+package main;
+
 import java.io.File;
 import java.util.List;
 
@@ -14,6 +16,10 @@ import view.ThreeTriosFrame;
  * the view as a moment in time as described by how the model is set up.
  */
 public final class ThreeTrios {
+  /**
+   * Main method to test GUI based view.
+   * @param args arguments
+   */
   public static void main(String[] args) {
     ThreeTriosModel<PlayingCard> model = new TTModel();
     File cardsFile = new File("docs" + File.separator + "cards1");
@@ -27,8 +33,10 @@ public final class ThreeTrios {
     model.placeCard(0, 0, 0);
     model.placeCard(1, 2, 0);
     model.placeCard(1, 1, 1);
-    model.placeCard(1, 2, 2);
+
     ThreeTriosFrame view = new TTGuiView(model);
+
+    view.addClickListener();
     view.makeVisible();
   }
 }

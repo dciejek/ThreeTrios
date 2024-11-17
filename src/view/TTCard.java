@@ -51,9 +51,16 @@ public class TTCard extends Path2D.Double {
     g2d.drawString(CardValue.toStringValue(card.getWest()),
             x + size / (float) 4, y + size / (float) 2);
     if (selected) {
+      Rectangle top, bottom, left, right;
       g2d.setColor(Color.GREEN);
-      Shape highlight = new Rectangle(x, y, size - 5, size - 5);
-      g2d.draw(highlight);
+      top = new Rectangle(x, y, size - 5, 5);
+      bottom = new Rectangle(x, y + size - 5, size - 5, 5);
+      left = new Rectangle(x, y, 5, size - 5);
+      right = new Rectangle(x + size - 5, y, 5, size);
+      g2d.fill(top);
+      g2d.fill(bottom);
+      g2d.fill(left);
+      g2d.fill(right);
     }
   }
 
