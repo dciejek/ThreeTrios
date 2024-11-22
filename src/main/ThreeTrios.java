@@ -36,7 +36,7 @@ public final class ThreeTrios {
 
     ThreeTriosFrame view = new TTGuiView(model);
 
-    view.addClickListener();
+   // view.addClickListener();
     view.makeVisible();
   }
 }

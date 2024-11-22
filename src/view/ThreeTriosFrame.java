@@ -1,5 +1,7 @@
 package view;
 
+import controller.ThreeTriosController;
+
 /**
  * The display frame interface for a game of Three Trios. Able to be updated
  * via click events and refreshed to update the visual state.
@@ -7,10 +9,9 @@ package view;
 public interface ThreeTriosFrame {
   /**
    * Set up to handle click events in this view.
-   * In this current implementation only to highlight cards,
-   * later implementations can incorporate the controller's features.
+   * @param listener the controller
    */
-  void addClickListener();
+  void addClickListener(ThreeTriosController listener);
 
   /**
    * Refresh the view to reflect any changes in the game state.
