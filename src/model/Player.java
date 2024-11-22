@@ -35,7 +35,7 @@ public interface Player<C extends Card> {
   void addToHand(C card);
 
   /**
-   * Get the move for the player. For human players it uses a Scanner
+   * Get the move for the player. For human players it uses clicks
    * and for CPU players it uses a TTStrategy to get the move.
    * @param model   The model to play one
    * @return        The play for this player
