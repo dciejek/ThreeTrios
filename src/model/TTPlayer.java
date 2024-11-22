@@ -10,7 +10,7 @@ import strategy.Play;
  */
 public class TTPlayer implements Player<PlayingCard> {
 
-  private final ReadOnlyThreeTriosModel<PlayingCard> model;
+  private ReadOnlyThreeTriosModel<PlayingCard> model;
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
 
