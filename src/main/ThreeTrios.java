@@ -2,9 +2,11 @@ package main;
 
 import java.io.File;
 import java.util.List;
+import java.util.Scanner;
 
 import controller.FileHandler;
 import model.Cell;
+import model.Player;
 import model.PlayingCard;
 import model.TTModel;
 import model.ThreeTriosModel;
@@ -21,7 +23,13 @@ public final class ThreeTrios {
    * @param args arguments
    */
   public static void main(String[] args) {
-    ThreeTriosModel<PlayingCard> model = new TTModel();
+    PlayerFactory factory = new PlayerFactory();
+    Scanner sc = new Scanner(System.in);
+
+    Player<PlayingCard> p1 = factory.stringToPlayer(sc.next());
+    Player<PlayingCard> p2 = factory.stringToPlayer(sc.next());
+
+    ThreeTriosModel<PlayingCard> model = new TTModel(p1, p2);
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "XGrid");
     List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);

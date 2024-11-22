@@ -51,4 +51,17 @@ public class TTPlayer implements Player<PlayingCard> {
   public Play getPlay(ThreeTriosModel<PlayingCard> model) {
     return null;
   }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof TTPlayer)) {
+      throw new IllegalArgumentException("other is not a TTPlayer");
+    }
+    return this.hashCode() == other.hashCode();
+  }
+
+  @Override
+  public int hashCode() {
+    return this.color.hashCode() + this.hand.hashCode();
+  }
 }
