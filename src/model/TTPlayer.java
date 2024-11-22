@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import strategy.Play;
 
 /**
  * A player in a game of Three Trios.
@@ -42,5 +45,10 @@ public class TTPlayer implements Player<PlayingCard> {
   @Override
   public void addToHand(PlayingCard card) {
     this.hand.add(card);
+  }
+
+  @Override
+  public Play getPlay(ThreeTriosModel<PlayingCard> model) {
+    return null;
   }
 }

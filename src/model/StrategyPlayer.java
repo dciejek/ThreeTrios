@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import strategy.Play;
 import strategy.TTStrategy;
 
 /**
@@ -14,7 +15,7 @@ public class StrategyPlayer implements Player<PlayingCard> {
 
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
-
+  private final TTStrategy<PlayingCard> strategy;
   /**
    * Constructs a player that has a PlayerColor for all of its cards, as well
    * as an empty Hand of PlayingCards.
@@ -27,6 +28,7 @@ public class StrategyPlayer implements Player<PlayingCard> {
     }
     this.color = color;
     this.hand = new ArrayList<>();
+    this.strategy = strategy;
   }
 
   @Override
@@ -48,4 +50,10 @@ public class StrategyPlayer implements Player<PlayingCard> {
   public void addToHand(PlayingCard card) {
     this.hand.add(card);
   }
+
+  @Override
+  public Play getPlay(ThreeTriosModel<PlayingCard> model) {
+    return strategy.playToPoint(model, this);
+  }
+
 }

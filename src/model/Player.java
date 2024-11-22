@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import strategy.Play;
+
 /**
  * Representation of a ThreeTrios player. Each player has a PlayerColor that represents
  * the color of its cards (in Hand and on Grid), as well as a Hand of three trios Cards.
@@ -32,4 +34,11 @@ public interface Player<C extends Card> {
    */
   void addToHand(C card);
 
+  /**
+   * Get the move for the player. For human players it uses a Scanner
+   * and for CPU players it uses a TTStrategy to get the move.
+   * @param model   The model to play one
+   * @return        The play for this player
+   */
+  Play getPlay(ThreeTriosModel<C> model);
 }
