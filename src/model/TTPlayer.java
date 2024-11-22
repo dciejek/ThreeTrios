@@ -1,25 +1,28 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import strategy.Play;
+
 
 /**
  * A player in a game of Three Trios.
  */
 public class TTPlayer implements Player<PlayingCard> {
 
+  private final ReadOnlyThreeTriosModel<PlayingCard> model;
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
 
   /**
    * Constructs a player that has a PlayerColor for all of its cards, as well
    * as an empty Hand of PlayingCards.
+   * @param model the model this player is using
    * @param color the color of the player's cards
    * @throws IllegalArgumentException if the PlayerColor is null
    */
-  public TTPlayer(PlayerColor color) {
+  public TTPlayer(ReadOnlyThreeTriosModel<PlayingCard> model, PlayerColor color) {
+    this.model = model;
     if (color == null) {
       throw new IllegalArgumentException("color cannot be null");
     }
@@ -48,14 +51,15 @@ public class TTPlayer implements Player<PlayingCard> {
   }
 
   @Override
-  public Play getPlay(ThreeTriosModel<PlayingCard> model) {
+  public Play getPlay() {
     return null;
   }
+
 
   @Override
   public boolean equals(Object other) {
     if (!(other instanceof TTPlayer)) {
-      throw new IllegalArgumentException("other is not a TTPlayer");
+      return false;
     }
     return this.hashCode() == other.hashCode();
   }

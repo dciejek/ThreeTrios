@@ -83,13 +83,4 @@ public interface ThreeTriosModel<C extends Card> extends ReadOnlyThreeTriosModel
    */
   Cell getCellAt(int row, int col);
 
-  /**
-   * Returns the number of cards that can be flipped by playing the given card
-   * to the given position.
-   * @param card  the card to play
-   * @param row   the row to play to
-   * @param col   the column to play to
-   * @return number of cards that can be flipped playing card to position
-   */
-  int numFlipped(Card card, int row, int col);
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import model.Card;
 import model.Cell;
 import model.Player;
+import model.ReadOnlyThreeTriosModel;
 import model.ThreeTriosModel;
 
 /**
@@ -16,7 +17,7 @@ import model.ThreeTriosModel;
 public class FlipStrategy implements TTStrategy<Card> {
 
   @Override
-  public Play playToPoint(ThreeTriosModel<Card> model, Player<Card> player) {
+  public Play playToPoint(ReadOnlyThreeTriosModel<Card> model, Player<Card> player) {
     List<Play> plays = new ArrayList<Play>();
     Cell currCell;
     int currHighest = 0;

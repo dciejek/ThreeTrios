@@ -19,8 +19,8 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    */
   public TTModel() {
     grid = new ArrayList<>();
-    playerOne = new TTPlayer(PlayerColor.BLUE);
-    playerTwo = new TTPlayer(PlayerColor.RED);
+    playerOne = new TTPlayer(this, PlayerColor.BLUE);
+    playerTwo = new TTPlayer(this, PlayerColor.RED);
     activePlayer = playerOne;
     playableCells = -1;
     isStarted = false;

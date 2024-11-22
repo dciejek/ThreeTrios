@@ -35,10 +35,9 @@ public interface Player<C extends Card> {
   void addToHand(C card);
 
   /**
-   * Get the move for the player. For human players it uses clicks
-   * and for CPU players it uses a TTStrategy to get the move.
-   * @param model   The model to play one
-   * @return        The play for this player
+   * Gets the Play for this player. Uses a Strategy for CPU players,
+   * and a controller for human players.
+   * @return  The Play
    */
-  Play getPlay(ThreeTriosModel<C> model);
+  Play getPlay();
 }

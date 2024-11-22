@@ -2,6 +2,7 @@ package strategy;
 
 import model.Card;
 import model.Player;
+import model.ReadOnlyThreeTriosModel;
 import model.ThreeTriosModel;
 
 /**
@@ -17,5 +18,5 @@ public interface TTStrategy<C extends Card> {
    * @throws IllegalArgumentException If either argument is null
    * @throws IllegalStateException    If the player given is not the active player in the model
    */
-  public Play playToPoint(ThreeTriosModel<C> model, Player<C> player);
+  public Play playToPoint(ReadOnlyThreeTriosModel<C> model, Player<C> player);
 }

@@ -25,11 +25,10 @@ public final class ThreeTrios {
   public static void main(String[] args) {
     PlayerFactory factory = new PlayerFactory();
     Scanner sc = new Scanner(System.in);
+    ThreeTriosModel<PlayingCard> model = new TTModel();
+    model = new TTModel(factory.stringToPlayer(model, sc.next()),
+            factory.stringToPlayer(model, sc.next()));
 
-    Player<PlayingCard> p1 = factory.stringToPlayer(sc.next());
-    Player<PlayingCard> p2 = factory.stringToPlayer(sc.next());
-
-    ThreeTriosModel<PlayingCard> model = new TTModel(p1, p2);
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "XGrid");
     List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);

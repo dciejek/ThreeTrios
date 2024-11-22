@@ -18,16 +18,17 @@ public class TestPlayer {
   public void testPlayerConstruction() {
     Player test;
     Assert.assertThrows(IllegalArgumentException.class,
-        () -> new TTPlayer(null));
-    test = new TTPlayer(PlayerColor.BLUE);
+        () -> new TTPlayer(null, null));
+    test = new TTPlayer(new TTModel(), PlayerColor.BLUE);
     Assert.assertEquals(PlayerColor.BLUE, test.getColor());
     Assert.assertTrue(test.getHand().isEmpty());
   }
 
   @Before
   public void setUp() {
-    playerOne = new TTPlayer(PlayerColor.BLUE);
-    playerTwo = new TTPlayer(PlayerColor.RED);
+    ThreeTriosModel<PlayingCard> model = new TTModel();
+    playerOne = new TTPlayer(model, PlayerColor.BLUE);
+    playerTwo = new TTPlayer(model, PlayerColor.RED);
 
     weakCard = new PlayingCard("Weak",
             CardValue.ONE,

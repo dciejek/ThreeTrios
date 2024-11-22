@@ -5,6 +5,7 @@ import model.PlayerColor;
 import model.PlayingCard;
 import model.StrategyPlayer;
 import model.TTPlayer;
+import model.ThreeTriosModel;
 import strategy.CornerStrategy;
 import strategy.FlipStrategy;
 
@@ -27,14 +28,14 @@ public class PlayerFactory {
    * @param playerName  The type of Player to create
    * @return            The specified type of Player
    */
-  public Player<PlayingCard> stringToPlayer(String playerName) {
+  public Player<PlayingCard> stringToPlayer(ThreeTriosModel model, String playerName) {
     switch (playerName) {
       case "person":
-        return new TTPlayer(countToColor());
+        return new TTPlayer(model, countToColor());
       case "corner":
-        return new StrategyPlayer(countToColor(), new CornerStrategy());
+        return new StrategyPlayer(model, countToColor(), new CornerStrategy());
       case "flip":
-        return new StrategyPlayer(countToColor(), new FlipStrategy());
+        return new StrategyPlayer(model, countToColor(), new FlipStrategy());
     }
     throw new IllegalArgumentException("Player type not accepted");
   }
