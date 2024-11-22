@@ -42,16 +42,16 @@ public class PlayerFactory {
 
   /**
    * Gives the color for the player being initialized.
-   * @return    BLUE for the first player, RED for the second
+   * @return    RED for the first player, BLUE for the second
    */
   public PlayerColor countToColor() {
     if (count == 0) {
       count++;
-      return PlayerColor.BLUE;
+      return PlayerColor.RED;
     }
     if (count == 1) {
       count++;
-      return PlayerColor.RED;
+      return PlayerColor.BLUE;
     }
 
     throw new IllegalStateException("Already used two players");

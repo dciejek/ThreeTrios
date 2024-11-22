@@ -3,7 +3,7 @@ package view;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import controller.ThreeTriosController;
 import model.PlayingCard;
@@ -59,10 +59,14 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
   }
 
   @Override
+  public JPanel getPanel() {
+    return panel;
+  }
+
+  @Override
   public Dimension getPreferredSize() {
     return new Dimension((model.getRow(0).size() + 2) * SIZE,
             (Math.max(model.getCurrentPlayer().getHand().size(),
                     model.getGrid().size())) * SIZE);
   }
-
 }

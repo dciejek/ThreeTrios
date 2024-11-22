@@ -3,6 +3,7 @@ package strategy;
 import java.io.IOException;
 import java.util.List;
 
+import controller.ThreeTriosController;
 import model.Card;
 import model.Cell;
 import model.Player;
@@ -82,5 +83,10 @@ public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<PlayingCa
   @Override
   public int numFlipped(Card card, int row, int col) {
     return base.numFlipped(card, row, col);
+  }
+
+  @Override
+  public void addTurnListener(ThreeTriosController listener) {
+    //is a mock
   }
 }

@@ -7,8 +7,8 @@ import java.awt.geom.Point2D;
  */
 public interface ThreeTriosPanel {
   /**
-   * Updates the highlighted card based on a given 2D point.
-   * @throws IllegalArgumentException if the point is null.
+   * Updates the highlighted card based on a given 2D point. 
+   * Can be null to signify no highlighted card.
    */
   void setHighlightedCard(Point2D point);
 

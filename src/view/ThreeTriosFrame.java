@@ -2,6 +2,8 @@ package view;
 
 import java.awt.geom.Point2D;
 
+import javax.swing.*;
+
 import controller.ThreeTriosController;
 import model.Player;
 import model.PlayingCard;
@@ -36,4 +38,9 @@ public interface ThreeTriosFrame {
    * Sets the highlighted card from the panel that is associated with the view.
    */
   void setHighlightedCard(Point2D point);
+
+  /**
+   * Gets the panel component that makes up the view.
+   */
+  JPanel getPanel();
 }

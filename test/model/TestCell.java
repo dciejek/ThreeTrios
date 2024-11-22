@@ -13,16 +13,17 @@ public class TestCell {
   Cell playerOneCell;
   Card random;
   Player player;
+  ThreeTriosModel model;
 
   @Before
   public void setUp() {
     holeCell = new HoleCell();
     cardCell = new CardCell();
     playerOneCell = new CardCell();
-
+    model = new TTModel();
     random = new PlayingCard("random",
             CardValue.ONE, CardValue.FIVE, CardValue.THREE, CardValue.NINE);
-    player = new TTPlayer(PlayerColor.BLUE);
+    player = new TTPlayer(model, PlayerColor.BLUE);
   }
 
   @Test
