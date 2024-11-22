@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.geom.Point2D;
+
 import model.Player;
 import model.PlayingCard;
 import model.ThreeTriosModel;
@@ -28,7 +30,6 @@ public class TTController implements ThreeTriosController {
 
   @Override
   public void playGame() {
-    //addClickListener can go in constructor or in this method
     view.addClickListener(this);
     view.makeVisible();
   }
@@ -45,10 +46,9 @@ public class TTController implements ThreeTriosController {
     }
     //If the cell selected is in the players hand update highlight
     else if (cardSelectedIsInHand(row, col)) {
-      //Change highlighted card
-      //Not yet implemented
-      //Should set cell to highlight & un-highlight all other cells
-      //If cell is already highlighted then un-highlight
+      view.setHighlightedCard(new Point2D.Double(row, col));
+      view.refresh();
+      return;
     }
     //Check that if the cell is on the grid a card is selected
     //No card selected not yet implemented
@@ -56,7 +56,7 @@ public class TTController implements ThreeTriosController {
       return;
     }
     //Last case (card selected & grid clicked (playCard))
-
+    model.placeCard((int) view.getHighlightedCard().getY(), row, col);
     view.refresh();
   }
 
@@ -75,8 +75,7 @@ public class TTController implements ThreeTriosController {
   }
 
   private boolean noCardSelected() {
-    //not done yet
-    return false;
+    return view.getHighlightedCard() == null;
   }
 
   private boolean notPlayersTurn() {
