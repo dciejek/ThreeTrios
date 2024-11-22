@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import controller.FileHandler;
+import controller.TTController;
+import controller.ThreeTriosController;
 import model.Cell;
 import model.Player;
 import model.PlayingCard;
@@ -26,22 +28,27 @@ public final class ThreeTrios {
     PlayerFactory factory = new PlayerFactory();
     Scanner sc = new Scanner(System.in);
     ThreeTriosModel<PlayingCard> model = new TTModel();
-    model = new TTModel(factory.stringToPlayer(model, sc.next()),
-            factory.stringToPlayer(model, sc.next()));
+    Player<PlayingCard> p1 = factory.stringToPlayer(model, sc.next());
+    Player<PlayingCard> p2 = factory.stringToPlayer(model, sc.next());
+    
+    model = new TTModel(p1, p2);
 
     File cardsFile = new File("docs" + File.separator + "cards1");
-    File gridFile = new File("docs" + File.separator + "XGrid");
+    File gridFile = new File("docs" + File.separator + "3x3Grid");
     List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);
     List<PlayingCard> cards = FileHandler.readCards(cardsFile);
     int rows = FileHandler.readRowNum(gridFile);
     int cols = FileHandler.readColNum(gridFile);
 
     model.startGame(grid, cards, rows, cols);
-
-
+    
     ThreeTriosFrame view = new TTGuiView(model);
-
-   // view.addClickListener();
-    view.makeVisible();
+    ThreeTriosFrame view2 = new TTGuiView(model);
+    
+    ThreeTriosController controller = new TTController(model, p1, view);
+    ThreeTriosController controller2 = new TTController(model, p2, view2);
+    
+    controller.playGame();
+    controller2.playGame();
   }
 }

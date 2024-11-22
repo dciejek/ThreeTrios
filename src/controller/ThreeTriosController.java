@@ -1,8 +1,5 @@
 package controller;
 
-import model.PlayingCard;
-import model.ThreeTriosModel;
-
 /**
  * Represents a Controller for a game of Three Trios, handle a players
  * moves by executing them to the model.

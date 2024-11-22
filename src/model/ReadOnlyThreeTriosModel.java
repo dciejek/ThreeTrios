@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import controller.ThreeTriosController;
+
 /**
  * A ReadOnly interface for a game of three trios.
  * @param <C> The type of cards to use for the game
@@ -74,4 +76,10 @@ public interface ReadOnlyThreeTriosModel<C extends Card> {
    * @return number of cards that can be flipped playing card to position
    */
   int numFlipped(Card card, int row, int col);
+
+  /**
+   * Set up to handle new turn events in this model.
+   * @param listener the controller.
+   */
+  void addTurnListener(ThreeTriosController listener);
 }

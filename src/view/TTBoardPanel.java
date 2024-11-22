@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import controller.ThreeTriosController;
 import model.Card;
 import model.Cell;
+import model.Player;
 import model.PlayerColor;
 import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
@@ -40,7 +41,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
    */
   public TTBoardPanel(ReadOnlyThreeTriosModel<PlayingCard> model) {
     this.model = model;
-    maxHandSize = model.getCurrentPlayer().getHand().size();
+    maxHandSize = model.getPlayerOne().getHand().size();
     highlightedCard = null;
   }
 
@@ -61,11 +62,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     int posY = 0;
     TTCard cardSquare;
     //PlayerOne Hand
-    for (Card card : model.getPlayerOne().getHand()) {
-      cardSquare = new TTCard(card, SIZE);
-      cardSquare.drawCard(g2d, getColor(model.getPlayerOne().getColor()), posX, posY);
-      posY += SIZE;
-    }
+    drawHand(g2d, model.getPlayerOne(), posX, posY);
     //Add first border
     g2d.setColor(Color.BLACK);
     Shape borderOne = new Rectangle(SIZE - 5, 0,
@@ -92,11 +89,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     posX = (1 + model.getRow(0).size()) * SIZE;
     posY = 0;
     //PlayerTwo Hand
-    for (Card card : model.getPlayerTwo().getHand()) {
-      cardSquare = new TTCard(card, SIZE);
-      cardSquare.drawCard(g2d, getColor(model.getPlayerTwo().getColor()), posX, posY);
-      posY += SIZE;
-    }
+    drawHand(g2d, model.getPlayerTwo(), posX, posY);
     //Add second border (after PlayerTwo hand so that it is not covered)
     g2d.setColor(Color.BLACK);
     Shape borderTwo = new Rectangle((1 + model.getRow(0).size()) * SIZE, 0,
@@ -104,6 +97,16 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     g2d.fill(borderTwo);
     if (highlightedCard != null) {
       drawHighlightedCard((int) highlightedCard.getX(), (int) highlightedCard.getY());
+    }
+  }
+
+  private void drawHand(Graphics2D g2d, Player<PlayingCard> player, int x, int y) {
+    int posY = y;
+    TTCard cardSquare;
+    for (Card card : player.getHand()) {
+      cardSquare = new TTCard(card, SIZE);
+      cardSquare.drawCard(g2d, getColor(player.getColor()), x, posY);
+      posY += SIZE;
     }
   }
 
@@ -150,21 +153,15 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     AffineTransform transform = new AffineTransform();
     Dimension local = getLocalDimension();
     transform.scale(local.getWidth() / (model.getRow(0).size() + 2),
-            local.getHeight() / model.getGrid().size());
+            local.getHeight() /(Math.max(maxHandSize, model.getGrid().size())));
     return transform;
-  }
-
-  /**
-   * Adds a click listener for the controller to handle click events.
-   */
-  public void addClickListener(ThreeTriosController listener) {
-    this.addMouseListener(new TTClickListener(listener));
   }
 
   @Override
   public void setHighlightedCard(Point2D point) {
     if (point == null) {
-      throw new IllegalArgumentException("Point cannot be null");
+      highlightedCard = null;
+      return;
     }
     int x = (int) point.getX();
     int y = (int) point.getY();
@@ -193,6 +190,13 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     cardSquare.select();
     cardSquare.drawCard(g2d, getColor(model.getCurrentPlayer().getColor()),
             x * SIZE, y * SIZE);
+  }
+
+  /**
+   * Adds a click listener for the controller to handle click events.
+   */
+  public void addClickListener(ThreeTriosController listener) {
+    this.addMouseListener(new TTClickListener(listener));
   }
 
   /**

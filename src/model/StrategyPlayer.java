@@ -12,7 +12,7 @@ import strategy.TTStrategy;
  */
 public class StrategyPlayer implements Player<PlayingCard> {
 
-  private final ThreeTriosModel<PlayingCard> model;
+  private ThreeTriosModel<PlayingCard> model;
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
   private final TTStrategy strategy;

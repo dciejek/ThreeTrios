@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.geom.Point2D;
 
+import javax.swing.*;
+
 import model.Player;
 import model.PlayingCard;
 import model.ThreeTriosModel;
@@ -30,14 +32,20 @@ public class TTController implements ThreeTriosController {
 
   @Override
   public void playGame() {
+    model.addTurnListener(this);
     view.addClickListener(this);
     view.makeVisible();
   }
 
   @Override
-  public void handleCellClicked(int row, int col) {
+  public void handleCellClicked(int col, int row) {
+    view.refresh();
     //check that it is the players turn
     if (notPlayersTurn()) {
+      if (model.isGameOver()) {
+        JOptionPane.showMessageDialog(view.getPanel(), "Game over.\n" +
+                "Winner: " + model.getWinner().getColor().toString());
+      }
       return;
     }
     //Check that it isnt the opponents hand
@@ -46,7 +54,7 @@ public class TTController implements ThreeTriosController {
     }
     //If the cell selected is in the players hand update highlight
     else if (cardSelectedIsInHand(row, col)) {
-      view.setHighlightedCard(new Point2D.Double(row, col));
+      view.setHighlightedCard(new Point2D.Double(col, row));
       view.refresh();
       return;
     }
@@ -56,7 +64,21 @@ public class TTController implements ThreeTriosController {
       return;
     }
     //Last case (card selected & grid clicked (playCard))
-    model.placeCard((int) view.getHighlightedCard().getY(), row, col);
+    try {
+      model.placeCard((int) view.getHighlightedCard().getY(), row, col - 1);
+      view.setHighlightedCard(null);
+    } catch (NullPointerException e) {
+      JOptionPane.showMessageDialog(view.getPanel(),
+              "Please select a card from your hand first");
+    } catch (IllegalArgumentException | IllegalStateException e) {
+      if (e.getMessage().contains("over")) {
+        JOptionPane.showMessageDialog(view.getPanel(), "Game over.\n" +
+                "Winner: " + model.getWinner().getColor().toString());
+      } else {
+        JOptionPane.showMessageDialog(view.getPanel(),
+                "Selected card must be played to an empty card cell on the grid");
+      }
+    }
     view.refresh();
   }
 
@@ -65,7 +87,7 @@ public class TTController implements ThreeTriosController {
         && row < player.getHand().size()) {
       return true;
     } else {
-      return !playerHandIsLeftHand() && col == model.getRow(0).size() + 2
+      return !playerHandIsLeftHand() && col == model.getRow(0).size() + 1
               && row < player.getHand().size();
     }
   }

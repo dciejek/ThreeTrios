@@ -173,10 +173,10 @@ public class TestModel {
   public void testGetCurrentPlayer() {
     model = FileHandler.makeGame(new File("docs" + File.separator + "grid1"),
             new File("docs" + File.separator + "cards1"));
-    Player startingPlayer = new TTPlayer(PlayerColor.BLUE);
+    Player startingPlayer = new TTPlayer(model, PlayerColor.BLUE);
     Assert.assertEquals(startingPlayer.getColor(), model.getCurrentPlayer().getColor());
     model.placeCard(0, 0, 1);
-    Player nextPlayer = new TTPlayer(PlayerColor.RED);
+    Player nextPlayer = new TTPlayer(model, PlayerColor.RED);
     Assert.assertEquals(nextPlayer.getColor(), model.getCurrentPlayer().getColor());
   }
 

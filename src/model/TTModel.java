@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.ModelStatus;
+import controller.ThreeTriosController;
+
 /**
  * Represents a simple 2 player ThreeTriosModel.
  */
@@ -19,8 +22,8 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    */
   public TTModel() {
     grid = new ArrayList<>();
-    playerOne = new TTPlayer(this, PlayerColor.BLUE);
-    playerTwo = new TTPlayer(this, PlayerColor.RED);
+    playerOne = new TTPlayer(this, PlayerColor.RED);
+    playerTwo = new TTPlayer(this, PlayerColor.BLUE);
     activePlayer = playerOne;
     playableCells = -1;
     isStarted = false;
@@ -329,5 +332,29 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
       }
     }
     return count;
+  }
+
+  @Override
+  public void addTurnListener(ThreeTriosController listener) {
+    
+  }
+
+  /**
+   * An event listener for a three trios game. Uses the controller to handle new turn events.
+   */
+  class TTTurnListener implements ModelStatus {
+    private final ThreeTriosController features;
+    
+    public TTTurnListener(ThreeTriosController features) {
+      if (features == null) {
+        throw new IllegalArgumentException("Features cannot be null");
+      }
+      this.features = features;
+    }
+    
+    @Override
+    public void newTurn() {
+      //features.refreshView();
+    }
   }
 }
