@@ -15,6 +15,7 @@ import java.awt.geom.Point2D;
 
 import javax.swing.JPanel;
 
+import controller.ThreeTriosController;
 import model.Card;
 import model.Cell;
 import model.PlayerColor;
@@ -165,19 +166,19 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
    * Set up the view to handle click events (highlight cards), later implementations will
    * allow the controller to handle click events.
    */
-  public void addClickListener(ThreeTriosFrame view) {
-    this.addMouseListener(new TTClickListener(view));
+  public void addClickListener(ThreeTriosController listener) {
+    this.addMouseListener(new TTClickListener(listener));
   }
 
   class TTClickListener implements MouseListener {
     //Fill in for controller until it is implemented
-    ThreeTriosFrame view;
+    ThreeTriosController features;
     /**
      * Empty constructor, adjustable in later implementation to input a controller
      * so its features can be applied.
      */
-    public TTClickListener(ThreeTriosFrame view) {
-      this.view = view;
+    public TTClickListener(ThreeTriosController features) {
+      this.features = features;
     }
 
     @Override
@@ -210,12 +211,11 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
             highlightedCard = new Point(x, y);
           }
         }
-
-        //controller on click action will go here
+        //Convert highlighted card to hand indx
+        // this.features.handleCellClicked();
       } catch (NoninvertibleTransformException ex) {
         throw new RuntimeException(ex);
       }
-      view.refresh();
     }
 
     private void printIndexIfGrid(Point2D modelPt) {

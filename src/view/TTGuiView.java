@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import controller.ThreeTriosController;
 import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
 
@@ -33,8 +34,8 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
   }
 
   @Override
-  public void addClickListener() {
-    this.panel.addClickListener(this);
+  public void addClickListener(ThreeTriosController listener) {
+    this.panel.addClickListener(listener);
   }
 
   @Override
