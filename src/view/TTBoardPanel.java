@@ -163,19 +163,20 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
   }
 
   /**
-   * Set up the view to handle click events (highlight cards), later implementations will
-   * allow the controller to handle click events.
+   * Adds a click listener for the controller to handle click events.
    */
   public void addClickListener(ThreeTriosController listener) {
     this.addMouseListener(new TTClickListener(listener));
   }
 
+  /**
+   * A click listener for a three trios game. Uses the controller to handle events.
+   */
   class TTClickListener implements MouseListener {
-    //Fill in for controller until it is implemented
     ThreeTriosController features;
     /**
-     * Empty constructor, adjustable in later implementation to input a controller
-     * so its features can be applied.
+     * Constructor takes in a controller so that its features can handle
+     * specified click events.
      */
     public TTClickListener(ThreeTriosController features) {
       this.features = features;
@@ -193,13 +194,14 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
         Point2D physicalPt = e.getPoint();
         Point2D logicalPt = physicalToLogical.transform(physicalPt, null);
         Point2D modelPt = logicalToModel.transform(logicalPt, null);
-
+        int x = (int) modelPt.getX();
+        int y = (int) modelPt.getY();
         printIndexIfGrid(modelPt);
 
         //Highlight card
         if (highlightInBounds(modelPt)) {
-          int x = (int) modelPt.getX();
-          int y = (int) modelPt.getY();
+           x = (int) modelPt.getX();
+           y = (int) modelPt.getY();
 
           if (highlightedCard != null) {
             if (highlightedCard.getX() == x && highlightedCard.getY() == y) {

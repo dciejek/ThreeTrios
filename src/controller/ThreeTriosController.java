@@ -12,15 +12,14 @@ public interface ThreeTriosController {
   /**
    * Execute a single game of Three Trios, when the game is over
    * the playGame method ends.
-   * @param model a non-null Three Trios model
    */
-  void playGame(ThreeTriosModel<PlayingCard> model);
+  void playGame();
 
   /**
-   * Handle an action on a single cell of the grid, such as playing a card.
-   * @param handIndex the index of the card in a hand, 0 based index
+   * Handle an action on a single cell of the board, such as playing a card.
+   * 0 0 on the board is the first card in Player Ones hand, as both hands are counted
    * @param row row of cell clicked, 0 based index
    * @param col column of cell clicked, 0 based index
    */
-  void handleCellClicked(int handIndex, int row, int col);
+  void handleCellClicked(int row, int col);
 }
