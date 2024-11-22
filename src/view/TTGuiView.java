@@ -49,9 +49,9 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
 
   @Override
   public Dimension getPreferredSize() {
-    return new Dimension((model.getGrid().size() + 2) * SIZE,
+    return new Dimension((model.getRow(0).size() + 2) * SIZE,
             (Math.max(model.getCurrentPlayer().getHand().size(),
-                    model.getGrid().get(0).size())) * SIZE);
+                    model.getGrid().size())) * SIZE);
   }
 
 }

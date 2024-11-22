@@ -1,7 +1,5 @@
 package controller;
 
-import javax.swing.*;
-
 import model.Player;
 import model.PlayingCard;
 import model.ThreeTriosModel;
@@ -37,12 +35,72 @@ public class TTController implements ThreeTriosController {
 
   @Override
   public void handleCellClicked(int row, int col) {
+    //check that it is the players turn
+    if (notPlayersTurn()) {
+      return;
+    }
+    //Check that it isnt the opponents hand
+    else if (isCellInOpponentHand(row, col)) {
+      return;
+    }
+    //If the cell selected is in the players hand update highlight
+    else if (cardSelectedIsInHand(row, col)) {
+      //Change highlighted card
+      //Not yet implemented
+      //Should set cell to highlight & un-highlight all other cells
+      //If cell is already highlighted then un-highlight
+    }
+    //Check that if the cell is on the grid a card is selected
+    //No card selected not yet implemented
+    else if (noCardSelected() && gridClicked(row, col)) {
+      return;
+    }
+    //Last case (card selected & grid clicked (playCard))
+
+    view.refresh();
+  }
+
+  private boolean cardSelectedIsInHand(int row, int col) {
+    if (playerHandIsLeftHand() && col == 0
+        && row < player.getHand().size()) {
+      return true;
+    } else {
+      return !playerHandIsLeftHand() && col == model.getRow(0).size() + 2
+              && row < player.getHand().size();
+    }
+  }
+
+  private boolean gridClicked(int row, int col) {
+    return row > 0 && row <= model.getGrid().size() && col >= 1 && col <= model.getRow(0).size();
+  }
+
+  private boolean noCardSelected() {
+    //not done yet
+    return false;
+  }
+
+  private boolean notPlayersTurn() {
     if (!model.getCurrentPlayer().equals(player)) {
       //JOptionPane showMessage
+      return true;
     }
-    //check that its the players turn
-    //check that card selected is from own hand
-    //
-    view.refresh();
+    return false;
+  }
+
+
+  private boolean isCellInOpponentHand(int row, int col) {
+    //We don't care if there is/isn't a card in that row since it's already the wrong hand.
+    if (playerHandIsLeftHand() && col == model.getRow(0).size() + 2) {
+      //This aint yo hand twin
+      return true;
+    } else if (!playerHandIsLeftHand() && col == 0) {
+      //this aint yo hand twin
+      return true;
+    }
+    return false;
+  }
+
+  private boolean playerHandIsLeftHand() {
+    return player.equals(model.getPlayerOne());
   }
 }

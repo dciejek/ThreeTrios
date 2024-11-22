@@ -70,13 +70,13 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     //Add first border
     g2d.setColor(Color.BLACK);
     Shape borderOne = new Rectangle(SIZE - 5, 0,
-            5, Math.max(maxHandSize * SIZE, model.getGrid().get(0).size() * SIZE));
+            5, Math.max(maxHandSize * SIZE, model.getGrid().size() * SIZE));
     g2d.fill(borderOne);
     posX = SIZE;
     posY = 0;
     //Grid
     for (int i = 0; i < model.getGrid().size(); i++) {
-      for (Cell cell : model.getGrid().get(i)) {
+      for (Cell cell : model.getRow(i)) {
         if (cell.toString().equals(" ")) {
           drawCell(g2d, cell, SIZE, posX, posY);
         } else if (cell.toString().equals("_")) {
@@ -90,7 +90,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
       posX = SIZE;
       posY += SIZE;
     }
-    posX = (1 + model.getGrid().size()) * SIZE;
+    posX = (1 + model.getRow(0).size()) * SIZE;
     posY = 0;
     //PlayerTwo Hand
     for (Card card : model.getPlayerTwo().getHand()) {
@@ -100,8 +100,8 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     }
     //Add second border (after PlayerTwo hand so that it is not covered)
     g2d.setColor(Color.BLACK);
-    Shape borderTwo = new Rectangle((1 + model.getGrid().size()) * SIZE, 0,
-            5, Math.max(maxHandSize * SIZE, model.getGrid().get(0).size() * SIZE));
+    Shape borderTwo = new Rectangle((1 + model.getRow(0).size()) * SIZE, 0,
+            5, Math.max(maxHandSize * SIZE, model.getGrid().size() * SIZE));
     g2d.fill(borderTwo);
     if (highlightedCard != null) {
       drawHighlightedCard((int) highlightedCard.getX(), (int) highlightedCard.getY());
@@ -134,9 +134,9 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
 
   private Dimension getLocalDimension() {
     // each row + 2 (for each hand) x  (max each column/hand size)
-    return new Dimension((model.getGrid().size() + 2) * SIZE,
+    return new Dimension((model.getRow(0).size() + 2) * SIZE,
             (Math.max(maxHandSize,
-                    model.getGrid().get(0).size())) * SIZE);
+                    model.getGrid().size())) * SIZE);
   }
 
   private AffineTransform getLogicalToPhysicalTransform() {
@@ -150,8 +150,8 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
   private AffineTransform getModelToLogicalTransform() {
     AffineTransform transform = new AffineTransform();
     Dimension local = getLocalDimension();
-    transform.scale(local.getWidth() / (model.getGrid().size() + 2),
-            local.getHeight() / model.getGrid().get(0).size());
+    transform.scale(local.getWidth() / (model.getRow(0).size() + 2),
+            local.getHeight() / model.getGrid().size());
     return transform;
   }
 

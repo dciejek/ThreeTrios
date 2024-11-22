@@ -30,9 +30,7 @@ public final class ThreeTrios {
     int cols = FileHandler.readColNum(gridFile);
 
     model.startGame(grid, cards, rows, cols);
-    model.placeCard(0, 0, 0);
-    model.placeCard(1, 2, 0);
-    model.placeCard(1, 1, 1);
+
 
     ThreeTriosFrame view = new TTGuiView(model);
 
