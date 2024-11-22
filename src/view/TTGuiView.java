@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.geom.Point2D;
 
 import javax.swing.JFrame;
 
@@ -45,6 +46,16 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
 
   public void makeVisible() {
     this.setVisible(true);
+  }
+
+  @Override
+  public Point2D getHighlightedCard() {
+    return panel.getHighlightedCard();
+  }
+
+  @Override
+  public void setHighlightedCard(Point2D point) {
+    panel.setHighlightedCard(point);
   }
 
   @Override

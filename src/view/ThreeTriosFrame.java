@@ -1,6 +1,10 @@
 package view;
 
+import java.awt.geom.Point2D;
+
 import controller.ThreeTriosController;
+import model.Player;
+import model.PlayingCard;
 
 /**
  * The display frame interface for a game of Three Trios. Able to be updated
@@ -22,4 +26,14 @@ public interface ThreeTriosFrame {
    * Make the view visible to start the game session.
    */
   void makeVisible();
+
+  /**
+   * Gets the highlighted card from the panel associated with the view.
+   */
+  Point2D getHighlightedCard();
+
+  /**
+   * Sets the highlighted card from the panel that is associated with the view.
+   */
+  void setHighlightedCard(Point2D point);
 }

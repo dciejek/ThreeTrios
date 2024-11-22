@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
@@ -155,18 +154,45 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     return transform;
   }
 
-  private void drawHighlightedCard(int x, int y) {
-    TTCard cardSquare = new TTCard(model.getCurrentPlayer().getHand().get(y), SIZE);
-    cardSquare.select();
-    cardSquare.drawCard(g2d, getColor(model.getCurrentPlayer().getColor()),
-              x * SIZE, y * SIZE);
-  }
-
   /**
    * Adds a click listener for the controller to handle click events.
    */
   public void addClickListener(ThreeTriosController listener) {
     this.addMouseListener(new TTClickListener(listener));
+  }
+
+  @Override
+  public void setHighlightedCard(Point2D point) {
+    if (point == null) {
+      throw new IllegalArgumentException("Point cannot be null");
+    }
+    int x = (int) point.getX();
+    int y = (int) point.getY();
+    highlightCard(x, y);
+  }
+
+  private void highlightCard(int handIndex, int cardIndex) {
+    if (highlightedCard != null && cardIndex == highlightedCard.getY()) {
+      highlightedCard = null;
+    } else {
+      highlightedCard = new Point2D.Double(handIndex, cardIndex);
+    }
+  }
+
+  @Override
+  public Point2D getHighlightedCard() {
+    if (highlightedCard == null) {
+      return null;
+    } else {
+      return new Point2D.Double(highlightedCard.getX(), highlightedCard.getY());
+    }
+  }
+
+  private void drawHighlightedCard(int x, int y) {
+    TTCard cardSquare = new TTCard(model.getCurrentPlayer().getHand().get(y), SIZE);
+    cardSquare.select();
+    cardSquare.drawCard(g2d, getColor(model.getCurrentPlayer().getColor()),
+            x * SIZE, y * SIZE);
   }
 
   /**
@@ -194,27 +220,14 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
         Point2D physicalPt = e.getPoint();
         Point2D logicalPt = physicalToLogical.transform(physicalPt, null);
         Point2D modelPt = logicalToModel.transform(logicalPt, null);
+        //Rounds to int values so index's are valid
         int x = (int) modelPt.getX();
         int y = (int) modelPt.getY();
+
+        modelPt.setLocation(x, y);
         printIndexIfGrid(modelPt);
 
-        //Highlight card
-        if (highlightInBounds(modelPt)) {
-           x = (int) modelPt.getX();
-           y = (int) modelPt.getY();
-
-          if (highlightedCard != null) {
-            if (highlightedCard.getX() == x && highlightedCard.getY() == y) {
-              highlightedCard = null;
-            } else if (highlightedCard.getX() != x || highlightedCard.getY() != y) {
-              highlightedCard = new Point(x, y);
-            }
-          } else {
-            highlightedCard = new Point(x, y);
-          }
-        }
-        //Convert highlighted card to hand indx
-        // this.features.handleCellClicked();
+        features.handleCellClicked(x, y);
       } catch (NoninvertibleTransformException ex) {
         throw new RuntimeException(ex);
       }
@@ -228,19 +241,6 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
         int gridY = (int) modelPt.getY();
         System.out.println(gridX + ", " + gridY);
       }
-    }
-
-    private boolean highlightInBounds(Point2D modelPt) {
-      int x = (int) modelPt.getX();
-      int y = (int) modelPt.getY();
-
-      if (x == 0 && model.getPlayerOne() == model.getCurrentPlayer()) {
-        return y < model.getPlayerOne().getHand().size();
-      } else if (x == model.getGrid().size() + 1
-              && model.getPlayerTwo() == model.getCurrentPlayer()) {
-        return y < model.getPlayerTwo().getHand().size();
-      }
-      return false;
     }
 
     @Override
