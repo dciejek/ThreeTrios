@@ -32,6 +32,8 @@ public final class ThreeTrios {
     Player<PlayingCard> p2 = factory.stringToPlayer(model, sc.next());
     
     model = new TTModel(p1, p2);
+    p1.setModel(model);
+    p2.setModel(model);
 
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "3x3Grid");

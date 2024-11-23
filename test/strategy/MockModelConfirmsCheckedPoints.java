@@ -89,4 +89,9 @@ public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<PlayingCa
   public void addTurnListener(ThreeTriosController listener) {
     //is a mock
   }
+
+  @Override
+  public boolean isGameStarted() {
+    return false;
+  }
 }
