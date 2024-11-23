@@ -240,7 +240,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     private void printIndexIfGrid(Point2D modelPt) {
       if ((int) modelPt.getX() != 0
               && (int) modelPt.getX() != model.getGrid().get(0).size() + 1
-              && (int) modelPt.getY() <= model.getGrid().size()) {
+              && (int) modelPt.getY() < model.getGrid().size()) {
         int gridX = (int) modelPt.getX() - 1;
         int gridY = (int) modelPt.getY();
         System.out.println(gridX + ", " + gridY);

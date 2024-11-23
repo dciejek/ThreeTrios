@@ -16,6 +16,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   private Player<PlayingCard> activePlayer;
   private int playableCells;
   private boolean isStarted;
+  private final List<TTTurnListener> listeners;
 
   /**
    * The default constructor for a model of Three Trios.
@@ -27,6 +28,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     activePlayer = playerOne;
     playableCells = -1;
     isStarted = false;
+    listeners = new ArrayList<>();
   }
 
   /**
@@ -41,6 +43,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     activePlayer = playerOne;
     playableCells = -1;
     isStarted = false;
+    listeners = new ArrayList<>();
   }
 
   @Override
@@ -196,6 +199,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     } else if (activePlayer.equals(playerTwo)) {
       activePlayer = playerOne;
     }
+    notifyNewTurn();
   }
 
   /**
@@ -336,7 +340,13 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
 
   @Override
   public void addTurnListener(ThreeTriosController listener) {
-    
+    listeners.add(new TTTurnListener(listener));
+  }
+  
+  private void notifyNewTurn() {
+    for (TTTurnListener listener : listeners) {
+      listener.newTurn();
+    }
   }
 
   @Override
@@ -359,7 +369,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     
     @Override
     public void newTurn() {
-      //features.refreshView();
+      //features.refresh();
     }
   }
 }
