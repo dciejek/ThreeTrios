@@ -51,8 +51,13 @@ public class TTPlayer implements Player<PlayingCard> {
   }
 
   @Override
-  public Play getPlay() {
+  public Play getPlay(ThreeTriosModel model) {
     return null;
+  }
+
+  @Override
+  public void setModel(ThreeTriosModel model) {
+    this.model = model;
   }
 
 
@@ -68,4 +73,6 @@ public class TTPlayer implements Player<PlayingCard> {
   public int hashCode() {
     return this.color.hashCode() + this.hand.hashCode();
   }
+
+
 }

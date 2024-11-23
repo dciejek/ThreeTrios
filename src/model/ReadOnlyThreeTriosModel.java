@@ -82,4 +82,6 @@ public interface ReadOnlyThreeTriosModel<C extends Card> {
    * @param listener the controller.
    */
   void addTurnListener(ThreeTriosController listener);
+
+  boolean isGameStarted();
 }

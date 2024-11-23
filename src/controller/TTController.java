@@ -8,6 +8,7 @@ import model.Player;
 import model.PlayingCard;
 import model.ThreeTriosModel;
 import view.ThreeTriosFrame;
+import strategy.Play;
 
 public class TTController implements ThreeTriosController {
 
@@ -48,6 +49,14 @@ public class TTController implements ThreeTriosController {
       }
       return;
     }
+
+    if (player.getPlay(model) != null && this.player.equals(model.getCurrentPlayer())) {
+      Play play = player.getPlay(model);
+      model.placeCard(play.handIdx, play.row, play.col);
+      view.refresh();
+      return;
+    }
+
     //Check that it isnt the opponents hand
     else if (isCellInOpponentHand(row, col)) {
       return;

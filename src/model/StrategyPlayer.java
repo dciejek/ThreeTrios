@@ -12,7 +12,7 @@ import strategy.TTStrategy;
  */
 public class StrategyPlayer implements Player<PlayingCard> {
 
-  private ThreeTriosModel<PlayingCard> model;
+  private ReadOnlyThreeTriosModel<PlayingCard> model;
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
   private final TTStrategy strategy;
@@ -22,7 +22,7 @@ public class StrategyPlayer implements Player<PlayingCard> {
    * @param color the color of the player's cards
    * @throws IllegalArgumentException if the PlayerColor is null
    */
-  public StrategyPlayer(ThreeTriosModel<PlayingCard> model, PlayerColor color, TTStrategy strategy) {
+  public StrategyPlayer(ReadOnlyThreeTriosModel<PlayingCard> model, PlayerColor color, TTStrategy strategy) {
     if (color == null) {
       throw new IllegalArgumentException("color cannot be null");
     }
@@ -53,8 +53,13 @@ public class StrategyPlayer implements Player<PlayingCard> {
   }
 
   @Override
-  public Play getPlay() {
+  public Play getPlay(ThreeTriosModel model) {
     return strategy.playToPoint(model, this);
+  }
+
+  @Override
+  public void setModel(ThreeTriosModel model) {
+    this.model = model;
   }
 
 

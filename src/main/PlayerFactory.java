@@ -3,9 +3,9 @@ package main;
 import model.Player;
 import model.PlayerColor;
 import model.PlayingCard;
+import model.ReadOnlyThreeTriosModel;
 import model.StrategyPlayer;
 import model.TTPlayer;
-import model.ThreeTriosModel;
 import strategy.CornerStrategy;
 import strategy.FlipStrategy;
 
@@ -28,7 +28,7 @@ public class PlayerFactory {
    * @param playerName  The type of Player to create
    * @return            The specified type of Player
    */
-  public Player<PlayingCard> stringToPlayer(ThreeTriosModel model, String playerName) {
+  public Player<PlayingCard> stringToPlayer(ReadOnlyThreeTriosModel model, String playerName) {
     switch (playerName) {
       case "person":
         return new TTPlayer(model, countToColor());

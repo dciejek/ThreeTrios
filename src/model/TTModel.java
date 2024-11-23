@@ -349,6 +349,11 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     }
   }
 
+  @Override
+  public boolean isGameStarted() {
+    return isStarted;
+  }
+
   /**
    * An event listener for a three trios game. Uses the controller to handle new turn events.
    */
