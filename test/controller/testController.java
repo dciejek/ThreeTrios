@@ -1,51 +1,62 @@
 package controller;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-public class testController {
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.StringWriter;
+import java.util.List;
+import java.util.Scanner;
+
+import main.PlayerFactory;
+import model.Cell;
+import model.Player;
+import model.PlayingCard;
+import model.TTModel;
+import model.ThreeTriosModel;
+import view.TTGuiView;
+import view.ThreeTriosFrame;
+
+/**
+ * Test class for the controller.
+ */
+public class TestController {
 
   @Test
-  public void testPlayGame() {
+  public void testMockModelConfirmsInputs() {
+    Appendable ap = new StringBuilder();
+    PlayerFactory factory = new PlayerFactory();
+    Scanner sc = new Scanner(System.in);
+    ThreeTriosModel model = new MockModelConfirmsInputs(ap);
+    Player<PlayingCard> p1 = factory.stringToPlayer(model, sc.next());
+    Player<PlayingCard> p2 = factory.stringToPlayer(model, sc.next());
 
-  }
+    p1.setModel(model);
+    p2.setModel(model);
 
-  @Test
-  public void testClickIgnoredNotOnTurn() {
-    //nothing happens
-    //Message sent
-  }
+    File cardsFile = new File("docs" + File.separator + "cards1");
+    File gridFile = new File("docs" + File.separator + "3x3Grid");
+    List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);
+    List<PlayingCard> cards = FileHandler.readCards(cardsFile);
+    int rows = FileHandler.readRowNum(gridFile);
+    int cols = FileHandler.readColNum(gridFile);
 
-  @Test
-  public void testHighlightCard() {
-    //Card is highlighted
-  }
+    model.startGame(grid, cards, rows, cols);
 
-  @Test
-  public void testUnhighlightCard() {
-    //When a new card is highlighted old is un
+    ThreeTriosFrame view = new TTGuiView(model);
+    ThreeTriosFrame view2 = new TTGuiView(model);
 
-    //When same card is clicked on again
-  }
+    ThreeTriosController controller = new TTController(model, p1, view);
+    ThreeTriosController controller2 = new TTController(model, p2, view2);
 
-  @Test
-  public void testGridClickedWithNoCardSelected() {
-    //nothing happens
-    //message sent
-  }
+    controller.playGame();
+    controller2.playGame();
 
-  @Test
-  public void testGridClickedWithCardSelected() {
-    //card is played to the grid
-  }
+    view.setHighlightedCard(new Point(0, 1));
+    controller.handleCellClicked(1, 2);
 
-  @Test
-  public void testPlayerClicks() {
-    //A player clicks on a card
-    //A player clicks on grid
-  }
-
-  @Test
-  public void testStrategyClicks() {
-    //A strategy works as expected
+    Assert.assertEquals("1, 1, 2", ap.toString());
   }
 }
