@@ -82,6 +82,7 @@ public class TTController implements ThreeTriosController {
     view.refresh();
   }
 
+
   private boolean cardSelectedIsInHand(int row, int col) {
     if (playerHandIsLeftHand() && col == 0
         && row < player.getHand().size()) {
