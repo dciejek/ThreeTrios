@@ -41,15 +41,14 @@ public class TTController implements ThreeTriosController {
   @Override
   public void handleCellClicked(int col, int row) {
     view.refresh();
-    //check that it is the players turn
-    if (notPlayersTurn()) {
-      if (model.isGameOver()) {
-        JOptionPane.showMessageDialog(view.getPanel(), "Game over.\n" +
-                "Winner: " + model.getWinner().getColor().toString());
-      }
+    if (model.isGameOver()) {
+      gameOverMessage();
       return;
     }
-
+    //check that it is the players turn
+    if (notPlayersTurn()) {
+      return;
+    }
     if (player.getPlay(model) != null && this.player.equals(model.getCurrentPlayer())) {
       Play play = player.getPlay(model);
       model.placeCard(play.handIdx, play.row, play.col);
@@ -81,8 +80,7 @@ public class TTController implements ThreeTriosController {
               "Please select a card from your hand first");
     } catch (IllegalArgumentException | IllegalStateException e) {
       if (e.getMessage().contains("over")) {
-        JOptionPane.showMessageDialog(view.getPanel(), "Game over.\n" +
-                "Winner: " + model.getWinner().getColor().toString());
+        gameOverMessage();
       } else {
         JOptionPane.showMessageDialog(view.getPanel(),
                 "Selected card must be played to an empty card cell on the grid");
@@ -91,6 +89,15 @@ public class TTController implements ThreeTriosController {
     view.refresh();
   }
 
+  private void gameOverMessage() {
+    JOptionPane.showMessageDialog(view.getPanel(), "Game over.\n" +
+            "Winner: " + model.getWinner().getColor().toString());
+  }
+
+  @Override
+  public void refresh() {
+    view.refresh();
+  }
 
   private boolean cardSelectedIsInHand(int row, int col) {
     if (playerHandIsLeftHand() && col == 0

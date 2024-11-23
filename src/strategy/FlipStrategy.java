@@ -31,7 +31,7 @@ public class FlipStrategy implements TTStrategy<Card> {
                 plays.clear();
                 currHighest = model.numFlipped(player.getHand().get(cardIdx), row, col);
               }
-              plays.add(new Play(row, col, currHighest));
+              plays.add(new Play(row, col, cardIdx));
             }
           }
         }

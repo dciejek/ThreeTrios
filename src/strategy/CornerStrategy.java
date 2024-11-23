@@ -39,8 +39,8 @@ public class CornerStrategy implements TTStrategy<Card> {
   }
 
   private Play lastResort(ReadOnlyThreeTriosModel<Card> model, Player<Card> player) {
-    for (int row = 0; row < model.getGrid().size(); row += model.getGrid().size() - 1) {
-      for (int col = 0; col < model.getRow(0).size(); col += model.getRow(0).size() - 1) {
+    for (int row = 0; row < model.getGrid().size(); row++) {
+      for (int col = 0; col < model.getRow(0).size(); col++) {
         if (model.getCellAt(row, col).canPlayHere()) {
           return new Play(row, col, 0);
         }

@@ -14,9 +14,15 @@ public interface ThreeTriosController {
 
   /**
    * Handle an action on a single cell of the board, such as playing a card.
+   * For both players and machines.
    * Both players hands and the grid itself are incorporated into the 0 based index.
    * @param row row of cell clicked, 0 based index
    * @param col column of cell clicked, 0 based index
    */
   void handleCellClicked(int row, int col);
+
+  /**
+   * Refreshes the controller's view field
+   */
+  void refresh();
 }

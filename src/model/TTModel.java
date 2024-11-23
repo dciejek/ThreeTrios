@@ -280,41 +280,45 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   @Override
   public int numFlipped(Card card, int cardRow, int cardCol) {
     int result = 0;
+    List<Cell> counted = new ArrayList<>();
+    counted.add(this.grid.get(cardRow).get(cardCol));
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)) {
-      result += flipCountNext(card, cardRow - 1, cardCol, CardinalDirection.NORTH);
+      result += flipCountNext(card, cardRow - 1, cardCol, CardinalDirection.NORTH, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)) {
-      result += flipCountNext(card, cardRow + 1, cardCol, CardinalDirection.SOUTH);
+      result += flipCountNext(card, cardRow + 1, cardCol, CardinalDirection.SOUTH, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)) {
-      result += flipCountNext(card, cardRow, cardCol + 1, CardinalDirection.EAST);
+      result += flipCountNext(card, cardRow, cardCol + 1, CardinalDirection.EAST, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)) {
-      result += flipCountNext(card, cardRow, cardCol - 1, CardinalDirection.WEST);
+      result += flipCountNext(card, cardRow, cardCol - 1, CardinalDirection.WEST, counted);
     }
     return result;
   }
 
-  private int flipCountNext(Card card, int cardRow, int cardCol, CardinalDirection dir) {
+  private int flipCountNext(Card card, int cardRow, int cardCol, CardinalDirection dir, List<Cell> counted) {
     if (cardRow < 0 || cardCol < 0 || !this.grid.get(cardRow).get(cardCol).hasCard()) {
       return 0;
     }
+    
 
     int result = 0;
     Card otherCard = this.grid.get(cardRow).get(cardCol).getCard();
 
-    if (card.isStrongerCard(otherCard, dir)) {
+    if (card.isStrongerCard(otherCard, dir) && !counted.contains(this.grid.get(cardRow).get(cardCol))) {
+      counted.add(this.grid.get(cardRow).get(cardCol));
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)) {
-        result += flipCountNext(otherCard, cardRow - 1, cardCol, CardinalDirection.NORTH);
+        result += flipCountNext(otherCard, cardRow - 1, cardCol, CardinalDirection.NORTH, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)) {
-        result += flipCountNext(otherCard, cardRow + 1, cardCol, CardinalDirection.SOUTH);
+        result += flipCountNext(otherCard, cardRow + 1, cardCol, CardinalDirection.SOUTH, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)) {
-        result += flipCountNext(otherCard, cardRow, cardCol + 1, CardinalDirection.EAST);
+        result += flipCountNext(otherCard, cardRow, cardCol + 1, CardinalDirection.EAST, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)) {
-        result += flipCountNext(otherCard, cardRow, cardCol - 1, CardinalDirection.WEST);
+        result += flipCountNext(otherCard, cardRow, cardCol - 1, CardinalDirection.WEST, counted);
       }
       return result + 1;
     }
@@ -369,7 +373,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     
     @Override
     public void newTurn() {
-      //features.refresh();
+      features.refresh();
     }
   }
 }
