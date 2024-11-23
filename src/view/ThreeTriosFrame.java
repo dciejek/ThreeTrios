@@ -5,8 +5,6 @@ import java.awt.geom.Point2D;
 import javax.swing.*;
 
 import controller.ThreeTriosController;
-import model.Player;
-import model.PlayingCard;
 
 /**
  * The display frame interface for a game of Three Trios. Able to be updated

@@ -20,6 +20,8 @@ import view.ThreeTriosFrame;
 
 public class TestController {
 
+
+
   @Test
   public void testMockModelConfirmsInputs() {
     Appendable ap = new StringBuilder();
