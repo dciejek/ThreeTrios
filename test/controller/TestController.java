@@ -4,25 +4,23 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.io.File;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.Scanner;
 
 import main.PlayerFactory;
 import model.Cell;
 import model.Player;
+import model.PlayerColor;
 import model.PlayingCard;
-import model.TTModel;
+import model.TTPlayer;
 import model.ThreeTriosModel;
 import view.TTGuiView;
 import view.ThreeTriosFrame;
 
-/**
- * Test class for the controller.
- */
 public class TestController {
+
+
 
   @Test
   public void testMockModelConfirmsInputs() {
@@ -30,11 +28,7 @@ public class TestController {
     PlayerFactory factory = new PlayerFactory();
     Scanner sc = new Scanner(System.in);
     ThreeTriosModel model = new MockModelConfirmsInputs(ap);
-    Player<PlayingCard> p1 = factory.stringToPlayer(model, sc.next());
-    Player<PlayingCard> p2 = factory.stringToPlayer(model, sc.next());
 
-    p1.setModel(model);
-    p2.setModel(model);
 
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "3x3Grid");
@@ -42,6 +36,9 @@ public class TestController {
     List<PlayingCard> cards = FileHandler.readCards(cardsFile);
     int rows = FileHandler.readRowNum(gridFile);
     int cols = FileHandler.readColNum(gridFile);
+
+    Player p1 = new TTPlayer(model, PlayerColor.RED);
+    Player p2 = new TTPlayer(model, PlayerColor.BLUE);
 
     model.startGame(grid, cards, rows, cols);
 
@@ -57,6 +54,52 @@ public class TestController {
     view.setHighlightedCard(new Point(0, 1));
     controller.handleCellClicked(1, 2);
 
-    Assert.assertEquals("1, 1, 2", ap.toString());
+    Assert.assertEquals("1, 2, 0\n", ap.toString());
+  }
+
+
+@Test
+  public void testPlayGame() {
+
+  }
+
+  @Test
+  public void testClickIgnoredNotOnTurn() {
+    //nothing happens
+    //Message sent
+  }
+
+  @Test
+  public void testHighlightCard() {
+    //Card is highlighted
+  }
+
+  @Test
+  public void testUnhighlightCard() {
+    //When a new card is highlighted old is un
+
+    //When same card is clicked on again
+  }
+
+  @Test
+  public void testGridClickedWithNoCardSelected() {
+    //nothing happens
+    //message sent
+  }
+
+  @Test
+  public void testGridClickedWithCardSelected() {
+    //card is played to the grid
+  }
+
+  @Test
+  public void testPlayerClicks() {
+    //A player clicks on a card
+    //A player clicks on grid
+  }
+
+  @Test
+  public void testStrategyClicks() {
+    //A strategy works as expected
   }
 }

@@ -6,8 +6,10 @@ import java.util.List;
 import model.Card;
 import model.Cell;
 import model.Player;
+import model.PlayerColor;
 import model.PlayingCard;
 import model.TTModel;
+import model.TTPlayer;
 import model.ThreeTriosModel;
 
 public class MockModelConfirmsInputs implements ThreeTriosModel {
@@ -43,7 +45,7 @@ public class MockModelConfirmsInputs implements ThreeTriosModel {
 
   @Override
   public Player getPlayerOne() {
-    return null;
+    return new TTPlayer(this, PlayerColor.RED);
   }
 
   @Override
@@ -53,7 +55,7 @@ public class MockModelConfirmsInputs implements ThreeTriosModel {
 
   @Override
   public Player getCurrentPlayer() {
-    return null;
+    return new TTPlayer(this, PlayerColor.RED);
   }
 
   @Override
