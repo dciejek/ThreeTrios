@@ -22,7 +22,7 @@ public interface ThreeTriosController {
   void handleCellClicked(int row, int col);
 
   /**
-   * Refreshes the controller's view field
+   * Refreshes the controller's view field.
    */
   void refresh();
 }

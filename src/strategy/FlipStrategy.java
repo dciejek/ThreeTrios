@@ -7,7 +7,6 @@ import model.Card;
 import model.Cell;
 import model.Player;
 import model.ReadOnlyThreeTriosModel;
-import model.ThreeTriosModel;
 
 /**
  * Strategy to pick the spot where the most cards will be flipped as a result. Defaults

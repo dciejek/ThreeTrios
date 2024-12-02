@@ -16,13 +16,15 @@ public class StrategyPlayer implements Player<PlayingCard> {
   private final PlayerColor color;
   private final ArrayList<PlayingCard> hand;
   private final TTStrategy strategy;
+
   /**
    * Constructs a player that has a PlayerColor for all of its cards, as well
    * as an empty Hand of PlayingCards.
    * @param color the color of the player's cards
    * @throws IllegalArgumentException if the PlayerColor is null
    */
-  public StrategyPlayer(ReadOnlyThreeTriosModel<PlayingCard> model, PlayerColor color, TTStrategy strategy) {
+  public StrategyPlayer(ReadOnlyThreeTriosModel<PlayingCard> model,
+                         PlayerColor color, TTStrategy strategy) {
     if (color == null) {
       throw new IllegalArgumentException("color cannot be null");
     }

@@ -2,7 +2,7 @@ package controller;
 
 import java.awt.geom.Point2D;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 import model.Player;
 import model.PlayingCard;
@@ -10,12 +10,22 @@ import model.ThreeTriosModel;
 import view.ThreeTriosFrame;
 import strategy.Play;
 
+/**
+ * Controller for a game of ThreeTrios. Takes in a player, a model
+ * and a view.
+ */
 public class TTController implements ThreeTriosController {
 
   private final ThreeTriosFrame view;
   private final Player<PlayingCard> player;
   private final ThreeTriosModel<PlayingCard> model;
 
+  /**
+   * Constructs a ThreeTrios constructor with a model, player and view.
+   * @param model   model to play with
+   * @param player  player for this controller
+   * @param view    view to play with
+   */
   public TTController(ThreeTriosModel<PlayingCard> model,
                       Player<PlayingCard> player,
                       ThreeTriosFrame view) {
@@ -118,11 +128,8 @@ public class TTController implements ThreeTriosController {
   }
 
   private boolean notPlayersTurn() {
-    if (!model.getCurrentPlayer().equals(player)) {
-      //JOptionPane showMessage
-      return true;
-    }
-    return false;
+    //JOptionPane showMessage
+    return !model.getCurrentPlayer().equals(player);
   }
 
 
