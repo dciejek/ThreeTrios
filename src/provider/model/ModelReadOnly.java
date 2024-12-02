@@ -82,7 +82,7 @@ public interface ModelReadOnly {
    * @param col the column index
    * @return an Optional containing the card, or empty if no card is present
    */
-  Optional<model.Card> cardAt(int row, int col);
+  Optional<Card> cardAt(int row, int col);
 
   /**
    * Gets the coach who owns the card at the specified position, if one exists.

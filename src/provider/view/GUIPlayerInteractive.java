@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 import provider.model.CoachColor;
 import provider.model.GamePlayer;
 import provider.model.Model;
+import provider.model.ModelForView;
 import provider.model.Move;
 import provider.view.utils.MouseHandler;
 import provider.view.utils.TriConsumer;
