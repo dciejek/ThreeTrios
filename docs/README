@@ -4,10 +4,34 @@ Playing this game should consist of a place phase, battle phase, and combo phase
 The entirety of the game should be displayed using a text based view.
 
 Quick start:
+PlayerFactory factory = new PlayerFactory();
+Scanner sc = new Scanner(System.in);
 ThreeTriosModel<PlayingCard> model = new TTModel();
-model.startGame(new File("docs" + File.separator + “3x3Grid”),
-        new File("docs" + File.separator + "cards1"))
-model.placeCard(model.getCurrentPlayer().getHand().get(0), 1, 1)
+Player<PlayingCard> p1 = factory.stringToPlayer(model, sc.next());
+Player<PlayingCard> p2 = factory.stringToPlayer(model, sc.next());
+
+model = new TTModel(p1, p2);
+p1.setModel(model);
+p2.setModel(model);
+
+File cardsFile = new File("docs" + File.separator + "cards1");
+File gridFile = new File("docs" + File.separator + "3x3Grid");
+List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);
+List<PlayingCard> cards = FileHandler.readCards(cardsFile);
+int rows = FileHandler.readRowNum(gridFile);
+int cols = FileHandler.readColNum(gridFile);
+
+model.startGame(grid, cards, rows, cols);
+
+ThreeTriosFrame view = new TTGuiView(model);
+ThreeTriosFrame view2 = new TTGuiView(model);
+
+ThreeTriosController controller = new TTController(model, p1, view);
+ThreeTriosController controller2 = new TTController(model, p2, view2);
+
+controller.playGame();
+controller2.playGame();
+
 
 Key Components:
 Model
@@ -22,7 +46,10 @@ View
 as well as what color player the card belongs to as denoted by "R" or "B"
 based on the contents as given by the model (grid, hand)
 Controller
--Not Yet Implemented
+-A gui based controller that displays a three trios board
+-Events to the board are handled by this controller and update the view and model as necessary
+- Displays popup messages as necessary to guide player (does not stop game or write to console)
+-Displays a game over pop up once the game is over
 
 Key Sub-Components:
 Grid
@@ -72,3 +99,10 @@ Changes for part 2
 - made FileHandler as a helper class to extract relevant data from files.
 - Added an invariant as that was left out.
 - Added GUI view, built with JFrame extensions and JPanels for cards/cells
+
+Changes for part 3
+- Added ThreeTriosController, which mediates between the view and the model.
+- Model status acts as an observer for new turn events and updates via the controller as necessary
+- Updated strategies and view orientation to actually display correct behaviors (strategies work as
+  intended, view is always proportioned correctly)
+- Multiple views are displayed simultaneously and update synchronously

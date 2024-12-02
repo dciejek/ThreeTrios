@@ -3,17 +3,18 @@ package view;
 import java.awt.Dimension;
 import java.awt.geom.Point2D;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import controller.ThreeTriosController;
-import model.PlayingCard;
+import model.Card;
 import model.ReadOnlyThreeTriosModel;
 
 /**
  * A gui based view for a game of Three Trios.
  */
 public class TTGuiView extends JFrame implements ThreeTriosFrame {
-  private final ReadOnlyThreeTriosModel<PlayingCard> model;
+  private final ReadOnlyThreeTriosModel<Card> model;
   private final TTBoardPanel panel;
   private static final int SIZE = 100;
 
@@ -22,7 +23,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
    * @param model a read only model
    * @throws IllegalArgumentException if the read only model is null
    */
-  public TTGuiView(ReadOnlyThreeTriosModel<PlayingCard> model) {
+  public TTGuiView(ReadOnlyThreeTriosModel<Card> model) {
     if (model == null) {
       throw new IllegalArgumentException("read only model cannot be null");
     }

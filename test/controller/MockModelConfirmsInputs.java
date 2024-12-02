@@ -12,25 +12,29 @@ import model.TTModel;
 import model.TTPlayer;
 import model.ThreeTriosModel;
 
+/**
+ * Mock for confirming inputs from a controller.
+ */
 public class MockModelConfirmsInputs implements ThreeTriosModel {
   private final Appendable transcript;
-  private final ThreeTriosModel<PlayingCard> base;
 
   public MockModelConfirmsInputs(Appendable transcript) {
     this.transcript = transcript;
-    this.base = new TTModel();
+    ThreeTriosModel<PlayingCard> base = new TTModel();
   }
 
   @Override
   public void startGame(List grid, List list, int rows, int cols) {
-
+    // is mock
   }
 
   @Override
   public void placeCard(int cardIdx, int row, int col) {
     try {
       transcript.append(cardIdx + ", " + row + ", " + col + "\n");
-    } catch (IOException ignored) {}
+    } catch (IOException ignored) {
+      // mock
+    }
   }
 
   @Override
@@ -80,7 +84,7 @@ public class MockModelConfirmsInputs implements ThreeTriosModel {
 
   @Override
   public void addTurnListener(ThreeTriosController listener) {
-
+    // mock
   }
 
   @Override

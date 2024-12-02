@@ -68,6 +68,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     }
     dealHands(cards, playableCells);
     isStarted = true;
+    notifyNewTurn();
   }
 
 
@@ -297,7 +298,8 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     return result;
   }
 
-  private int flipCountNext(Card card, int cardRow, int cardCol, CardinalDirection dir, List<Cell> counted) {
+  private int flipCountNext(Card card, int cardRow, int cardCol, CardinalDirection dir,
+                            List<Cell> counted) {
     if (cardRow < 0 || cardCol < 0 || !this.grid.get(cardRow).get(cardCol).hasCard()) {
       return 0;
     }
@@ -306,7 +308,8 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     int result = 0;
     Card otherCard = this.grid.get(cardRow).get(cardCol).getCard();
 
-    if (card.isStrongerCard(otherCard, dir) && !counted.contains(this.grid.get(cardRow).get(cardCol))) {
+    if (card.isStrongerCard(otherCard, dir) && !counted.contains(this.grid.get(cardRow)
+            .get(cardCol))) {
       counted.add(this.grid.get(cardRow).get(cardCol));
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)) {
         result += flipCountNext(otherCard, cardRow - 1, cardCol, CardinalDirection.NORTH, counted);

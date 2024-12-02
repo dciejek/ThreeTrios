@@ -3,7 +3,6 @@ package strategy;
 import model.Card;
 import model.Player;
 import model.ReadOnlyThreeTriosModel;
-import model.ThreeTriosModel;
 
 /**
  * Represents a strategy for a CPU player of Three Trios to follow.

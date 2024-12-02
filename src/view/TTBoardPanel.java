@@ -19,7 +19,6 @@ import model.Card;
 import model.Cell;
 import model.Player;
 import model.PlayerColor;
-import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
 
 /**
@@ -28,7 +27,7 @@ import model.ReadOnlyThreeTriosModel;
  * which can be updated via the addClickListener() method.
  */
 public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
-  private final ReadOnlyThreeTriosModel<PlayingCard> model;
+  private final ReadOnlyThreeTriosModel<Card> model;
   private final int SIZE = 100;
   private final int maxHandSize;
   private Graphics2D g2d;
@@ -39,7 +38,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
    * for future in displaying the game state visually.
    * @param model a read only model
    */
-  public TTBoardPanel(ReadOnlyThreeTriosModel<PlayingCard> model) {
+  public TTBoardPanel(ReadOnlyThreeTriosModel<Card> model) {
     this.model = model;
     maxHandSize = model.getPlayerOne().getHand().size();
     highlightedCard = null;
@@ -100,7 +99,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     }
   }
 
-  private void drawHand(Graphics2D g2d, Player<PlayingCard> player, int x, int y) {
+  private void drawHand(Graphics2D g2d, Player<Card> player, int x, int y) {
     int posY = y;
     TTCard cardSquare;
     for (Card card : player.getHand()) {
@@ -153,7 +152,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     AffineTransform transform = new AffineTransform();
     Dimension local = getLocalDimension();
     transform.scale(local.getWidth() / (model.getRow(0).size() + 2),
-            local.getHeight() /(Math.max(maxHandSize, model.getGrid().size())));
+            local.getHeight() / (Math.max(maxHandSize, model.getGrid().size())));
     return transform;
   }
 
@@ -204,6 +203,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
    */
   class TTClickListener implements MouseListener {
     ThreeTriosController features;
+
     /**
      * Constructor takes in a controller so that its features can handle
      * specified click events.

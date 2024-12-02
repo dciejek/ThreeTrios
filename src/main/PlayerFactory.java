@@ -36,8 +36,9 @@ public class PlayerFactory {
         return new StrategyPlayer(model, countToColor(), new CornerStrategy());
       case "flip":
         return new StrategyPlayer(model, countToColor(), new FlipStrategy());
+      default:
+        throw new IllegalArgumentException("Player type not accepted");
     }
-    throw new IllegalArgumentException("Player type not accepted");
   }
 
   /**

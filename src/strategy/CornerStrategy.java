@@ -6,7 +6,6 @@ import java.util.List;
 import model.Card;
 import model.Player;
 import model.ReadOnlyThreeTriosModel;
-import model.ThreeTriosModel;
 
 /**
  * Strategies to pick out corners that would be most advantageous for the player.
@@ -49,7 +48,8 @@ public class CornerStrategy implements TTStrategy<Card> {
     return null;
   }
 
-  private Play getBestMove(ReadOnlyThreeTriosModel<Card> model, Player<Card> player, int row, int col) {
+  private Play getBestMove(ReadOnlyThreeTriosModel<Card> model,
+                           Player<Card> player, int row, int col) {
     int count;
     List<Card> hand = player.getHand();
     List<Play> best = new ArrayList<Play>();

@@ -2,7 +2,7 @@ package view;
 
 import java.awt.geom.Point2D;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import controller.ThreeTriosController;
 
