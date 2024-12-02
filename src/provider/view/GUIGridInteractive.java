@@ -1,14 +1,15 @@
 package provider.view;
 
-import model.Move;
-import utils.MouseHandler;
-import utils.Utils;
-import utils.WasMouse;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
+import provider.model.Move;
+import provider.view.utils.MouseHandler;
+import provider.view.utils.Utils;
+import provider.view.utils.WasMouse;
 
 /**
  * To represent an interactive grid in the game of Three Trios which can be clicked on.

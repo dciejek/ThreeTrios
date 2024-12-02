@@ -1,10 +1,10 @@
 package provider.controller;
 
 
-import copy.model.CoachColor;
-import copy.model.GameListener;
-import copy.model.GamePlayer;
-import copy.view.GameView;
+import provider.model.CoachColor;
+import provider.model.GameListener;
+import provider.model.GamePlayer;
+import provider.view.GameView;
 
 /**
  * To represent a controller of a player of Three Trios.

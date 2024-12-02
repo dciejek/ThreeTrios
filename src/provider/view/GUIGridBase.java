@@ -2,11 +2,12 @@ package provider.view;
 
 
 
-import copy.model.Grid;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import provider.model.Grid;
 
 /**
  * To represent a base view only gui of a grid in Three Trios.

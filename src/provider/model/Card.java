@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.CardinalDirection;
 
 /**
  * to represent a card in three trios.
@@ -12,7 +11,7 @@ import model.CardinalDirection;
 public final class Card {
 
   private final String name;
-  private final Map<model.CardinalDirection, AttackValue> attackValues;
+  private final Map<CardinalDirection, AttackValue> attackValues;
   private CoachColor coachColor;
 
   /**
@@ -20,7 +19,7 @@ public final class Card {
    * @param name         - name of this card
    * @param attackValues - attack value in each direction
    */
-  public Card(String name, Map<model.CardinalDirection, AttackValue> attackValues) {
+  public Card(String name, Map<CardinalDirection, AttackValue> attackValues) {
     if (name == null) {
       throw new IllegalArgumentException("card name cannot be null");
     }
@@ -65,7 +64,7 @@ public final class Card {
    * @param direction - the direction where this battles other
    * @return the result of the battle.
    */
-  public boolean beats(Card other, model.CardinalDirection direction) {
+  public boolean beats(Card other, CardinalDirection direction) {
     return getAttackValue(direction).beats(other.getAttackValue(direction.opposite()));
   }
 
@@ -74,7 +73,7 @@ public final class Card {
    * @param direction - the direction to check
    * @return - the attack value in [direction]
    */
-  public AttackValue getAttackValue(model.CardinalDirection direction) {
+  public AttackValue getAttackValue(CardinalDirection direction) {
     return attackValues.get(direction);
   }
 

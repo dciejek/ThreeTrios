@@ -3,21 +3,18 @@ package provider.model;
 import java.util.EnumMap;
 import java.util.Map;
 
-import model.Card;
-import model.CardinalDirection;
-
 /**
  * To represent a cell on a grid on a game of three trios.
  */
 abstract class GridCellAbstract implements GridCellVisitable {
 
-  private final Map<model.CardinalDirection, GridCellAbstract> neighbors;
+  private final Map<CardinalDirection, GridCellAbstract> neighbors;
 
   /**
    * Constructs an AGridCell.
    */
   public GridCellAbstract() {
-    this.neighbors = new EnumMap<>(model.CardinalDirection.class);
+    this.neighbors = new EnumMap<>(CardinalDirection.class);
   }
 
   /**
@@ -26,7 +23,7 @@ abstract class GridCellAbstract implements GridCellVisitable {
    * @param other - the other board cell
    * @param dir   - the direction [this] links to [other]
    */
-  protected final void link(GridCellAbstract other, model.CardinalDirection dir) {
+  protected final void link(GridCellAbstract other, CardinalDirection dir) {
     this.neighbors.put(dir, other);
     other.neighbors.put(dir.opposite(), this);
   }
@@ -51,7 +48,7 @@ abstract class GridCellAbstract implements GridCellVisitable {
    * To return the card held in this cell.
    * @return - the card held in this cell.
    */
-  public model.Card getCard() {
+  public Card getCard() {
     throw new IllegalStateException("Can't get card from this cell");
   }
 
@@ -60,7 +57,7 @@ abstract class GridCellAbstract implements GridCellVisitable {
    * @param direction - the direction to consider
    * @return
    */
-  public boolean hasNeighborToThe(model.CardinalDirection direction) {
+  public boolean hasNeighborToThe(CardinalDirection direction) {
     return this.neighbors.get(direction) != null;
   }
 

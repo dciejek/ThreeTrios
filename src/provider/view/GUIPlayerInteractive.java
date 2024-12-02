@@ -1,14 +1,5 @@
 package provider.view;
 
-import model.CoachColor;
-import model.GamePlayer;
-import model.Model;
-import model.ModelForView;
-import model.Move;
-import utils.MouseHandler;
-import utils.TriConsumer;
-import utils.Utils;
-import utils.WasMouse;
 
 import javax.swing.JPanel;
 import java.awt.event.InputEvent;
@@ -16,6 +7,15 @@ import java.awt.event.MouseEvent;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import provider.model.CoachColor;
+import provider.model.GamePlayer;
+import provider.model.Model;
+import provider.model.Move;
+import provider.view.utils.MouseHandler;
+import provider.view.utils.TriConsumer;
+import provider.view.utils.Utils;
+import provider.view.utils.WasMouse;
 
 /**
  * To represent a player in the game of three trios as a gui and also handle interactions

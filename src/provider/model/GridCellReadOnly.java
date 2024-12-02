@@ -1,7 +1,5 @@
 package provider.model;
 
-import model.Card;
-import model.CardinalDirection;
 
 /**
  * represents a read only grid cell.
@@ -31,7 +29,7 @@ public interface GridCellReadOnly {
    * @param direction - the direction
    * @return - if cell has a neighbor in direction
    */
-  boolean hasNeighborToThe(model.CardinalDirection direction);
+  boolean hasNeighborToThe(CardinalDirection direction);
 
   /**
    * To get the neighbor to the [N/S/E/W].

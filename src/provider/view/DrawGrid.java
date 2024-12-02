@@ -1,13 +1,14 @@
 package provider.view;
 
 
-import copy.model.Grid;
-import copy.model.GridCellReadOnly;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+
+import provider.model.Grid;
+import provider.model.GridCellReadOnly;
 
 /**
  * To render a grid onto a buffered image. This is used so that a grid can directly be

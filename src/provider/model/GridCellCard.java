@@ -1,6 +1,5 @@
 package provider.model;
 
-import model.Card;
 
 /**
  * Represents a cell on the grid that can hold a card in the Three Trios game. A
@@ -8,7 +7,7 @@ import model.Card;
  */
 public final class GridCellCard extends GridCellAbstract {
 
-  private model.Card card;
+  private Card card;
 
   /**
    * Constructor.
@@ -29,7 +28,7 @@ public final class GridCellCard extends GridCellAbstract {
   }
 
   @Override
-  public model.Card getCard() {
+  public Card getCard() {
     return this.card;
   }
 

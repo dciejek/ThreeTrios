@@ -1,12 +1,12 @@
 package provider.view;
 
-import copy.model.Card;
-
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import provider.model.Card;
+
 
 /**
  * To represent a view only gui representation of a hand in Three Trios.

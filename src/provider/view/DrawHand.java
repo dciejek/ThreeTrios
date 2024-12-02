@@ -1,8 +1,9 @@
 package provider.view;
 
 
-import copy.model.CardinalDirection;
-import copy.model.CoachColor;
+import provider.model.Card;
+import provider.model.CardinalDirection;
+import provider.model.CoachColor;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * To draw a hand of cards onto a buffered image and provide information about where

@@ -1,15 +1,16 @@
 package provider.view;
 
 
-import copy.model.CoachColor;
-import copy.model.ModelReadOnly;
-import copy.view.utils.Utils;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
+import provider.model.CoachColor;
+import provider.model.ModelReadOnly;
+import provider.view.utils.Utils;
 
 /**
  * To represent a player in the game of three trios as a gui. This is also a listener of a

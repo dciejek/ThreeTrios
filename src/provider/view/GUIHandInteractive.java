@@ -1,25 +1,26 @@
 package provider.view;
 
-
-import copy.model.CoachColor;
-import copy.model.Move;
-import copy.view.utils.MouseHandler;
-import copy.view.utils.TriConsumer;
-import copy.view.utils.WasMouse;
-
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
+import provider.model.Card;
+import provider.model.CoachColor;
+import provider.model.Move;
+import provider.view.utils.MouseHandler;
+import provider.view.utils.TriConsumer;
+import provider.view.utils.WasMouse;
 
 /**
  * To represent an interactive representation of a hand in Three Trios that can handle
  * clicks and hovers to select a card in the hand.
  */
 public class GUIHandInteractive extends GUIHandBase implements
-    TriConsumer<Move, Consumer<Move>, BiConsumer<Move, Consumer<Move>>> {
+        TriConsumer<Move, Consumer<Move>, BiConsumer<Move, Consumer<Move>>> {
 
   // clicks
   protected Optional<Integer> clickPos;

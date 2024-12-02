@@ -1,7 +1,7 @@
 package provider.view;
 
 
-import copy.model.ModelReadOnly;
+import provider.model.ModelReadOnly;
 
 /**
  * Represents the view for a game. This interface had methods for rendering

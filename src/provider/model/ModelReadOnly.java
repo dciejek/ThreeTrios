@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import model.Card;
 
 /**
  * A Read only interface for a three trios model. the objects that inheritors return to
@@ -39,7 +38,7 @@ public interface ModelReadOnly {
    * Gets the hands of all coaches in the game.
    * @return a map of coaches to their respective hands
    */
-  Map<CoachColor, List<model.Card>> curCoachesHands();
+  Map<CoachColor, List<Card>> curCoachesHands();
 
   /**
    * Checks if the game has started.
