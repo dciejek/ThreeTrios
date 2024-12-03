@@ -99,6 +99,12 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   }
 
   @Override
+  public int getScore(Player player) {
+    // not necessary for adapter.
+    return 0;
+  }
+
+  @Override
   public void startGame(Grid grid, List<Card> cards, Referee referee) {
     ArrayList<ArrayList<Cell>> newGrid = new ArrayList<ArrayList<Cell>>();
     for (GridCellReadOnly[] row : grid.readOnlyArray2D()) {
