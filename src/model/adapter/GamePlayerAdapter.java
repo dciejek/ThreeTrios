@@ -1,6 +1,7 @@
 package model.adapter;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -17,7 +18,7 @@ public class GamePlayerAdapter implements GamePlayer, Player<Card> {
   private final Player<Card> adaptee;
 
   public GamePlayerAdapter(Player<Card> adaptee) {
-    this.adaptee = adaptee;
+    this.adaptee = Objects.requireNonNull(adaptee);
   }
 
   @Override
