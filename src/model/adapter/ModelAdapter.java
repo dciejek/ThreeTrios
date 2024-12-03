@@ -16,11 +16,13 @@ import model.ThreeTriosModel;
 import provider.model.CardinalDirection;
 import provider.model.CoachColor;
 import provider.model.Grid;
-import provider.model.GridCellReadOnly;
 import provider.model.Model;
 import provider.model.Referee;
 
 public class ModelAdapter implements Model, ThreeTriosModel<Card> {
+  private Grid grid;
+  private final ThreeTriosModel<Card> model;
+
   //take in our model?
 
   //construct
@@ -33,79 +35,14 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   //placeCard
   //call our own models placeCard using given values
-  private final ThreeTriosModel<Card> model;
 
   public ModelAdapter(ThreeTriosModel<Card> model) {
     this.model = model;
   }
 
   @Override
-  public void startGame(List grid, List cards, int rows, int cols) {
-    // not necessary for adapter.
-  }
-
-  @Override
-  public Player getWinner() {
-    // not necessary for adapter.
-    return null;
-  }
-
-  @Override
-  public Player getPlayerOne() {
-    // not necessary for adapter.
-    return null;
-  }
-
-  @Override
-  public Player getPlayerTwo() {
-    // not necessary for adapter.
-    return null;
-  }
-
-  @Override
-  public Player getCurrentPlayer() {
-    // not necessary for adapter.
-    return null;
-  }
-
-  @Override
-  public List<List<Cell>> getGrid() {
-    // not necessary for adapter.
-    return List.of();
-  }
-
-  @Override
-  public List<Cell> getRow(int row) {
-    // not necessary for adapter.
-    return List.of();
-  }
-
-  @Override
-  public Cell getCellAt(int row, int col) {
-    // not necessary for adapter.
-    return null;
-  }
-
-  @Override
-  public int numFlipped(Card card, int row, int col) {
-    // not necessary for adapter.
-    return 0;
-  }
-
-  @Override
-  public void addTurnListener(ThreeTriosController listener) {
-    // not necessary for adapter.
-  }
-
-  @Override
-  public int getScore(Player player) {
-    // not necessary for adapter.
-    return 0;
-  }
-
-  @Override
-  public void startGame(Grid grid, List<Card> cards, Referee referee) {
-    ArrayList<ArrayList<Cell>> newGrid = new ArrayList<ArrayList<Cell>>();
+  public void startGame(Grid grid, List<provider.model.Card> cards, Referee referee) {
+    this.grid = grid;
 
   }
 
@@ -212,5 +149,69 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   public int score(CoachColor coach) {
     // model can be null for set up purposes already, helpful to set up dummy player here
     return model.getScore(new TTPlayer(null, CoachColorAdapter.coachColorToPlayerColor(coach)));
+  }
+
+  @Override
+  public void startGame(List grid, List cards, int rows, int cols) {
+    // not necessary for adapter.
+  }
+
+  @Override
+  public Player getWinner() {
+    // not necessary for adapter.
+    return null;
+  }
+
+  @Override
+  public Player getPlayerOne() {
+    // not necessary for adapter.
+    return null;
+  }
+
+  @Override
+  public Player getPlayerTwo() {
+    // not necessary for adapter.
+    return null;
+  }
+
+  @Override
+  public Player getCurrentPlayer() {
+    // not necessary for adapter.
+    return null;
+  }
+
+  @Override
+  public List<List<Cell>> getGrid() {
+    // not necessary for adapter.
+    return List.of();
+  }
+
+  @Override
+  public List<Cell> getRow(int row) {
+    // not necessary for adapter.
+    return List.of();
+  }
+
+  @Override
+  public Cell getCellAt(int row, int col) {
+    // not necessary for adapter.
+    return null;
+  }
+
+  @Override
+  public int numFlipped(Card card, int row, int col) {
+    // not necessary for adapter.
+    return 0;
+  }
+
+  @Override
+  public void addTurnListener(ThreeTriosController listener) {
+    // not necessary for adapter.
+  }
+
+  @Override
+  public int getScore(Player player) {
+    // not necessary for adapter.
+    return 0;
   }
 }

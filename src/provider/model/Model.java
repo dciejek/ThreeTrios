@@ -3,8 +3,6 @@ package provider.model;
 
 import java.util.List;
 
-import model.Card;
-
 /**
  * Represents the game model.
  */
@@ -16,7 +14,7 @@ public interface Model extends ModelReadOnly {
    * @param cards   the deck of cards to be used
    * @param referee the referee that manages game logic
    */
-  void startGame(Grid grid, List<Card> cards, Referee referee);
+  void startGame(Grid grid, List<provider.model.Card> cards, Referee referee);
 
   /**
    * Places a card on the grid at the specified row and column, from an idx in the coach's
