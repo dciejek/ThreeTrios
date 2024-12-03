@@ -13,7 +13,7 @@ import provider.model.Model;
 import provider.model.Move;
 import strategy.Play;
 
-public final class GamePlayerAdapter implements GamePlayer, Player<Card> {
+public class GamePlayerAdapter implements GamePlayer, Player<Card> {
   private final Player<Card> adaptee;
 
   public GamePlayerAdapter(Player<Card> adaptee) {
@@ -22,32 +22,32 @@ public final class GamePlayerAdapter implements GamePlayer, Player<Card> {
 
   @Override
   public PlayerColor getColor() {
-    return null;
+    return adaptee.getColor();
   }
 
   @Override
   public List getHand() {
-    return List.of();
+    return adaptee.getHand();
   }
 
   @Override
   public void removeFromHand(Card card) {
-
+    adaptee.removeFromHand(card);
   }
 
   @Override
   public void addToHand(Card card) {
-
+    adaptee.addToHand(card);
   }
 
   @Override
   public Play getPlay(ThreeTriosModel model) {
-    return null;
+    return adaptee.getPlay(model);
   }
 
   @Override
   public void setModel(ThreeTriosModel model) {
-
+    adaptee.setModel(model);
   }
 
   @Override
