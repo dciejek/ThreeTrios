@@ -28,7 +28,6 @@ public class AbstractControlPlayerAdapter extends AbstractControlPlayer
 
   @Override
   public void playGame() {
-
   }
 
   @Override

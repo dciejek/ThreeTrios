@@ -16,6 +16,7 @@ import model.ReadOnlyThreeTriosModel;
 import model.TTModel;
 import model.ThreeTriosModel;
 import model.adapter.CoachColorAdapter;
+import model.adapter.ModelAdapter;
 import provider.model.CoachColor;
 import provider.model.GamePlayer;
 import provider.view.DrawGrid;
@@ -63,6 +64,8 @@ public final class ThreeTrios {
 
     CoachColor player2Color = CoachColorAdapter.playerColorToCoachColor(p2.getColor());
     GameView view2 = buildProviderView(player2Color);
+
+    view2.renderModel(new ModelAdapter(model));
     
     ThreeTriosController<Card> controller = new TTController(model, p1, view);
     ThreeTriosController<Card> controller2 = new AbstractControlPlayerAdapter(player2Color,
