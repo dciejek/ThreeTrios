@@ -40,9 +40,14 @@ public class GridAdapter implements Grid {
 
   @Override
   public GridCellReadOnly[][] readOnlyArray2D() {
-    //GridCellReadOnly[][] readOnly2DArray
-    //convert to readOnlyGridCell
-    return null;
+    GridCellReadOnly[][] array2D =
+            new GridCellReadOnly[model.getGrid().size()][model.getRow(0).size()];
+    for (int i = 0; i < model.getGrid().size(); i++) {
+      for (int j = 0; j < model.getRow(0).size(); j++) {
+        array2D[i][j] = new GridCellReadOnlyAdapter(model.getGrid().get(i).get(j));
+      }
+    }
+    return array2D;
   }
 
   @Override
