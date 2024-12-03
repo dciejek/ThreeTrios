@@ -40,8 +40,7 @@ public class GridCellVisitableAdapter implements GridCellVisitable {
 
   @Override
   public Card getCard() {
-    //Should return providers card, so make adapter work
-    return null;
+    return new CardAdapter(cell.getCard(), cell.getPlayerColor());
   }
 
   @Override
