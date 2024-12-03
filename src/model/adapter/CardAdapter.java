@@ -1,6 +1,39 @@
 package model.adapter;
 
-public class CardAdapter {
+
+import model.Card;
+import model.CardinalDirection;
+
+public class CardAdapter extends provider.model.Card implements Card {
+  @Override
+  public int getNorth() {
+    return 0;
+  }
+
+  @Override
+  public int getSouth() {
+    return 0;
+  }
+
+  @Override
+  public int getEast() {
+    return 0;
+  }
+
+  @Override
+  public int getWest() {
+    return 0;
+  }
+
+  @Override
+  public int getDirection(CardinalDirection dir) {
+    return 0;
+  }
+
+  @Override
+  public boolean isStrongerCard(Card opposing, CardinalDirection dir) {
+    return false;
+  }
 
   //Take in card
 

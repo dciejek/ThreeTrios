@@ -1,23 +1,57 @@
 package model.adapter;
 
-public class GridAdapter {
-  //Take in 2D array
+import java.util.List;
+import java.util.Objects;
 
-  //boolean isFull()
-  //for each loop
-  //if cell.hasCard = false return false
-  //at end of loop return true
+import model.Cell;
+import model.PlayingCard;
+import model.ReadOnlyThreeTriosModel;
+import provider.model.Grid;
+import provider.model.GridCellReadOnly;
 
-  //int getNumHoles
-  //for each loop
-  //count++ for each hole cell
+public class GridAdapter implements Grid {
+  private final ReadOnlyThreeTriosModel<PlayingCard> model;
 
-  //GridCellReadOnly[][] readOnly2DArray
-  //convert to readOnlyGridCell
+  public GridAdapter(ReadOnlyThreeTriosModel<PlayingCard> model) {
+    this.model = Objects.requireNonNull(model);
+  }
 
-  //int numRows()
-  //return grid.getSize();
+  @Override
+  public boolean isFull() {
+    //Checks if the number of playable cells is 0 on a given grid
+    //aka if the grid is full.
+    return model.isGameOver();
+  }
 
-  //int numColumns()
-  //return grid.get(0).getSize();
+  @Override
+  public int getNumHoles() {
+    int numHoles = 0;
+    for (List<Cell> row : model.getGrid()) {
+      for (Cell cell : row) {
+        try {
+          cell.getCard();
+        } catch (IllegalStateException e) {
+          numHoles++;
+        }
+      }
+    }
+    return numHoles;
+  }
+
+  @Override
+  public GridCellReadOnly[][] readOnlyArray2D() {
+    //GridCellReadOnly[][] readOnly2DArray
+    //convert to readOnlyGridCell
+    return null;
+  }
+
+  @Override
+  public int numRows() {
+    return model.getGrid().size();
+  }
+
+  @Override
+  public int numCols() {
+    return model.getRow(0).size();
+  }
 }
