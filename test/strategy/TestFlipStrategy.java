@@ -22,10 +22,9 @@ public class TestFlipStrategy {
   File grid2File = new File("docs" + File.separator + "3x3Grid");
   File cards1 = new File("docs" + File.separator + "cards1");
 
-  ThreeTriosModel<Card> model1;
-  ThreeTriosModel<Card> model2;
-  ThreeTriosModel<PlayingCard> model3;
-  TTStrategy<Card> flipStrategy;
+  ThreeTriosModel model1;
+  ThreeTriosModel model2;
+  TTStrategy flipStrategy;
   Appendable sb = new StringBuilder();
 
   @Before

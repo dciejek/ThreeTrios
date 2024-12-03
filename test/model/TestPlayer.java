@@ -26,7 +26,7 @@ public class TestPlayer {
 
   @Before
   public void setUp() {
-    ThreeTriosModel<PlayingCard> model = new TTModel();
+    ThreeTriosModel<Card> model = new TTModel();
     playerOne = new TTPlayer(model, PlayerColor.BLUE);
     playerTwo = new TTPlayer(model, PlayerColor.RED);
 

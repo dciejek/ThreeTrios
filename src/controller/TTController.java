@@ -4,8 +4,8 @@ import java.awt.geom.Point2D;
 
 import javax.swing.JOptionPane;
 
+import model.Card;
 import model.Player;
-import model.PlayingCard;
 import model.ThreeTriosModel;
 import view.ThreeTriosFrame;
 import strategy.Play;
@@ -14,11 +14,11 @@ import strategy.Play;
  * Controller for a game of ThreeTrios. Takes in a player, a model
  * and a view.
  */
-public class TTController implements ThreeTriosController {
+public class TTController implements ThreeTriosController<Card> {
 
   private final ThreeTriosFrame view;
-  private final Player<PlayingCard> player;
-  private final ThreeTriosModel<PlayingCard> model;
+  private final Player<Card> player;
+  private final ThreeTriosModel<Card> model;
 
   /**
    * Constructs a ThreeTrios constructor with a model, player and view.
@@ -26,8 +26,8 @@ public class TTController implements ThreeTriosController {
    * @param player  player for this controller
    * @param view    view to play with
    */
-  public TTController(ThreeTriosModel<PlayingCard> model,
-                      Player<PlayingCard> player,
+  public TTController(ThreeTriosModel<Card> model,
+                      Player<Card> player,
                       ThreeTriosFrame view) {
     if (model == null) {
       throw new IllegalArgumentException("model cannot be null");

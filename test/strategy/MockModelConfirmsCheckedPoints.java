@@ -14,9 +14,9 @@ import model.ThreeTriosModel;
 /**
  * Mock to confirm what points are checked by strategies.
  */
-public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<PlayingCard> {
+public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<Card> {
   private final Appendable transcript;
-  private final ThreeTriosModel<PlayingCard> base;
+  private final ThreeTriosModel<Card> base;
 
   public MockModelConfirmsCheckedPoints(Appendable transcript) {
     this.transcript = transcript;
@@ -24,8 +24,8 @@ public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<PlayingCa
   }
 
   @Override
-  public void startGame(List<List<Cell<PlayingCard>>> grid,
-                        List<PlayingCard> cards, int rows, int cols) {
+  public void startGame(List<List<Cell<Card>>> grid,
+                        List<Card> cards, int rows, int cols) {
     base.startGame(grid, cards, rows, cols);
   }
 
@@ -40,22 +40,22 @@ public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<PlayingCa
   }
 
   @Override
-  public Player<PlayingCard> getWinner() {
+  public Player<Card> getWinner() {
     return null;
   }
 
   @Override
-  public Player<PlayingCard> getPlayerOne() {
+  public Player<Card> getPlayerOne() {
     return null;
   }
 
   @Override
-  public Player<PlayingCard> getPlayerTwo() {
+  public Player<Card> getPlayerTwo() {
     return null;
   }
 
   @Override
-  public Player<PlayingCard> getCurrentPlayer() {
+  public Player<Card> getCurrentPlayer() {
     return base.getCurrentPlayer();
   }
 
@@ -93,5 +93,11 @@ public class MockModelConfirmsCheckedPoints implements ThreeTriosModel<PlayingCa
   @Override
   public boolean isGameStarted() {
     return false;
+  }
+
+  @Override
+  public int getScore(Player player) {
+    //is a mock
+    return 0;
   }
 }

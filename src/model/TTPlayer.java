@@ -8,20 +8,20 @@ import strategy.Play;
 /**
  * A player in a game of Three Trios.
  */
-public class TTPlayer implements Player<PlayingCard> {
+public class TTPlayer implements Player<Card> {
 
-  private ReadOnlyThreeTriosModel<PlayingCard> model;
+  private ReadOnlyThreeTriosModel<Card> model;
   private final PlayerColor color;
-  private final ArrayList<PlayingCard> hand;
+  private final ArrayList<Card> hand;
 
   /**
    * Constructs a player that has a PlayerColor for all of its cards, as well
-   * as an empty Hand of PlayingCards.
+   * as an empty Hand of cards.
    * @param model the model this player is using
    * @param color the color of the player's cards
    * @throws IllegalArgumentException if the PlayerColor is null
    */
-  public TTPlayer(ReadOnlyThreeTriosModel<PlayingCard> model, PlayerColor color) {
+  public TTPlayer(ReadOnlyThreeTriosModel<Card> model, PlayerColor color) {
     this.model = model;
     if (color == null) {
       throw new IllegalArgumentException("color cannot be null");
@@ -36,27 +36,27 @@ public class TTPlayer implements Player<PlayingCard> {
   }
 
   @Override
-  public ArrayList<PlayingCard> getHand() {
+  public ArrayList<Card> getHand() {
     return new ArrayList<>(this.hand);
   }
 
   @Override
-  public void removeFromHand(PlayingCard card) {
+  public void removeFromHand(Card card) {
     this.hand.remove(card);
   }
 
   @Override
-  public void addToHand(PlayingCard card) {
+  public void addToHand(Card card) {
     this.hand.add(card);
   }
 
   @Override
-  public Play getPlay(ThreeTriosModel model) {
+  public Play getPlay(ReadOnlyThreeTriosModel<Card> model) {
     return null;
   }
 
   @Override
-  public void setModel(ThreeTriosModel model) {
+  public void setModel(ReadOnlyThreeTriosModel<Card> model) {
     this.model = model;
   }
 

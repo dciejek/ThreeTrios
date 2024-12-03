@@ -1,10 +1,12 @@
 package controller;
 
+import model.Card;
+
 /**
  * Represents a Controller for a game of Three Trios, handle a players
  * moves by executing them to the model.
  */
-public interface ThreeTriosController {
+public interface ThreeTriosController<C extends Card> {
 
   /**
    * Execute a single game of Three Trios, when the game is over

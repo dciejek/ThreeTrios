@@ -15,12 +15,12 @@ import model.ThreeTriosModel;
 /**
  * Mock for confirming inputs from a controller.
  */
-public class MockModelConfirmsInputs implements ThreeTriosModel {
+public class MockModelConfirmsInputs implements ThreeTriosModel<Card> {
   private final Appendable transcript;
 
   public MockModelConfirmsInputs(Appendable transcript) {
     this.transcript = transcript;
-    ThreeTriosModel<PlayingCard> base = new TTModel();
+    ThreeTriosModel<Card> base = new TTModel();
   }
 
   @Override

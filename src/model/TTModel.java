@@ -8,11 +8,11 @@ import controller.ThreeTriosController;
 /**
  * Represents a simple 2 player ThreeTriosModel.
  */
-public class TTModel implements ThreeTriosModel<PlayingCard> {
-  private final List<List<Cell<PlayingCard>>> grid;
-  private final Player<PlayingCard> playerOne;
-  private final Player<PlayingCard> playerTwo;
-  private Player<PlayingCard> activePlayer;
+public class TTModel implements ThreeTriosModel<Card> {
+  private final List<List<Cell<Card>>> grid;
+  private final Player<Card> playerOne;
+  private final Player<Card> playerTwo;
+  private Player<Card> activePlayer;
   private int playableCells;
   private boolean isStarted;
   private final List<TTTurnListener> listeners;
@@ -35,7 +35,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * @param p1 player one
    * @param p2 player two
    */
-  public TTModel(Player p1, Player p2) {
+  public TTModel(Player<Card> p1, Player<Card> p2) {
     grid = new ArrayList<>();
     playerOne = p1;
     playerTwo = p2;
@@ -46,7 +46,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public void startGame(List<List<Cell<PlayingCard>>> grid, List<PlayingCard> cards,
+  public void startGame(List<List<Cell<Card>>> grid, List<Card> cards,
                         int rows, int cols) {
     if (isStarted) {
       throw new IllegalStateException("Game already started");
@@ -76,7 +76,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * @param cards list of every card as given from the config
    * @param playableCells the number of card cells on the grid
    */
-  private void dealHands(List<PlayingCard> cards, int playableCells) {
+  private void dealHands(List<Card> cards, int playableCells) {
     int counter = 0;
     while (!cards.isEmpty()
             && playerOne.getHand().size() <= ((playableCells + 1) / 2)
@@ -95,7 +95,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     if (cardIdx > getCurrentPlayer().getHand().size()) {
       throw new IllegalArgumentException("Invalid card index");
     }
-    PlayingCard card = this.getCurrentPlayer().getHand().get(cardIdx);
+    Card card = this.getCurrentPlayer().getHand().get(cardIdx);
     if (!isStarted) {
       throw new IllegalStateException("Game has not started");
     } else if (isGameOver()) { //checks if there are no more cells that can be placed on
@@ -183,7 +183,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public Player<PlayingCard> getCurrentPlayer() {
+  public Player<Card> getCurrentPlayer() {
     if (!isStarted) {
       throw new IllegalStateException("Game has not started");
     }
@@ -206,7 +206,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * Counts the # of playable cells in the grid.
    * @return the # playable cells
    */
-  private int countPlayableCells(List<List<Cell<PlayingCard>>> grid) {
+  private int countPlayableCells(List<List<Cell<Card>>> grid) {
     int playable = 0;
     for (int i = 0; i < grid.size(); i++) {
       for (int j = 0; j < grid.get(i).size(); j++) {
@@ -227,7 +227,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public Player<PlayingCard> getWinner() {
+  public Player<Card> getWinner() {
     if (!isGameOver()) {
       throw new IllegalStateException("Game is not over");
     }
@@ -241,12 +241,12 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
   }
 
   @Override
-  public Player<PlayingCard> getPlayerOne() {
+  public Player<Card> getPlayerOne() {
     return playerOne;
   }
 
   @Override
-  public Player<PlayingCard> getPlayerTwo() {
+  public Player<Card> getPlayerTwo() {
     return playerTwo;
   }
 
@@ -256,7 +256,7 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
       throw new IllegalStateException("Game hasn't started");
     }
     List<List<Cell>> copy = new ArrayList<>();
-    for (List<Cell<PlayingCard>> row : grid) {
+    for (List<Cell<Card>> row : grid) {
       copy.add(new ArrayList<>(row));
     }
     return copy;
@@ -332,9 +332,9 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
    * @param player the player
    * @return the # of cells belonging to the player currently on the grid
    */
-  private int countCells(Player<PlayingCard> player) {
+  private int countCells(Player<Card> player) {
     int count = 0;
-    for (List<Cell<PlayingCard>> row : grid) {
+    for (List<Cell<Card>> row : grid) {
       for (Cell cell : row) {
         if (cell.getPlayerColor() == player.getColor()) {
           count++;

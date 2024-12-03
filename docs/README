@@ -106,3 +106,7 @@ Changes for part 3
 - Updated strategies and view orientation to actually display correct behaviors (strategies work as
   intended, view is always proportioned correctly)
 - Multiple views are displayed simultaneously and update synchronously
+
+Changes for HW8
+-Fixed typing issues across controller, model, view (was using class type rather than interface)
+-Added getScore method to model implemented in all relevant classes

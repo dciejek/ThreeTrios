@@ -39,11 +39,11 @@ public interface Player<C extends Card> {
    * and a controller for human players.
    * @return  The Play
    */
-  Play getPlay(ThreeTriosModel model);
+  Play getPlay(ReadOnlyThreeTriosModel<C> model);
 
   /**
    * Sets this players model to deal with aliasing.
    * @param model   the model to be set
    */
-  void setModel(ThreeTriosModel model);
+  void setModel(ReadOnlyThreeTriosModel<C> model);
 }

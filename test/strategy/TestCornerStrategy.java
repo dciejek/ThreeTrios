@@ -25,7 +25,6 @@ public class TestCornerStrategy {
 
   ThreeTriosModel<Card> model1;
   ThreeTriosModel<Card> model2;
-  ThreeTriosModel<PlayingCard> model3;
   TTStrategy<Card> cornerStrategy;
   StringBuilder sb = new StringBuilder();
 

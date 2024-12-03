@@ -13,7 +13,7 @@ import controller.FileHandler;
  * Tests for the model.
  */
 public class TestModel {
-  ThreeTriosModel<PlayingCard> model;
+  ThreeTriosModel<Card> model;
   File evenCells = new File("docs" + File.separator + "InvalidGridEvenCells");
   File badRows = new File("docs" + File.separator + "InvalidGridBadRows");
   File badCols = new File("docs" + File.separator + "InvalidGridBadCols");
@@ -67,8 +67,8 @@ public class TestModel {
   public void testStartGame() {
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "grid1");
-    List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);
-    List<PlayingCard> cards = FileHandler.readCards(cardsFile);
+    List<List<Cell<Card>>> grid = FileHandler.readGrid(gridFile);
+    List<Card> cards = FileHandler.readCards(cardsFile);
     int rows = FileHandler.readRowNum(gridFile);
     int cols = FileHandler.readColNum(gridFile);
 

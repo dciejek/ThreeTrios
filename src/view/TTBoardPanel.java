@@ -26,8 +26,8 @@ import model.ReadOnlyThreeTriosModel;
  * Composed of each player's Hand, as well as the Grid itself,
  * which can be updated via the addClickListener() method.
  */
-public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
-  private final ReadOnlyThreeTriosModel<Card> model;
+public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPanel {
+  private final ReadOnlyThreeTriosModel<C> model;
   private final int SIZE = 100;
   private final int maxHandSize;
   private Graphics2D g2d;
@@ -38,7 +38,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
    * for future in displaying the game state visually.
    * @param model a read only model
    */
-  public TTBoardPanel(ReadOnlyThreeTriosModel<Card> model) {
+  public TTBoardPanel(ReadOnlyThreeTriosModel<C> model) {
     this.model = model;
     maxHandSize = model.getPlayerOne().getHand().size();
     highlightedCard = null;
@@ -99,7 +99,7 @@ public class TTBoardPanel extends JPanel implements ThreeTriosPanel {
     }
   }
 
-  private void drawHand(Graphics2D g2d, Player<Card> player, int x, int y) {
+  private void drawHand(Graphics2D g2d, Player<C> player, int x, int y) {
     int posY = y;
     TTCard cardSquare;
     for (Card card : player.getHand()) {

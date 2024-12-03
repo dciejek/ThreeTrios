@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import model.Card;
 import model.CardCell;
 import model.CardValue;
 import model.Cell;
@@ -25,7 +27,7 @@ public class FileHandler {
    * @param gridFile the given file.
    * @return A list of cells that represent the grid.
    */
-  public static List<List<Cell<PlayingCard>>> readGrid(File gridFile) {
+  public static List<List<Cell<Card>>> readGrid(File gridFile) {
     List<List<String>> tempGrid = new ArrayList<>();
     try {
       Scanner scan = new Scanner(new FileReader(gridFile));
@@ -37,14 +39,14 @@ public class FileHandler {
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("Grid file not found");
     }
-    List<List<Cell<PlayingCard>>> ret = new ArrayList<>();
-    List<Cell<PlayingCard>> cells = new ArrayList<>();
+    List<List<Cell<Card>>> ret = new ArrayList<>();
+    List<Cell<Card>> cells = new ArrayList<>();
     for (List<String> row : tempGrid) {
       cells.clear();
       for (String s : row) {
         cells.add(cellFactory(s));
       }
-      ret.add(new ArrayList<Cell<PlayingCard>>(cells));
+      ret.add(new ArrayList<Cell<Card>>(cells));
     }
     return ret;
   }
@@ -55,7 +57,7 @@ public class FileHandler {
    * @param str "C" if a CardCell or "X" if a HoleCell
    * @throws IllegalArgumentException if the String is null or not a valid type ("X" or "C")
    */
-  private static Cell<PlayingCard> cellFactory(String str) {
+  private static Cell<Card> cellFactory(String str) {
     if (str == null) {
       throw new IllegalArgumentException("String cannot be null");
     } else if (str.equals("C")) {
@@ -72,8 +74,8 @@ public class FileHandler {
    * @param cardFile the card file
    * @return a list of playing cards to be used in the model
    */
-  public static List<PlayingCard> readCards(File cardFile) {
-    List<PlayingCard> cards = new ArrayList<>();
+  public static List<Card> readCards(File cardFile) {
+    List<Card> cards = new ArrayList<>();
     try {
       FileReader reader = new FileReader(cardFile);
       Scanner scan = new Scanner(reader);

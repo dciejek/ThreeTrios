@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import model.Card;
 import model.Player;
 import model.PlayerColor;
+import model.ReadOnlyThreeTriosModel;
 import model.ThreeTriosModel;
 import provider.model.GamePlayer;
 import provider.model.Model;
@@ -42,12 +43,12 @@ public class GamePlayerAdapter implements GamePlayer, Player<Card> {
   }
 
   @Override
-  public Play getPlay(ThreeTriosModel model) {
+  public Play getPlay(ReadOnlyThreeTriosModel<Card> model) {
     return adaptee.getPlay(model);
   }
 
   @Override
-  public void setModel(ThreeTriosModel model) {
+  public void setModel(ReadOnlyThreeTriosModel<Card> model) {
     adaptee.setModel(model);
   }
 

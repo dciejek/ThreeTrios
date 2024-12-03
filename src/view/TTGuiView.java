@@ -13,9 +13,9 @@ import model.ReadOnlyThreeTriosModel;
 /**
  * A gui based view for a game of Three Trios.
  */
-public class TTGuiView extends JFrame implements ThreeTriosFrame {
-  private final ReadOnlyThreeTriosModel<Card> model;
-  private final TTBoardPanel panel;
+public class TTGuiView<C extends Card> extends JFrame implements ThreeTriosFrame {
+  private final ReadOnlyThreeTriosModel<C> model;
+  private final TTBoardPanel<C> panel;
   private static final int SIZE = 100;
 
   /**
@@ -23,7 +23,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame {
    * @param model a read only model
    * @throws IllegalArgumentException if the read only model is null
    */
-  public TTGuiView(ReadOnlyThreeTriosModel<Card> model) {
+  public TTGuiView(ReadOnlyThreeTriosModel<C> model) {
     if (model == null) {
       throw new IllegalArgumentException("read only model cannot be null");
     }

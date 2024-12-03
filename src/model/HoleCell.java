@@ -3,7 +3,7 @@ package model;
 /**
  * Represents a Cell that no card can be played to.
  */
-public class HoleCell implements Cell<PlayingCard> {
+public class HoleCell implements Cell<Card> {
 
   /**
    * Constructs a HoleCell.
@@ -13,12 +13,12 @@ public class HoleCell implements Cell<PlayingCard> {
   }
 
   @Override
-  public PlayingCard getCard() {
+  public Card getCard() {
     throw new IllegalStateException("Hole cell does not have card.");
   }
 
   @Override
-  public void updateCell(PlayingCard card, Player<PlayingCard> currentPlayer) {
+  public void updateCell(Card card, Player<Card> currentPlayer) {
     throw new IllegalStateException("Hole cell cannot be updated.");
   }
 
