@@ -360,6 +360,19 @@ public class TTModel implements ThreeTriosModel<PlayingCard> {
     return isStarted;
   }
 
+  @Override
+  public int getScore(Player player) {
+    int score = 0;
+    for (List<Cell> row : getGrid()) {
+      for (Cell cell : row) {
+        if (cell.getPlayerColor() == player.getColor()) {
+          score++;
+        }
+      }
+    }
+    return score;
+  }
+
   /**
    * An event listener for a three trios game. Uses the controller to handle new turn events.
    */

@@ -84,4 +84,11 @@ public interface ReadOnlyThreeTriosModel<C extends Card> {
   void addTurnListener(ThreeTriosController listener);
 
   boolean isGameStarted();
+
+  /**
+   * Returns the score for the given player.
+   * @param player  the player to calculate score for
+   * @return        the score as an int
+   */
+  int getScore(Player player);
 }

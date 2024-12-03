@@ -3,16 +3,16 @@ package model.adapter;
 import java.util.List;
 import java.util.Objects;
 
+import model.Card;
 import model.Cell;
-import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
 import provider.model.Grid;
 import provider.model.GridCellReadOnly;
 
 public class GridAdapter implements Grid {
-  private final ReadOnlyThreeTriosModel<PlayingCard> model;
+  private final ReadOnlyThreeTriosModel<Card> model;
 
-  public GridAdapter(ReadOnlyThreeTriosModel<PlayingCard> model) {
+  public GridAdapter(ReadOnlyThreeTriosModel<Card> model) {
     this.model = Objects.requireNonNull(model);
   }
 

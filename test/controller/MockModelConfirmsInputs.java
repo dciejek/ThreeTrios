@@ -91,4 +91,9 @@ public class MockModelConfirmsInputs implements ThreeTriosModel {
   public boolean isGameStarted() {
     return false;
   }
+
+  @Override
+  public int getScore(Player player) {
+    return 0;
+  }
 }

@@ -9,7 +9,11 @@ import controller.ThreeTriosController;
 import model.Card;
 import model.Cell;
 import model.Player;
+import model.PlayingCard;
+import model.TTModel;
+import model.TTPlayer;
 import model.ThreeTriosModel;
+import provider.model.CardinalDirection;
 import provider.model.CoachColor;
 import provider.model.Grid;
 import provider.model.GridCellReadOnly;
@@ -130,7 +134,7 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public CoachColor winner() {
-    return this.model.getWinner();
+    return CoachColorAdapter.playerColorToCoachColor(this.model.getWinner().getColor());
   }
 
   @Override
@@ -165,11 +169,17 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public int numFlippedIfPlaced(provider.model.Card card, int row, int col) {
-    return 0;
+    return model.numFlipped(new PlayingCard("",
+            AttackValueAdapter.attackValueToCardValue(card.getAttackValue(CardinalDirection.NORTH)),
+            AttackValueAdapter.attackValueToCardValue(card.getAttackValue(CardinalDirection.SOUTH)),
+            AttackValueAdapter.attackValueToCardValue(card.getAttackValue(CardinalDirection.EAST)),
+            AttackValueAdapter.attackValueToCardValue(card.getAttackValue(CardinalDirection.WEST))),
+    row, col);
   }
 
   @Override
   public int score(CoachColor coach) {
-    return 0;
+    // model can be null for set up purposes already, helpful to set up dummy player here
+    return model.getScore(new TTPlayer(null, CoachColorAdapter.coachColorToPlayerColor(coach)));
   }
 }
