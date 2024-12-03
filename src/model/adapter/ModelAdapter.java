@@ -1,6 +1,7 @@
 package model.adapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,14 +11,12 @@ import model.Card;
 import model.Cell;
 import model.Player;
 import model.PlayingCard;
-import model.TTModel;
 import model.TTPlayer;
 import model.ThreeTriosModel;
 import provider.model.CardinalDirection;
 import provider.model.CoachColor;
 import provider.model.Grid;
 import provider.model.GridCellReadOnly;
-import provider.model.GridCellVisitable;
 import provider.model.Model;
 import provider.model.Referee;
 
@@ -107,15 +106,12 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   @Override
   public void startGame(Grid grid, List<Card> cards, Referee referee) {
     ArrayList<ArrayList<Cell>> newGrid = new ArrayList<ArrayList<Cell>>();
-    for (GridCellReadOnly[] row : grid.readOnlyArray2D()) {
 
-    }
-    // need GridAdapter here
   }
 
   @Override
   public void placeCard(int idx, int row, int col) {
-
+    model.placeCard(idx, row, col);
   }
 
   @Override
@@ -125,7 +121,26 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public Map<CoachColor, List<provider.model.Card>> curCoachesHands() {
-    return Map.of();
+    CoachColor coachColorOne = CoachColorAdapter.playerColorToCoachColor(
+            model.getPlayerOne().getColor());
+    CoachColor coachColorTwo = CoachColorAdapter.playerColorToCoachColor(
+            model.getPlayerTwo().getColor());
+    Map<CoachColor, List<provider.model.Card>> ret =
+            new HashMap<CoachColor, List<provider.model.Card>>();
+    List<provider.model.Card> tempHand = new ArrayList<>();
+
+    for (Card c : model.getPlayerOne().getHand()) {
+      tempHand.add(new CardAdapter(c, model.getPlayerOne().getColor()));
+    }
+    ret.put(coachColorOne, new ArrayList<provider.model.Card>(tempHand));
+    tempHand.clear();
+
+    for (Card c : model.getPlayerTwo().getHand()) {
+      tempHand.add(new CardAdapter(c, model.getPlayerTwo().getColor()));
+    }
+    ret.put(coachColorTwo, new ArrayList<provider.model.Card>(tempHand));
+
+    return ret;
   }
 
   @Override
@@ -160,17 +175,27 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public Optional<provider.model.Card> cardAt(int row, int col) {
-    return Optional.empty();
+    try {
+      return Optional.of(new CardAdapter(model.getCellAt(row, col).getCard(),
+              model.getCellAt(row, col).getPlayerColor()));
+    } catch (Exception e) {
+      return Optional.empty();
+    }
   }
 
   @Override
   public Optional<CoachColor> ownerAt(int row, int col) {
-    return Optional.empty();
+    try {
+      return Optional.of(CoachColorAdapter.playerColorToCoachColor(
+              model.getCellAt(row, col).getPlayerColor()));
+    } catch (IllegalArgumentException e) {
+      return Optional.empty();
+    }
   }
 
   @Override
   public boolean canPlayAt(int row, int col) {
-    return false;
+    return model.getCellAt(row, col).canPlayHere();
   }
 
   @Override

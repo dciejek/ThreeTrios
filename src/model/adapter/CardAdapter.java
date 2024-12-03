@@ -89,6 +89,4 @@ public class CardAdapter implements Card, provider.model.Card {
   public boolean isStrongerCard(Card opposing, CardinalDirection dir) {
     return card.isStrongerCard(opposing, dir);
   }
-
-  public static providerCardToOurCard();
 }
