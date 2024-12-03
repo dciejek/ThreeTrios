@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import model.Cell;
 import model.PlayingCard;
+import model.ReadOnlyThreeTriosModel;
+import model.ThreeTriosModel;
 import provider.model.Card;
 import provider.model.CardinalDirection;
 import provider.model.GridCellReadOnly;
@@ -12,9 +14,12 @@ import provider.model.Referee;
 
 public class GridCellVisitableAdapter implements GridCellVisitable {
   private final Cell<PlayingCard> cell;
+  private final ReadOnlyThreeTriosModel<PlayingCard> model;
 
-  public GridCellVisitableAdapter(Cell<PlayingCard> cell) {
+  public GridCellVisitableAdapter(Cell<PlayingCard> cell,
+                                  ReadOnlyThreeTriosModel<PlayingCard> model) {
     this.cell = Objects.requireNonNull(cell);
+    this.model = Objects.requireNonNull(model);
   }
 
   @Override
