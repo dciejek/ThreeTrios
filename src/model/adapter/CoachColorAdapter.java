@@ -3,7 +3,8 @@ package model.adapter;
 import model.PlayerColor;
 import provider.model.CoachColor;
 
-public class CoachColorAdapter {
+public class CoachColorAdapter implements PlayerColor {
+  CoachColor coachColor;
 
   public static CoachColor playerColorToCoachColor(PlayerColor playerColor) {
     switch (playerColor) {
