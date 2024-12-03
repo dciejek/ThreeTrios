@@ -20,8 +20,8 @@ import provider.model.Model;
 import provider.model.Referee;
 
 public class ModelAdapter implements Model, ThreeTriosModel<Card> {
-  private Grid grid;
   private final ThreeTriosModel<Card> model;
+  private Grid grid;
 
   //take in our model?
 
@@ -42,7 +42,7 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public void startGame(Grid grid, List<provider.model.Card> cards, Referee referee) {
-    this.grid = grid;
+
 
   }
 
@@ -97,7 +97,7 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public Grid curGrid() {
-    return new GridAdapter(model);
+    return this.grid;
   }
 
   @Override
