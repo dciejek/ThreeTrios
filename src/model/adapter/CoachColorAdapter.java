@@ -1,4 +1,9 @@
 package model.adapter;
 
-public class CoachColorAdapter {
+import model.PlayerColor;
+import provider.model.CoachColor;
+
+public class CoachColorAdapter implements PlayerColor {
+  CoachColor coachColor;
+
 }
