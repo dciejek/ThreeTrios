@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.awt.Point;
 import java.io.File;
 import java.util.List;
+
+import model.Card;
 import model.Cell;
 import model.Player;
 import model.PlayerColor;
@@ -29,8 +31,8 @@ public class TestController {
   ThreeTriosModel model;
   File cardsFile = new File("docs" + File.separator + "cards1");
   File gridFile = new File("docs" + File.separator + "3x3Grid");
-  List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);
-  List<PlayingCard> cards = FileHandler.readCards(cardsFile);
+  List<List<Cell<Card>>> grid = FileHandler.readGrid(gridFile);
+  List<Card> cards = FileHandler.readCards(cardsFile);
   ThreeTriosFrame view;
   ThreeTriosFrame view2;
   Player p1;
