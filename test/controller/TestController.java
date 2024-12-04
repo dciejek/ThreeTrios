@@ -12,7 +12,6 @@ import model.Card;
 import model.Cell;
 import model.Player;
 import model.PlayerColor;
-import model.PlayingCard;
 import model.StrategyPlayer;
 import model.TTPlayer;
 import model.ThreeTriosModel;
