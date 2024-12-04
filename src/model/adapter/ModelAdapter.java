@@ -23,19 +23,6 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   private final ThreeTriosModel<Card> model;
   private GridAdapter grid;
 
-  //take in our model?
-
-  //construct
-  //adapt Grid from model.getGrid()
-  //adapt each card in List<Cards>
-  //add referee? if needed
-
-  //startGame
-
-
-  //placeCard
-  //call our own models placeCard using given values
-
   public ModelAdapter(ThreeTriosModel<Card> model) {
     this.model = model;
   }

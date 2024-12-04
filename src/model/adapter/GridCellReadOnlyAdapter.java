@@ -36,15 +36,15 @@ public class GridCellReadOnlyAdapter implements GridCellReadOnly {
 
   @Override
   public boolean hasNeighborToThe(CardinalDirection direction) {
-    //boolean hasNeighborToThe(CardinalDirection dir)
-    //return GridCellAbstractAdapter.hasNeighborToThe(dir);
+    //Not necessary in implementation as neighbors are accessed in a private helper method
+    //within our model when needed (during the battle/combo step after placeCard() is called)
     return false;
   }
 
   @Override
   public GridCellReadOnly getNeighborToThe(CardinalDirection direction) {
-    //GridCellReadOnly getCellToThe(CardinalDirection dir)
-    //return GridCellAbstractAdapter.getCellToThe(dir)
+    //Not necessary in implementation as neighbors are accessed in a private helper method
+    //within our model when needed (during the battle/combo step after placeCard() is called)
     return null;
   }
 
