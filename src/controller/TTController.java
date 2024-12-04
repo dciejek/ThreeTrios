@@ -49,7 +49,7 @@ public class TTController implements ThreeTriosController<Card> {
   }
 
   @Override
-  public void handleCellClicked(int col, int row) {
+  public void handleCellClicked(int row, int col) {
     view.refresh();
     if (model.isGameOver()) {
       gameOverMessage();
@@ -67,7 +67,7 @@ public class TTController implements ThreeTriosController<Card> {
     }
 
     //Check that it isnt the opponents hand
-    else if (isCellInOpponentHand(row, col)) {
+    else if (isCellInOpponentHand(col)) {
       return;
     }
     //If the cell selected is in the players hand update highlight
@@ -120,7 +120,7 @@ public class TTController implements ThreeTriosController<Card> {
   }
 
   private boolean gridClicked(int row, int col) {
-    return row > 0 && row <= model.getGrid().size() && col >= 1 && col <= model.getRow(0).size();
+    return row >= 0 && row < model.getGrid().size() && col >= 1 && col <= model.getRow(0).size();
   }
 
   private boolean noCardSelected() {
@@ -133,9 +133,9 @@ public class TTController implements ThreeTriosController<Card> {
   }
 
 
-  private boolean isCellInOpponentHand(int row, int col) {
+  private boolean isCellInOpponentHand(int col) {
     //We don't care if there is/isn't a card in that row since it's already the wrong hand.
-    if (playerHandIsLeftHand() && col == model.getRow(0).size() + 2) {
+    if (playerHandIsLeftHand() && col == model.getRow(0).size() + 1) {
       //This aint yo hand twin
       return true;
     } else if (!playerHandIsLeftHand() && col == 0) {

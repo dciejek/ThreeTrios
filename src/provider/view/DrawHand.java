@@ -59,8 +59,8 @@ public class DrawHand {
     artist.drawRect(0, 0, cardWidth, cardHeight);
     Point north = new Point(7 * cardWidth / 16, cardHeight / 4);
     Point south = new Point(7 * cardWidth / 16, 7 * cardHeight / 8);
-    Point east = new Point(cardWidth / 16, cardHeight / 2);
-    Point west = new Point(7 * cardWidth / 8, cardHeight / 2);
+    Point west = new Point(cardWidth / 16, cardHeight / 2);
+    Point east = new Point(7 * cardWidth / 8, cardHeight / 2);
     artist.setColor(VISIBLE_TEXT);
     artist.setFont(VISIBLE_FONT);
     artist.drawString(card.getAttackValue(CardinalDirection.NORTH).toString(), north.x,

@@ -66,7 +66,6 @@ public final class ThreeTrios {
 
     ThreeTriosFrame view = new TTGuiView<>(modelAdapter);
     GameViewAdapter providerView = buildProviderView();
-    providerView.accept(move -> {}, () -> modelAdapter);
 
     ThreeTriosController<Card> controller = new TTController(modelAdapter, p1, view);
     ThreeTriosController<Card> controller2 =
@@ -74,6 +73,8 @@ public final class ThreeTrios {
 
     controller.playGame();
     controller2.playGame();
+
+    providerView.accept(move -> {}, () -> modelAdapter);
   }
 
   private static void cardToProviderConversion(List<Card> cards,

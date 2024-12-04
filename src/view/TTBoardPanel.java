@@ -231,7 +231,7 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
         modelPt.setLocation(x, y);
         printIndexIfGrid(modelPt);
 
-        features.handleCellClicked(x, y);
+        features.handleCellClicked(y, x);
       } catch (NoninvertibleTransformException ex) {
         throw new RuntimeException(ex);
       }
