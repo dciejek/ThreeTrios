@@ -20,7 +20,12 @@ public class CardAdapter implements Card, provider.model.Card {
   }
 
   public CardAdapter(provider.model.Card card, PlayerColor player) {
-    this.card = new PlayingCard(card.getName(),
+    this.card = cardConverter(card);
+    this.player = player;
+  }
+
+  public static PlayingCard cardConverter(provider.model.Card card) {
+    return new PlayingCard(card.getName(),
             AttackValueAdapter.attackValueToCardValue(
                     card.getAttackValue(provider.model.CardinalDirection.NORTH)),
             AttackValueAdapter.attackValueToCardValue(
@@ -29,7 +34,6 @@ public class CardAdapter implements Card, provider.model.Card {
                     card.getAttackValue(provider.model.CardinalDirection.SOUTH)),
             AttackValueAdapter.attackValueToCardValue(
                     card.getAttackValue(provider.model.CardinalDirection.WEST)));
-    this.player = player;
   }
 
   @Override

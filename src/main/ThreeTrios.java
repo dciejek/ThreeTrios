@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,10 +16,14 @@ import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
 import model.TTModel;
 import model.ThreeTriosModel;
+import model.adapter.CardAdapter;
 import model.adapter.CoachColorAdapter;
+import model.adapter.GridAdapter;
 import model.adapter.ModelAdapter;
 import provider.model.CoachColor;
 import provider.model.GamePlayer;
+import provider.model.Grid;
+import provider.model.Model;
 import provider.view.DrawGrid;
 import provider.view.DrawHand;
 import provider.view.GUIGridBase;
@@ -46,6 +51,7 @@ public final class ThreeTrios {
     ThreeTriosModel<Card> model = new TTModel();
     Player<Card> p1 = factory.stringToPlayer(model, sc.next());
     Player<Card> p2 = factory.stringToPlayer(model, sc.next());
+    Model modelAdapter = new ModelAdapter(model);
     
     model = new TTModel(p1, p2);
     p1.setModel(model);
@@ -53,19 +59,31 @@ public final class ThreeTrios {
 
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "3x3Grid");
-    List<List<Cell<Card>>> grid = FileHandler.readGrid(gridFile);
+    Grid grid = new GridAdapter(FileHandler.readGrid(gridFile));
     List<Card> cards = FileHandler.readCards(cardsFile);
+    List<provider.model.Card> deck = new ArrayList<>();
+
+    int count = 0;
+    for (Card card : cards) {
+      if (count % 2 == 0) {
+        deck.add(new CardAdapter(card, p1.getColor()));
+      } else {
+        deck.add(new CardAdapter(card, p2.getColor()));
+      }
+      count++;
+    }
+
     int rows = FileHandler.readRowNum(gridFile);
     int cols = FileHandler.readColNum(gridFile);
 
-    model.startGame(grid, cards, rows, cols);
+    modelAdapter.startGame(grid, deck, null);
     
     ThreeTriosFrame view = new TTGuiView(model);
 
     CoachColor player2Color = CoachColorAdapter.playerColorToCoachColor(p2.getColor());
     GameView view2 = buildProviderView(player2Color);
 
-    view2.renderModel(new ModelAdapter(model));
+    view2.renderModel(modelAdapter);
     
     ThreeTriosController<Card> controller = new TTController(model, p1, view);
     ThreeTriosController<Card> controller2 = new AbstractControlPlayerAdapter(player2Color,

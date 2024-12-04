@@ -1,6 +1,5 @@
 package model.adapter;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,7 @@ import provider.model.Referee;
 
 public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   private final ThreeTriosModel<Card> model;
-  private Grid grid;
+  private GridAdapter grid;
 
   //take in our model?
 
@@ -43,9 +42,8 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public void startGame(Grid grid, List<provider.model.Card> cards, Referee referee) {
-    this.grid = grid;
+    this.grid = new GridAdapter(grid);
     List<Card> deck = new ArrayList<>();
-    List<List<Cell<Card>>> newGrid = new GridAdapter(grid);
     int count = 0;
     for (provider.model.Card card : cards) {
       if (count % 2 == 0) {
@@ -55,7 +53,7 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
       }
       count++;
     }
-    model.startGame(newGrid, deck, grid.numRows(), grid.numCols());
+    model.startGame(this.grid, deck, grid.numRows(), grid.numCols());
   }
 
   @Override
