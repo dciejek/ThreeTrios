@@ -9,7 +9,6 @@ import model.Card;
 import model.Player;
 import model.PlayerColor;
 import model.ReadOnlyThreeTriosModel;
-import model.ThreeTriosModel;
 import provider.model.GamePlayer;
 import provider.model.Model;
 import provider.model.Move;

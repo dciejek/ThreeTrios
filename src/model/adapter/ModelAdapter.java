@@ -163,7 +163,7 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public void startGame(List grid, List cards, int rows, int cols) {
-    // not necessary for adapter.
+    model.startGame(grid, cards, rows, cols);
   }
 
   @Override
