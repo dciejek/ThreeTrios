@@ -20,7 +20,7 @@ public class CardAdapter implements Card, provider.model.Card {
   private final PlayerColor player;
 
   /**
-   * Constructs a card from our implementation
+   * Constructs a card from our implementation.
    * @param card our card implementation
    * @param player our player implementation
    */
@@ -30,7 +30,7 @@ public class CardAdapter implements Card, provider.model.Card {
   }
 
   /**
-   * Constructs a card from provider implementation
+   * Constructs a card from provider implementation.
    * @param card provider card
    * @param player provider player
    */
