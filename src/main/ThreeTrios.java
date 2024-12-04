@@ -7,6 +7,7 @@ import java.util.Scanner;
 import controller.FileHandler;
 import controller.TTController;
 import controller.ThreeTriosController;
+import controller.adapter.AbstractControlPlayerAdapter;
 import model.Card;
 import model.Cell;
 import model.Player;
@@ -14,6 +15,19 @@ import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
 import model.TTModel;
 import model.ThreeTriosModel;
+import model.adapter.CoachColorAdapter;
+import model.adapter.ModelAdapter;
+import provider.model.CoachColor;
+import provider.model.GamePlayer;
+import provider.view.DrawGrid;
+import provider.view.DrawHand;
+import provider.view.GUIGridBase;
+import provider.view.GUIGridInteractive;
+import provider.view.GUIHandBase;
+import provider.view.GUIHandInteractive;
+import provider.view.GUIPlayerDelegate;
+import provider.view.GUIPlayerInteractive;
+import provider.view.GameView;
 import view.TTGuiView;
 import view.ThreeTriosFrame;
 
@@ -47,12 +61,50 @@ public final class ThreeTrios {
     model.startGame(grid, cards, rows, cols);
     
     ThreeTriosFrame view = new TTGuiView(model);
-    ThreeTriosFrame view2 = new TTGuiView(model);
+
+    CoachColor player2Color = CoachColorAdapter.playerColorToCoachColor(p2.getColor());
+    GameView view2 = buildProviderView(player2Color);
+
+    view2.renderModel(new ModelAdapter(model));
     
     ThreeTriosController<Card> controller = new TTController(model, p1, view);
-    ThreeTriosController<Card> controller2 = new TTController(model, p2, view2);
+    ThreeTriosController<Card> controller2 = new AbstractControlPlayerAdapter(player2Color,
+            view2, buildProviderPlayer());
     
     controller.playGame();
     controller2.playGame();
   }
+
+  private static GameView buildProviderView(CoachColor coachColor) {
+    GUIHandBase redHand = new GUIHandBase(new DrawHand());
+    GUIHandBase blueHand = new GUIHandBase(new DrawHand());
+    GUIGridBase grid = new GUIGridBase(new DrawGrid());
+
+    return new GUIPlayerDelegate(redHand, blueHand, grid, coachColor);
+  }
+
+  private static GamePlayer buildProviderPlayer() {
+    GUIHandBase redHand = new GUIHandBase(new DrawHand());
+    GUIHandInteractive blueHand = new GUIHandInteractive(new DrawHand());
+    GUIGridInteractive grid = new GUIGridInteractive(new DrawGrid());
+
+    return new GUIPlayerInteractive(redHand, blueHand, grid);
+  }
+
+
 }
+
+
+//helper method to build providers view implement in controllerAdapter
+//Building GUIPlayerInteractive
+  //GUIHandBase
+    //DrawHand
+      //List<Card>, BufferedImage
+  //GUIHandInteraction
+    //DrawHand
+     //List<Card>, BufferedImage
+  //GUIGridInteraction
+   //DrawGrid
+    //Grid, BufferedImage
+
+
