@@ -168,60 +168,51 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public Player getWinner() {
-    // not necessary for adapter.
-    return null;
+    return model.getWinner();
   }
 
   @Override
   public Player getPlayerOne() {
-    // not necessary for adapter.
-    return null;
+    return model.getPlayerOne();
   }
 
   @Override
   public Player getPlayerTwo() {
-    // not necessary for adapter.
-    return null;
+    return model.getPlayerTwo();
   }
 
   @Override
   public Player getCurrentPlayer() {
-    // not necessary for adapter.
-    return null;
+    return model.getCurrentPlayer();
   }
 
   @Override
   public List<List<Cell>> getGrid() {
-    // not necessary for adapter.
-    return List.of();
+    return model.getGrid();
   }
 
   @Override
   public List<Cell> getRow(int row) {
-    // not necessary for adapter.
-    return List.of();
+    return model.getRow(row);
   }
 
   @Override
   public Cell getCellAt(int row, int col) {
-    // not necessary for adapter.
-    return null;
+    return model.getCellAt(row, col);
   }
 
   @Override
   public int numFlipped(Card card, int row, int col) {
-    // not necessary for adapter.
-    return 0;
+    return model.numFlipped(card, row, col);
   }
 
   @Override
   public void addTurnListener(ThreeTriosController listener) {
-    // not necessary for adapter.
+    model.addTurnListener(listener);
   }
 
   @Override
   public int getScore(Player player) {
-    // not necessary for adapter.
-    return 0;
+    return model.getScore(player);
   }
 }
