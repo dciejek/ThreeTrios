@@ -13,21 +13,14 @@ import model.Player;
 import model.TTModel;
 import model.ThreeTriosModel;
 import model.adapter.CardAdapter;
-import model.adapter.CoachColorAdapter;
 import model.adapter.GridAdapter;
 import model.adapter.ModelAdapter;
-import provider.model.CoachColor;
-import provider.model.GamePlayer;
 import provider.model.Grid;
 import provider.view.DrawGrid;
 import provider.view.DrawHand;
-import provider.view.GUIGridBase;
 import provider.view.GUIGridInteractive;
 import provider.view.GUIHandBase;
 import provider.view.GUIHandInteractive;
-import provider.view.GUIPlayerDelegate;
-import provider.view.GUIPlayerInteractive;
-import provider.view.GameView;
 import view.TTGuiView;
 import view.ThreeTriosFrame;
 import view.adapter.GameViewAdapter;
@@ -74,7 +67,7 @@ public final class ThreeTrios {
     controller.playGame();
     controller2.playGame();
 
-    providerView.accept(move -> {}, () -> modelAdapter);
+    providerView.accept(move -> { }, () -> modelAdapter);
   }
 
   private static void cardToProviderConversion(List<Card> cards,

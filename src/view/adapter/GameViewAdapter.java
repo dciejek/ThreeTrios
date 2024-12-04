@@ -1,12 +1,10 @@
 package view.adapter;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import controller.ThreeTriosController;
 import provider.model.Model;
@@ -17,12 +15,23 @@ import provider.view.GUIHandInteractive;
 import provider.view.GUIPlayerInteractive;
 import view.ThreeTriosFrame;
 
+/**
+ * Class Adapter that implements our view ThreeTriosFrame and extends the interactive provider
+ * view GUIPlayerInteractive so that it can be directly utilized with our controller and updated
+ * directly by the player.
+ */
 public class GameViewAdapter extends GUIPlayerInteractive implements ThreeTriosFrame {
   private Model model;
   private Point2D highlightedCard;
   protected Move move;
   private ThreeTriosController listener;
 
+  /**
+   * Constructs an interactive player view for player 2 using provider view.
+   * @param redHand provider hand panel
+   * @param blueHand provider interactive hand panel
+   * @param grid provider interactive grid panel
+   */
   public GameViewAdapter(GUIHandBase redHand, GUIHandInteractive blueHand,
                          GUIGridInteractive grid) {
     super(redHand, blueHand, grid);

@@ -7,7 +7,6 @@ import controller.ThreeTriosController;
 import model.Card;
 import model.Cell;
 import model.Player;
-import model.PlayingCard;
 import model.TTModel;
 import model.ThreeTriosModel;
 

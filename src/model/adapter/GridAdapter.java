@@ -14,6 +14,9 @@ import model.HoleCell;
 import provider.model.Grid;
 import provider.model.GridCellReadOnly;
 
+/**
+ * Two-way adapter that switches between a list of cells and the provider's Grid class.
+ */
 public class GridAdapter implements Grid, List<List<Cell<Card>>> {
   private final List<List<Cell<Card>>> grid;
 
@@ -129,8 +132,18 @@ public class GridAdapter implements Grid, List<List<Cell<Card>>> {
   }
 
   @Override
+  public void add(int index, List<Cell<Card>> element) {
+    grid.add(index, element);
+  }
+
+  @Override
   public boolean remove(Object o) {
     return grid.remove(o);
+  }
+
+  @Override
+  public List<Cell<Card>> remove(int index) {
+    return grid.remove(index);
   }
 
   @Override
@@ -171,16 +184,6 @@ public class GridAdapter implements Grid, List<List<Cell<Card>>> {
   @Override
   public List<Cell<Card>> set(int index, List<Cell<Card>> element) {
     return grid.set(index, element);
-  }
-
-  @Override
-  public void add(int index, List<Cell<Card>> element) {
-    grid.add(index, element);
-  }
-
-  @Override
-  public List<Cell<Card>> remove(int index) {
-    return grid.remove(index);
   }
 
   @Override

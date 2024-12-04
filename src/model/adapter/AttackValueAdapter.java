@@ -3,8 +3,17 @@ package model.adapter;
 import model.CardValue;
 import provider.model.AttackValue;
 
+/**
+ * A class housing static conversion methods that allow for respective
+ *     AttackValue <-> CardValue enumeration conversions.
+ */
 public class AttackValueAdapter {
 
+  /**
+   * Converts attack values -> card values.
+   * @param av an attack value
+   * @return the respective card value
+   */
   public static CardValue attackValueToCardValue(AttackValue av) {
     switch (av) {
       case A:
@@ -32,7 +41,12 @@ public class AttackValueAdapter {
     }
   }
 
-  public static AttackValue cardValueToAttackValue(CardValue cv){
+  /**
+   * Converts card values -> attack values.
+   * @param cv a card value
+   * @return the respective attack value
+   */
+  public static AttackValue cardValueToAttackValue(CardValue cv) {
     switch (cv) {
       case TEN:
         return AttackValue.A;

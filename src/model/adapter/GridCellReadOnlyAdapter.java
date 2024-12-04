@@ -7,6 +7,9 @@ import model.Cell;
 import provider.model.CardinalDirection;
 import provider.model.GridCellReadOnly;
 
+/**
+ * Object Adapter used to convert from Cell to the provider's GridCellReadOnly.
+ */
 public class GridCellReadOnlyAdapter implements GridCellReadOnly {
   private final Cell<Card> cell;
 

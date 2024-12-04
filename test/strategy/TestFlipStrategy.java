@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.io.File;
 
 import controller.FileHandler;
-import model.Card;
-import model.PlayingCard;
 import model.ThreeTriosModel;
 
 /**

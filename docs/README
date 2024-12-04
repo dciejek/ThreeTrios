@@ -92,6 +92,11 @@ Changes for part 4
 -Bug fix in TTBoardPanel mouseClick features.handleClickEvent() takes in y, x instead of x, y
 as handleClick event has the signature (row, col)
 
+Provider Changes:
+-Due to deadline and lack of responses from provider we changed the following ourselves:
+    -Removed unused imports in provider/model/Card
+    -Swapped declarations of Point east & Point west in provider/view/DrawHand in renderCard()
+
 Functional Features of Provider View Implementation:
 -Highlight card
     - Only given player's hand
@@ -108,7 +113,7 @@ Functional Features of Provider View Implementation:
 
 Provider Adapters:
 -AttackValueAdapter
-    -A class housing two static conversion methods that allow for respective
+    -A class housing static conversion methods that allow for respective
     AttackValue <-> CardValue enumeration conversions
 -CardAdapter
     - Two way adapter to mask as both our Card and the provider's Card for the model.
@@ -128,5 +133,11 @@ Provider Adapters:
 -ModelAdapter
     - Two way adapter that works for both views, since our view and the provider's view are
       hooked up to the same model.
+-GameViewAdapter
+    -Class Adapter that implements our view ThreeTriosFrame and extends the interactive provider
+    view GUIPlayerInteractive so that it can be directly utilized with our controller and updated
+    directly by the player.
+    -Class adapter because the GameView interface lacked information regarding all features of the
+    view necessary for a complete synchronous implementation.
 
 No necessary features were UNABLE to be implemented from the provider's code using adapters.

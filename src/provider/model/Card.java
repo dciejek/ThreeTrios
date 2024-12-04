@@ -1,9 +1,5 @@
 package provider.model;
 
-import java.util.Collections;
-
-import provider.model.CoachColor;
-
 /**
  * to represent a card in three trios.
  */

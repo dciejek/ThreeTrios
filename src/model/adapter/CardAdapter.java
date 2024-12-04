@@ -10,20 +10,40 @@ import model.PlayingCard;
 import provider.model.AttackValue;
 import provider.model.CoachColor;
 
+/**
+ * Two-way adapter to mask as both our Card and the provider's Card for the model.
+ * Two-way because some of their methods took in the provider's Card type, and we needed to
+ * convert from that, and vice versa is also true.
+ */
 public class CardAdapter implements Card, provider.model.Card {
   private final Card card;
   private final PlayerColor player;
 
+  /**
+   * Constructs a card from our implementation
+   * @param card our card implementation
+   * @param player our player implementation
+   */
   public CardAdapter(Card card, PlayerColor player) {
     this.card = Objects.requireNonNull(card);
     this.player = Objects.requireNonNull(player);
   }
 
+  /**
+   * Constructs a card from provider implementation
+   * @param card provider card
+   * @param player provider player
+   */
   public CardAdapter(provider.model.Card card, PlayerColor player) {
     this.card = cardConverter(card);
     this.player = player;
   }
 
+  /**
+   * Converts to our card implementation from provider.
+   * @param card provider card
+   * @return our card implementation
+   */
   public static PlayingCard cardConverter(provider.model.Card card) {
     return new PlayingCard(card.getName(),
             AttackValueAdapter.attackValueToCardValue(
