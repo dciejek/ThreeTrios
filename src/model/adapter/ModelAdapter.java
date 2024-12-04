@@ -43,7 +43,6 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   @Override
   public void startGame(Grid grid, List<provider.model.Card> cards, Referee referee) {
 
-
   }
 
   @Override

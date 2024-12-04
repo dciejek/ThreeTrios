@@ -63,7 +63,7 @@ public class GridAdapter implements Grid, List<List<Cell>> {
 
   @Override
   public int numCols() {
-    return grid.size();
+    return grid.get(0).size();
   }
 
   @Override
@@ -73,22 +73,22 @@ public class GridAdapter implements Grid, List<List<Cell>> {
 
   @Override
   public boolean isEmpty() {
-    return false;
+    return grid.isEmpty();
   }
 
   @Override
   public boolean contains(Object o) {
-    return false;
+    return grid.contains(o);
   }
 
   @Override
   public Iterator<List<Cell>> iterator() {
-    return null;
+    return grid.iterator();
   }
 
   @Override
   public Object[] toArray() {
-    return new Object[0];
+    return grid.toArray();
   }
 
   @Override
