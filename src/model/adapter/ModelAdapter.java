@@ -1,5 +1,6 @@
 package model.adapter;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,19 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
 
   @Override
   public void startGame(Grid grid, List<provider.model.Card> cards, Referee referee) {
-
+    this.grid = grid;
+    List<Card> deck = new ArrayList<>();
+    List<List<Cell<Card>>> newGrid = new GridAdapter(grid);
+    int count = 0;
+    for (provider.model.Card card : cards) {
+      if (count % 2 == 0) {
+        deck.add(new CardAdapter(card, model.getPlayerOne().getColor()));
+      } else {
+        deck.add(new CardAdapter(card, model.getPlayerTwo().getColor()));
+      }
+      count++;
+    }
+    model.startGame(newGrid, deck, grid.numRows(), grid.numCols());
   }
 
   @Override

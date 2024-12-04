@@ -5,8 +5,8 @@ import java.util.Objects;
 
 import model.Card;
 import model.CardinalDirection;
-import model.Player;
 import model.PlayerColor;
+import model.PlayingCard;
 import provider.model.AttackValue;
 import provider.model.CoachColor;
 
@@ -17,6 +17,19 @@ public class CardAdapter implements Card, provider.model.Card {
   public CardAdapter(Card card, PlayerColor player) {
     this.card = Objects.requireNonNull(card);
     this.player = Objects.requireNonNull(player);
+  }
+
+  public CardAdapter(provider.model.Card card, PlayerColor player) {
+    this.card = new PlayingCard(card.getName(),
+            AttackValueAdapter.attackValueToCardValue(
+                    card.getAttackValue(provider.model.CardinalDirection.NORTH)),
+            AttackValueAdapter.attackValueToCardValue(
+                    card.getAttackValue(provider.model.CardinalDirection.EAST)),
+            AttackValueAdapter.attackValueToCardValue(
+                    card.getAttackValue(provider.model.CardinalDirection.SOUTH)),
+            AttackValueAdapter.attackValueToCardValue(
+                    card.getAttackValue(provider.model.CardinalDirection.WEST)));
+    this.player = player;
   }
 
   @Override

@@ -2,16 +2,15 @@ package model.adapter;
 
 import java.util.Objects;
 
+import model.Card;
 import model.Cell;
-import model.PlayingCard;
-import provider.model.Card;
 import provider.model.CardinalDirection;
 import provider.model.GridCellReadOnly;
 
 public class GridCellReadOnlyAdapter implements GridCellReadOnly {
-  private final Cell<PlayingCard> cell;
+  private final Cell<Card> cell;
 
-  public GridCellReadOnlyAdapter(Cell<PlayingCard> cell) {
+  public GridCellReadOnlyAdapter(Cell<Card> cell) {
     this.cell = Objects.requireNonNull(cell);
   }
 
@@ -31,7 +30,7 @@ public class GridCellReadOnlyAdapter implements GridCellReadOnly {
   }
 
   @Override
-  public Card getCard() {
+  public provider.model.Card getCard() {
     return new CardAdapter(cell.getCard(), cell.getPlayerColor());
   }
 
