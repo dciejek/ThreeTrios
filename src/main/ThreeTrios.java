@@ -14,7 +14,6 @@ import model.TTModel;
 import model.ThreeTriosModel;
 import model.adapter.CardAdapter;
 import model.adapter.CoachColorAdapter;
-import model.adapter.GamePlayerAdapter;
 import model.adapter.GridAdapter;
 import model.adapter.ModelAdapter;
 import provider.model.CoachColor;
@@ -31,6 +30,7 @@ import provider.view.GUIPlayerInteractive;
 import provider.view.GameView;
 import view.TTGuiView;
 import view.ThreeTriosFrame;
+import view.adapter.GameViewAdapter;
 
 /**
  * The placeholder main class for our project, as described by HW6 displays
@@ -62,20 +62,18 @@ public final class ThreeTrios {
     cardToProviderConversion(cards, deck, p1, p2);
 
     modelAdapter.startGame(grid, deck, null);
-    
+
+
     ThreeTriosFrame view = new TTGuiView<>(modelAdapter);
-
-    CoachColor player2Color = CoachColorAdapter.playerColorToCoachColor(p2.getColor());
-    GameView view2 = buildProviderView(player2Color);
-
-    view2.renderModel(modelAdapter);
+    GameViewAdapter providerView = buildProviderView();
+    providerView.accept(move -> {}, () -> modelAdapter);
 
     ThreeTriosController<Card> controller = new TTController(modelAdapter, p1, view);
-    //ThreeTriosController<Card> controller2 = new TTController(modelAdapter,
-    //        p2, view2);
+    ThreeTriosController<Card> controller2 =
+            new TTController(modelAdapter, p2, providerView);
 
     controller.playGame();
-    //controller2.playGame();
+    controller2.playGame();
   }
 
   private static void cardToProviderConversion(List<Card> cards,
@@ -92,20 +90,12 @@ public final class ThreeTrios {
     }
   }
 
-  private static GameView buildProviderView(CoachColor coachColor) {
-    GUIHandBase redHand = new GUIHandBase(new DrawHand());
-    GUIHandBase blueHand = new GUIHandBase(new DrawHand());
-    GUIGridBase grid = new GUIGridBase(new DrawGrid());
-
-    return new GUIPlayerDelegate(redHand, blueHand, grid, coachColor);
-  }
-
-  private static GamePlayer buildProviderPlayer() {
+  private static GameViewAdapter buildProviderView() {
     GUIHandBase redHand = new GUIHandBase(new DrawHand());
     GUIHandInteractive blueHand = new GUIHandInteractive(new DrawHand());
     GUIGridInteractive grid = new GUIGridInteractive(new DrawGrid());
 
-    return new GUIPlayerInteractive(redHand, blueHand, grid);
+    return new GameViewAdapter(redHand, blueHand, grid);
   }
 
 }
