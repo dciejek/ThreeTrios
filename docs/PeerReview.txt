@@ -1,0 +1,18 @@
+The interfaces we were given were very flexible, however, they implemented a lot of
+base Java classes that we were not familiar with and had to look up documentation to understand, but
+once we understood, it, overall, made their implementation very concise
+
+The views are fully capable, however some quality of life changes like making borders thicker
+would be nice. Also, when the game is over, the view is still updated over their hand, which does
+not impact anything with the game, but it doesnt make sense for the listener on the hand panel to
+still be active. Their code was very easy to use and reuse, followed a logical path and was
+exceptionally documented, although it was sometimes vague because of how robust their classes were.
+Very cleanly written, some tastefully used helper methods and overall good design with method names
+and actions. Although some of the vocab used in documentation left something to be desired as it was
+a little vague.
+
+There were two large changes we asked of them. The first was to change their card implementation, as
+the one that was given was final and proved very difficult to adapt, so they sent us an interface
+with the same functionality. Then, we noticed a bug in their view regarding the DrawHand class'
+renderCard method, where the east and west values were flipped when their were displayed. However,
+they did not get back to us so we made the change ourself and included in the README.

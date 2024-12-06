@@ -1,0 +1,16 @@
+What we wish we had done differently in our design/implementation was
+to improve upon our controller. We believe it should have done less handling,
+with more things being delegated to the view/model respectively such as some of
+the uses of handleCellClicked, having it as a whole be replaced by different methods.
+Also, a design the mistake on our end was having our Cell class keep track of the player color
+while this should have been delegated to the card specifically. Additionally, we should have been
+more mindful of how we used parameterization. Our provider's code helped us recognize our
+mistake with the Cell class, whilst our customer's requests notified us of the limitations of our
+controller specifically regarding the handleCellClicked method.
+
+Overall, our experience with our provider was mediocre. Of the two requests we emailed them about
+they were moderately fast in response time and were able to supply us with the necessary Card
+interface. However, our second request to flip two lines of code in their DrawHand method was
+left unfulfilled despite us emailing twice. Additionally, at the very beginning of the assignment
+they provided us the code a day late sending it over on Monday rather than Sunday
+after being re-notified by the professor that day.
