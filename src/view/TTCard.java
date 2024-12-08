@@ -74,11 +74,4 @@ public class TTCard extends Path2D.Double {
     selected = true;
   }
 
-  /**
-   * DeHighlights a card.
-   */
-  public void deselect() {
-    selected = false;
-  }
-
 }

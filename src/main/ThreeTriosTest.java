@@ -15,6 +15,9 @@ import model.ThreeTriosModel;
 import view.TTGuiView;
 import view.ThreeTriosFrame;
 
+/**
+ * A main method that tests our view implementation.
+ */
 public class ThreeTriosTest {
 
   /**

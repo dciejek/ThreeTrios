@@ -153,6 +153,9 @@ public class TTController implements ThreeTriosController<Card> {
     return player.equals(model.getPlayerOne());
   }
 
+  /**
+   * Listens for a space-bar key to be hit to toggle hints on/off.
+   */
   class HintKeyListener implements KeyListener {
 
     @Override

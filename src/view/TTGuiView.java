@@ -49,6 +49,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
     this.repaint();
   }
 
+  @Override
   public void makeVisible() {
     this.setVisible(true);
   }

@@ -11,11 +11,20 @@ import model.ReadOnlyThreeTriosModel;
 import view.ThreeTriosPanel;
 import view.Utils;
 
+/**
+ * A decorator panel that displays GUI hints on the grid above the current state of the game.
+ */
 public class DisplayHints extends JPanel implements ThreeTriosPanel {
   private final ThreeTriosPanel panel;
   private final ReadOnlyThreeTriosModel<Card> model;
   private Graphics2D g2d;
 
+  /**
+   * Constructs the decorator panel for hints.
+   * @param panel the base panel to build from
+   * @param model the state of the model
+   * @param g the graphics used to generate the GUI
+   */
   public DisplayHints(ThreeTriosPanel panel, ReadOnlyThreeTriosModel<Card> model,
                       Graphics g) {
     this.panel = panel;
