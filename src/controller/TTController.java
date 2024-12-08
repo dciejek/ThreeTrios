@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 
 import javax.swing.JOptionPane;
@@ -45,6 +47,7 @@ public class TTController implements ThreeTriosController<Card> {
   public void playGame() {
     model.addTurnListener(this);
     view.addClickListener(this);
+    view.addKeyListener(new HintKeyListener());
     view.makeVisible();
   }
 
@@ -79,6 +82,8 @@ public class TTController implements ThreeTriosController<Card> {
     //Check that if the cell is on the grid a card is selected
     //No card selected not yet implemented
     else if (noCardSelected() && gridClicked(row, col)) {
+      JOptionPane.showMessageDialog(view.getPanel(),
+              "Please select a card from your hand first");
       return;
     }
     //Last case (card selected & grid clicked (playCard))
@@ -86,8 +91,7 @@ public class TTController implements ThreeTriosController<Card> {
       model.placeCard((int) view.getHighlightedCard().getY(), row, col - 1);
       view.setHighlightedCard(null);
     } catch (NullPointerException e) {
-      JOptionPane.showMessageDialog(view.getPanel(),
-              "Please select a card from your hand first");
+        //Do nothing
     } catch (IllegalArgumentException | IllegalStateException e) {
       if (e.getMessage().contains("over")) {
         gameOverMessage();
@@ -147,5 +151,28 @@ public class TTController implements ThreeTriosController<Card> {
 
   private boolean playerHandIsLeftHand() {
     return player.equals(model.getPlayerOne());
+  }
+
+  class HintKeyListener implements KeyListener {
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+      //ignore
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+      if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        if (notPlayersTurn() || noCardSelected()) {
+          return;
+        }
+        view.toggleHints();
+      }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+      //ignore
+    }
   }
 }

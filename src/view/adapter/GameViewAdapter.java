@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import javax.swing.JPanel;
 
 import controller.ThreeTriosController;
+import model.ReadOnlyThreeTriosModel;
 import provider.model.Model;
 import provider.model.Move;
 import provider.view.GUIGridInteractive;
@@ -72,6 +73,16 @@ public class GameViewAdapter extends GUIPlayerInteractive implements ThreeTriosF
   public JPanel getPanel() {
     //This is used to display messages, all messages are handled by their view implementation
     return null;
+  }
+
+  @Override
+  public ReadOnlyThreeTriosModel getModel() {
+    return null;
+  }
+
+  @Override
+  public void toggleHints() {
+    //not implemented
   }
 
   @Override

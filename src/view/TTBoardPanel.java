@@ -28,7 +28,7 @@ import model.ReadOnlyThreeTriosModel;
  */
 public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPanel {
   private final ReadOnlyThreeTriosModel<C> model;
-  private final int SIZE = 100;
+  private final int SIZE = Utils.SIZE;
   private final int maxHandSize;
   private Graphics2D g2d;
   private Point2D highlightedCard;
@@ -56,7 +56,8 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
     drawBoard(g2d);
   }
 
-  private void drawBoard(Graphics2D g2d) {
+  @Override
+  public void drawBoard(Graphics2D g2d) {
     int posX = 0;
     int posY = 0;
     TTCard cardSquare;
@@ -72,9 +73,7 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
     //Grid
     for (int i = 0; i < model.getGrid().size(); i++) {
       for (Cell cell : model.getRow(i)) {
-        if (cell.toString().equals(" ")) {
-          drawCell(g2d, cell, SIZE, posX, posY);
-        } else if (cell.toString().equals("_")) {
+        if (cell.toString().equals(" ") || cell.toString().equals("_")) {
           drawCell(g2d, cell, SIZE, posX, posY);
         } else {
           cardSquare = new TTCard(cell.getCard(), SIZE);
@@ -95,7 +94,7 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
             5, Math.max(maxHandSize * SIZE, model.getGrid().size() * SIZE));
     g2d.fill(borderTwo);
     if (highlightedCard != null) {
-      drawHighlightedCard((int) highlightedCard.getX(), (int) highlightedCard.getY());
+      drawHighlightedCard(g2d, (int) highlightedCard.getX(), (int) highlightedCard.getY());
     }
   }
 
@@ -140,7 +139,8 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
                     model.getGrid().size())) * SIZE);
   }
 
-  private AffineTransform getLogicalToPhysicalTransform() {
+  @Override
+  public AffineTransform getLogicalToPhysicalTransform() {
     AffineTransform transform = new AffineTransform();
     Dimension local = getLocalDimension();
     transform.scale(this.getWidth() / local.getWidth(),
@@ -184,7 +184,8 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
     }
   }
 
-  private void drawHighlightedCard(int x, int y) {
+  @Override
+  public void drawHighlightedCard(Graphics2D g2d, int x, int y) {
     TTCard cardSquare = new TTCard(model.getCurrentPlayer().getHand().get(y), SIZE);
     cardSquare.select();
     cardSquare.drawCard(g2d, getColor(model.getCurrentPlayer().getColor()),
@@ -244,6 +245,14 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
         int gridX = (int) modelPt.getX() - 1;
         int gridY = (int) modelPt.getY();
         System.out.println(gridX + ", " + gridY);
+      } else {
+        if ((int) modelPt.getX() == 0) {
+          System.out.println(
+                  model.getPlayerOne().getColor().toString() + " "+  (int) modelPt.getY());
+        } else if ((int) modelPt.getX() == model.getGrid().size() + 1) {
+          System.out.println(
+                  model.getPlayerTwo().getColor().toString() + " " + (int) modelPt.getY());
+        }
       }
     }
 

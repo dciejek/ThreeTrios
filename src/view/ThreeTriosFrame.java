@@ -1,21 +1,24 @@
 package view;
 
+import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 
 import javax.swing.JPanel;
 
 import controller.ThreeTriosController;
+import model.Card;
+import model.ReadOnlyThreeTriosModel;
 
 /**
  * The display frame interface for a game of Three Trios. Able to be updated
  * via click events and refreshed to update the visual state.
  */
-public interface ThreeTriosFrame {
+public interface ThreeTriosFrame<C extends Card> {
   /**
    * Set up to handle click events in this view.
    * @param listener the controller
    */
-  void addClickListener(ThreeTriosController listener);
+  void addClickListener(ThreeTriosController<C> listener);
 
   /**
    * Refresh the view to reflect any changes in the game state.
@@ -41,4 +44,20 @@ public interface ThreeTriosFrame {
    * Gets the panel component that makes up the view.
    */
   JPanel getPanel();
+
+  /**
+   * Gets a Read-Only model of three trios.
+   */
+  ReadOnlyThreeTriosModel<C> getModel();
+
+  /**
+   * Toggles on/off hint displays for the given view
+   */
+  void toggleHints();
+
+  /**
+   * Set up to key events in this view.
+   * @param listener the key events to be handled
+   */
+  void addKeyListener(KeyListener listener);
 }

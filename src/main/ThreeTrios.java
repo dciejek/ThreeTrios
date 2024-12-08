@@ -57,7 +57,7 @@ public final class ThreeTrios {
     modelAdapter.startGame(grid, deck, null);
 
 
-    ThreeTriosFrame view = new TTGuiView<>(modelAdapter);
+    ThreeTriosFrame<Card> view = new TTGuiView(modelAdapter);
     GameViewAdapter providerView = buildProviderView();
 
     ThreeTriosController<Card> controller = new TTController(modelAdapter, p1, view);
