@@ -81,11 +81,6 @@ public class GameViewAdapter extends GUIPlayerInteractive implements ThreeTriosF
   }
 
   @Override
-  public void toggleHints() {
-    //not implemented
-  }
-
-  @Override
   public void accept(Consumer<Move> moveConsumer, Supplier<Model> supplier) {
     super.accept(new ProviderClickListener(listener), supplier);
     if (model == null) {

@@ -1,9 +1,7 @@
 package view.decorator;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
@@ -27,11 +25,9 @@ public class DisplayHints extends JPanel implements ThreeTriosPanel {
    * @param panel the base panel to build from
    * @param model the state of the model
    */
-  public DisplayHints(ThreeTriosPanel panel, ReadOnlyThreeTriosModel<Card> model,
-                      Graphics g) {
+  public DisplayHints(ThreeTriosPanel panel, ReadOnlyThreeTriosModel<Card> model) {
     this.panel = panel;
     this.model = model;
-    paintComponent(g);
   }
 
   @Override
@@ -58,18 +54,20 @@ public class DisplayHints extends JPanel implements ThreeTriosPanel {
   @Override
   public void drawBoard(Graphics2D g2d) {
     panel.drawBoard(g2d);
-    int gridX = Utils.SIZE;
-    int gridY = 0;
-    for (int i = 0; i < model.getGrid().size(); i++) {
-      for (int j = 0; j < model.getRow(i).size(); j++) {
-        if (model.getCellAt(i, j).toString().equals(" ") ||
-                model.getCellAt(i, j).toString().equals("_")) {
-          drawHint(g2d, i, j, Utils.SIZE, gridX, gridY);
+    if (getHighlightedCard() != null) {
+      int gridX = Utils.SIZE;
+      int gridY = 0;
+      for (int i = 0; i < model.getGrid().size(); i++) {
+        for (int j = 0; j < model.getRow(i).size(); j++) {
+          if (model.getCellAt(i, j).toString().equals(" ") ||
+                  model.getCellAt(i, j).toString().equals("_")) {
+            drawHint(g2d, i, j, Utils.SIZE, gridX, gridY);
+          }
+          gridX += Utils.SIZE;
         }
-        gridX += Utils.SIZE;
+        gridX = Utils.SIZE;
+        gridY += Utils.SIZE;
       }
-      gridX = Utils.SIZE;
-      gridY += Utils.SIZE;
     }
   }
 

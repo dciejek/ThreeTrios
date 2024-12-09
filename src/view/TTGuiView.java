@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import controller.ThreeTriosController;
 import model.Card;
 import model.ReadOnlyThreeTriosModel;
-import view.decorator.DisplayHints;
 
 /**
  * A gui based view for a game of Three Trios.
@@ -17,9 +16,7 @@ import view.decorator.DisplayHints;
 public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
   private final ReadOnlyThreeTriosModel<Card> model;
   private final ThreeTriosPanel panel;
-  private DisplayHints hints;
   private static final int SIZE = Utils.SIZE;
-  private boolean hintsEnabled;
 
   /**
    * Constructs a GUI based view based off the given read only model of a game of Three Trios.
@@ -36,7 +33,6 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
     this.setSize(getPreferredSize().width, getPreferredSize().height);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     this.add(panel.getPanel());
-    hintsEnabled = false;
   }
 
   @Override
@@ -46,7 +42,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
 
   @Override
   public void refresh() {
-    this.paintComponents(this.getGraphics());
+    repaint();
   }
 
   @Override
@@ -72,19 +68,6 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
   @Override
   public ReadOnlyThreeTriosModel<Card> getModel() {
     return model;
-  }
-
-  @Override
-  public void toggleHints() {
-    if (!hintsEnabled) {
-      hints = new DisplayHints(panel, model, panel.getPanel().getGraphics());
-      add(hints);
-      hintsEnabled = true;
-    } else {
-      remove(hints);
-      hintsEnabled = false;
-      repaint();
-    }
   }
 
   @Override

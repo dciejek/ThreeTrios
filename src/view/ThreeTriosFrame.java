@@ -51,11 +51,6 @@ public interface ThreeTriosFrame<C extends Card> {
   ReadOnlyThreeTriosModel<C> getModel();
 
   /**
-   * Toggles on/off hint displays for the given view
-   */
-  void toggleHints();
-
-  /**
    * Set up to key events in this view.
    * @param listener the key events to be handled
    */

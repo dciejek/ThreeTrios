@@ -11,6 +11,7 @@ import model.Player;
 import model.ThreeTriosModel;
 import strategy.Play;
 import view.ThreeTriosFrame;
+import view.decorator.TTGuiHintDecorator;
 
 /**
  * Controller for a game of ThreeTrios. Takes in a player, a model
@@ -18,7 +19,7 @@ import view.ThreeTriosFrame;
  */
 public class TTController implements ThreeTriosController {
 
-  private final ThreeTriosFrame<Card> view;
+  private ThreeTriosFrame<Card> view;
   private final Player<Card> player;
   private final ThreeTriosModel<Card> model;
 
@@ -47,7 +48,7 @@ public class TTController implements ThreeTriosController {
   public void playGame() {
     model.addTurnListener(this);
     view.addClickListener(this);
-    view.addKeyListener(new HintKeyListener());
+    view.addKeyListener(new HintKeyListener(view));
     view.makeVisible();
   }
 
@@ -161,6 +162,17 @@ public class TTController implements ThreeTriosController {
    * Listens for a space-bar key to be hit to toggle hints on/off.
    */
   class HintKeyListener implements KeyListener {
+    private boolean enabled = false;
+    private final ThreeTriosFrame<Card> baseView;
+
+    /**
+     * Constructs a hint key listener using a base view from which all future views
+     * will be based on.
+     * @param view the base view
+     */
+    public HintKeyListener(ThreeTriosFrame<Card> view) {
+      baseView = view;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -173,7 +185,17 @@ public class TTController implements ThreeTriosController {
         if (notPlayersTurn() || noCardSelected()) {
           return;
         }
-        view.toggleHints();
+        enabled = !enabled;
+        String message;
+        if (enabled) {
+          view = new TTGuiHintDecorator(baseView);
+          message = "Hints Enabled";
+        } else {
+          view = baseView;
+          message = "Hints Disabled";
+        }
+        view.refresh();
+        System.out.println(message);
       }
     }
 
