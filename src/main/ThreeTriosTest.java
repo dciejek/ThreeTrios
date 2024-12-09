@@ -58,8 +58,8 @@ public class ThreeTriosTest {
     ThreeTriosFrame<Card> view = new TTGuiView(model);
     ThreeTriosFrame<Card> view2 = new TTGuiView(model);
 
-    ThreeTriosController<Card> controller = new TTController(model, p1, view);
-    ThreeTriosController<Card> controller2 = new TTController(model, p2, view2);
+    ThreeTriosController controller = new TTController(model, p1, view);
+    ThreeTriosController controller2 = new TTController(model, p2, view2);
 
     controller.playGame();
     controller2.playGame();

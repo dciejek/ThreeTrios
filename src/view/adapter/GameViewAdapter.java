@@ -105,8 +105,8 @@ public class GameViewAdapter extends GUIPlayerInteractive implements ThreeTriosF
       //model.numCols() + 1 & move.col + 1
       //because controller uses 0 based index with both hands included
       //therefore 0 index is player one's hand
-      features.handleCellClicked(move.handIdx, model.numCols() + 1);
-      features.handleCellClicked(move.row, move.col + 1);
+      features.cellClicked(move.handIdx, model.numCols() + 1);
+      features.cellClicked(move.row, move.col + 1);
       refresh();
     }
   }

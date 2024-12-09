@@ -18,7 +18,7 @@ public interface ThreeTriosFrame<C extends Card> {
    * Set up to handle click events in this view.
    * @param listener the controller
    */
-  void addClickListener(ThreeTriosController<C> listener);
+  void addClickListener(ThreeTriosController listener);
 
   /**
    * Refresh the view to reflect any changes in the game state.

@@ -69,7 +69,7 @@ public class TestController {
     controller2.playGame();
 
     view.setHighlightedCard(new Point(0, 1));
-    controller.handleCellClicked(1, 2);
+    controller.cellClicked(1, 2);
 
     Assert.assertEquals("1, 2, 0\n", ap.toString());
   }
@@ -80,7 +80,7 @@ public class TestController {
     controller2.playGame();
 
     view2.setHighlightedCard(new Point(0, 1));
-    controller2.handleCellClicked(1, 2);
+    controller2.cellClicked(1, 2);
 
     Assert.assertEquals("", ap.toString());
   }
@@ -91,7 +91,7 @@ public class TestController {
     controller.playGame();
     controller2.playGame();
 
-    controller.handleCellClicked(1, 2);
+    controller.cellClicked(1, 2);
 
     Assert.assertEquals("", ap.toString());
 
@@ -118,7 +118,7 @@ public class TestController {
     controller.playGame();
     controller2.playGame();
 
-    controller.handleCellClicked(1, 2);
+    controller.cellClicked(1, 2);
     Assert.assertEquals("", ap.toString());
   }
 }

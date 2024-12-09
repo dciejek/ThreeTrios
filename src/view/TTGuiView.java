@@ -40,7 +40,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
   }
 
   @Override
-  public void addClickListener(ThreeTriosController<Card> listener) {
+  public void addClickListener(ThreeTriosController listener) {
     this.panel.addClickListener(listener);
   }
 
