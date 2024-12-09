@@ -1,5 +1,7 @@
 package model;
 
+import model.rules.BattleRule;
+
 /**
  * Represents a playable card for ThreeTrios. Has 4 values for each
  * cardinal direction, as well as a name.
@@ -76,10 +78,8 @@ public class PlayingCard implements Card {
   }
 
   @Override
-  public boolean isStrongerCard(Card opposing, CardinalDirection dir) {
-    return this.getDirection(dir)
-            - opposing.getDirection(dir.oppositeDirection())
-            > 0;
+  public boolean isStrongerCard(Card opposing, CardinalDirection dir, BattleRule rule) {
+    return rule.beatsCard(this, opposing, dir);
   }
 
 

@@ -227,7 +227,6 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
         //Rounds to int values so index's are valid
         int x = (int) modelPt.getX();
         int y = (int) modelPt.getY();
-
         modelPt.setLocation(x, y);
         printIndexIfGrid(modelPt);
 

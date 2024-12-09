@@ -1,5 +1,7 @@
 package model;
 
+import model.rules.BattleRule;
+
 /**
  * A card interface for three trios. Each card will have a name represented with a string,
  * 4 CardValue's belonging to each cardinal direction, which can be compared to another
@@ -51,5 +53,5 @@ public interface Card {
    * @param dir the direction for this cards value to be compared
    * @return true if this card's value is greater than the opposing
    */
-  boolean isStrongerCard(Card opposing, CardinalDirection dir);
+  boolean isStrongerCard(Card opposing, CardinalDirection dir, BattleRule rule);
 }
