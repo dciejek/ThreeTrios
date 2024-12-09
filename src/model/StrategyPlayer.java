@@ -14,7 +14,7 @@ public class StrategyPlayer implements Player<Card> {
 
   private ReadOnlyThreeTriosModel<Card> model;
   private final PlayerColor color;
-  private final ArrayList<Card> hand;
+  private final List<Card> hand;
   private final TTStrategy<Card> strategy;
 
   /**

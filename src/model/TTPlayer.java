@@ -1,18 +1,20 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import strategy.Play;
 
 
 /**
- * A player in a game of Three Trios.
+ * A player in a game of Three Trios. Possesses a PlayerColor and a hand of Cards.
+ * This hand can be added to, removed from, and accessed to receive the specific card's information.
  */
 public class TTPlayer implements Player<Card> {
 
   private ReadOnlyThreeTriosModel<Card> model;
   private final PlayerColor color;
-  private final ArrayList<Card> hand;
+  private final List<Card> hand;
 
   /**
    * Constructs a player that has a PlayerColor for all of its cards, as well

@@ -9,16 +9,16 @@ import javax.swing.JOptionPane;
 import model.Card;
 import model.Player;
 import model.ThreeTriosModel;
-import view.ThreeTriosFrame;
 import strategy.Play;
+import view.ThreeTriosFrame;
 
 /**
  * Controller for a game of ThreeTrios. Takes in a player, a model
  * and a view.
  */
-public class TTController implements ThreeTriosController<Card> {
+public class TTController implements ThreeTriosController {
 
-  private final ThreeTriosFrame view;
+  private final ThreeTriosFrame<Card> view;
   private final Player<Card> player;
   private final ThreeTriosModel<Card> model;
 
@@ -30,7 +30,7 @@ public class TTController implements ThreeTriosController<Card> {
    */
   public TTController(ThreeTriosModel<Card> model,
                       Player<Card> player,
-                      ThreeTriosFrame view) {
+                      ThreeTriosFrame<Card> view) {
     if (model == null) {
       throw new IllegalArgumentException("model cannot be null");
     } else if (player == null) {
@@ -51,26 +51,24 @@ public class TTController implements ThreeTriosController<Card> {
     view.makeVisible();
   }
 
-  @Override
-  public void handleCellClicked(int row, int col) {
-    view.refresh();
+  public void cellClicked(int row, int col) {
     if (model.isGameOver()) {
       gameOverMessage();
       return;
     }
-    //check that it is the players turn
     if (notPlayersTurn()) {
       return;
     }
-    if (player.getPlay(model) != null && this.player.equals(model.getCurrentPlayer())) {
-      Play play = player.getPlay(model);
-      model.placeCard(play.handIdx, play.row, play.col);
-      view.refresh();
-      return;
+    if (player.getPlay(model) != null) {
+      emulateCellClicked();
+    } else {
+      handleCellClicked(row, col);
     }
+  }
 
+  private void handleCellClicked(int row, int col) {
     //Check that it isnt the opponents hand
-    else if (isCellInOpponentHand(col)) {
+    if (isCellInOpponentHand(col)) {
       return;
     }
     //If the cell selected is in the players hand update highlight
@@ -101,6 +99,14 @@ public class TTController implements ThreeTriosController<Card> {
       }
     }
     view.refresh();
+  }
+
+  private void emulateCellClicked() {
+    if (player.getPlay(model) != null && this.player.equals(model.getCurrentPlayer())) {
+      Play play = player.getPlay(model);
+      model.placeCard(play.handIdx, play.row, play.col);
+      view.refresh();
+    }
   }
 
   private void gameOverMessage() {
@@ -136,17 +142,15 @@ public class TTController implements ThreeTriosController<Card> {
     return !model.getCurrentPlayer().equals(player);
   }
 
-
   private boolean isCellInOpponentHand(int col) {
     //We don't care if there is/isn't a card in that row since it's already the wrong hand.
+    //this aint yo hand twin
     if (playerHandIsLeftHand() && col == model.getRow(0).size() + 1) {
       //This aint yo hand twin
       return true;
-    } else if (!playerHandIsLeftHand() && col == 0) {
-      //this aint yo hand twin
-      return true;
+    } else {
+      return !playerHandIsLeftHand() && col == 0;
     }
-    return false;
   }
 
   private boolean playerHandIsLeftHand() {
