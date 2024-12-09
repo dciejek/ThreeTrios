@@ -1,11 +1,15 @@
 package view.decorator;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import javax.swing.JPanel;
 
+import controller.ThreeTriosController;
 import model.Card;
 import model.ReadOnlyThreeTriosModel;
 import view.ThreeTriosPanel;
@@ -17,13 +21,11 @@ import view.Utils;
 public class DisplayHints extends JPanel implements ThreeTriosPanel {
   private final ThreeTriosPanel panel;
   private final ReadOnlyThreeTriosModel<Card> model;
-  private Graphics2D g2d;
 
   /**
    * Constructs the decorator panel for hints.
    * @param panel the base panel to build from
    * @param model the state of the model
-   * @param g the graphics used to generate the GUI
    */
   public DisplayHints(ThreeTriosPanel panel, ReadOnlyThreeTriosModel<Card> model,
                       Graphics g) {
@@ -36,7 +38,7 @@ public class DisplayHints extends JPanel implements ThreeTriosPanel {
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
 
-    this.g2d = (Graphics2D) g;
+    Graphics2D g2d = (Graphics2D) g;
 
     g2d.transform(getLogicalToPhysicalTransform());
 
@@ -69,8 +71,6 @@ public class DisplayHints extends JPanel implements ThreeTriosPanel {
       gridX = Utils.SIZE;
       gridY += Utils.SIZE;
     }
-    drawHighlightedCard(g2d, (int) getHighlightedCard().getX(),
-            (int) getHighlightedCard().getY());
   }
 
   private void drawHint(Graphics2D g2d, int row, int col, int size, int x, int y) {
@@ -99,7 +99,12 @@ public class DisplayHints extends JPanel implements ThreeTriosPanel {
   }
 
   @Override
-  public void drawHighlightedCard(Graphics2D g2d, int x, int y) {
-    panel.drawHighlightedCard(g2d, x, y);
+  public JPanel getPanel() {
+    return panel.getPanel();
+  }
+
+  @Override
+  public void addClickListener(ThreeTriosController listener) {
+    panel.addClickListener(listener);
   }
 }

@@ -125,6 +125,6 @@ public class CardAdapter implements Card, provider.model.Card {
 
   @Override
   public boolean isStrongerCard(Card opposing, CardinalDirection dir, BattleRule rule) {
-    return rule.beatsCard(this, opposing, dir);
+    return rule.beatsCard(card, opposing, dir);
   }
 }
