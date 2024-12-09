@@ -6,6 +6,9 @@ import java.util.List;
 import controller.ThreeTriosController;
 import model.rules.BattleRule;
 import model.rules.NormalRules;
+import model.rules.PreBattleRule;
+
+import static model.CardinalDirection.SOUTH;
 
 /**
  * Represents a simple 2 player ThreeTriosModel.
@@ -19,6 +22,7 @@ public class TTModel implements ThreeTriosModel<Card> {
   private boolean isStarted;
   private final List<TTTurnListener> listeners;
   private final BattleRule battleRules;
+  private final PreBattleRule preBattleRules;
 
 
   /**
@@ -33,6 +37,7 @@ public class TTModel implements ThreeTriosModel<Card> {
     isStarted = false;
     listeners = new ArrayList<>();
     battleRules = new NormalRules();
+    preBattleRules = null;
   }
 
   /**
@@ -49,6 +54,7 @@ public class TTModel implements ThreeTriosModel<Card> {
     isStarted = false;
     listeners = new ArrayList<>();
     battleRules = new NormalRules();
+    preBattleRules = null;
   }
 
   public TTModel(Player<Card> p1, Player<Card> p2, BattleRule rules) {
@@ -60,6 +66,19 @@ public class TTModel implements ThreeTriosModel<Card> {
     isStarted = false;
     listeners = new ArrayList<>();
     this.battleRules = rules;
+    preBattleRules = null;
+  }
+
+  public TTModel(Player<Card> p1, Player<Card> p2, BattleRule rules, PreBattleRule preRules) {
+    grid = new ArrayList<>();
+    playerOne = p1;
+    playerTwo = p2;
+    activePlayer = playerOne;
+    playableCells = -1;
+    isStarted = false;
+    listeners = new ArrayList<>();
+    this.battleRules = rules;
+    preBattleRules = preRules;
   }
 
 
@@ -128,9 +147,52 @@ public class TTModel implements ThreeTriosModel<Card> {
     grid.get(row).get(col).updateCell(card, getCurrentPlayer());
     getCurrentPlayer().removeFromHand(card);
     playableCells--;
-
+    if (preBattleRules != null) {
+      applyPreBattleRules(row, col, card);
+    }
     battlePhase(row, col);
     switchPlayer();
+  }
+
+  private void applyPreBattleRules(int row, int col, Card card) {
+    if (opposingCardInBounds(row, col, CardinalDirection.SOUTH)
+            && getCellAt(row + 1, col).hasCard()) {
+      preBattleRules.apply(card, getCellAt(row + 1, col).getCard(), CardinalDirection.SOUTH);
+    }
+    if (opposingCardInBounds(row, col, CardinalDirection.NORTH)
+            && getCellAt(row - 1, col).hasCard()) {
+      preBattleRules.apply(card, getCellAt(row - 1, col).getCard(), CardinalDirection.NORTH);
+    }
+    if (opposingCardInBounds(row, col, CardinalDirection.EAST)
+            && getCellAt(row, col + 1).hasCard()) {
+      preBattleRules.apply(card, getCellAt(row, col + 1).getCard(), CardinalDirection.EAST);
+    }
+    if (opposingCardInBounds(row, col, CardinalDirection.WEST)
+            && getCellAt(row, col - 1).hasCard()) {
+      preBattleRules.apply(card, getCellAt(row, col - 1).getCard(), CardinalDirection.WEST);
+    }
+
+    for (CardinalDirection dir : preBattleRules.getWinners()) {
+      switch (dir) {
+        case NORTH:
+          getCellAt(row - 1, col).setPlayerColor(activePlayer.getColor());
+          battlePhase(row - 1, col);
+          break;
+        case SOUTH:
+          getCellAt(row + 1, col).setPlayerColor(activePlayer.getColor());
+          battlePhase(row + 1, col);
+          break;
+        case EAST:
+          getCellAt(row, col + 1).setPlayerColor(activePlayer.getColor());
+          battlePhase(row, col + 1);
+          break;
+        case WEST:
+          getCellAt(row, col - 1).setPlayerColor(activePlayer.getColor());
+          battlePhase(row, col - 1);
+          break;
+      }
+    }
+    preBattleRules.reset();
   }
 
   /**
@@ -145,8 +207,8 @@ public class TTModel implements ThreeTriosModel<Card> {
       battleOpposingCell(cell, CardinalDirection.NORTH,
               cardRow - 1, cardCol);
     }
-    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)) {
-      battleOpposingCell(cell, CardinalDirection.SOUTH,
+    if (opposingCardInBounds(cardRow, cardCol, SOUTH)) {
+      battleOpposingCell(cell, SOUTH,
               cardRow + 1, cardCol);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)) {
@@ -170,7 +232,7 @@ public class TTModel implements ThreeTriosModel<Card> {
    * @param cellCol the column index of the cell being challenged
    */
   protected void battleOpposingCell(Cell cell, CardinalDirection dir,
-                                  int cellRow, int cellCol) {
+                                    int cellRow, int cellCol) {
     Cell opposing = grid.get(cellRow).get(cellCol);
     if (opposing.hasCard()
             && cell.getPlayerColor() != opposing.getPlayerColor()
@@ -303,18 +365,22 @@ public class TTModel implements ThreeTriosModel<Card> {
     List<Cell> counted = new ArrayList<>();
     counted.add(this.grid.get(cardRow).get(cardCol));
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)
+            && getCellAt(cardRow - 1, cardCol).getPlayerColor() != null
             && !(getCellAt(cardRow - 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
       result += flipCountNext(card, cardRow - 1, cardCol, CardinalDirection.NORTH, counted);
     }
-    if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)
+    if (opposingCardInBounds(cardRow, cardCol, SOUTH)
+            && getCellAt(cardRow + 1, cardCol).getPlayerColor() != null
             && !(getCellAt(cardRow + 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
-      result += flipCountNext(card, cardRow + 1, cardCol, CardinalDirection.SOUTH, counted);
+      result += flipCountNext(card, cardRow + 1, cardCol, SOUTH, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)
+            && getCellAt(cardRow, cardCol + 1).getPlayerColor() != null
             && !(getCellAt(cardRow, cardCol + 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
       result += flipCountNext(card, cardRow, cardCol + 1, CardinalDirection.EAST, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)
+            && getCellAt(cardRow, cardCol - 1).getPlayerColor() != null
             && !(getCellAt(cardRow, cardCol - 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
       result += flipCountNext(card, cardRow, cardCol - 1, CardinalDirection.WEST, counted);
     }
@@ -326,7 +392,7 @@ public class TTModel implements ThreeTriosModel<Card> {
     if (cardRow < 0 || cardCol < 0 || !this.grid.get(cardRow).get(cardCol).hasCard()) {
       return 0;
     }
-    
+
 
     int result = 0;
     Card otherCard = this.grid.get(cardRow).get(cardCol).getCard();
@@ -335,18 +401,22 @@ public class TTModel implements ThreeTriosModel<Card> {
             .get(cardCol))) {
       counted.add(this.grid.get(cardRow).get(cardCol));
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)
+              && getCellAt(cardRow - 1, cardCol).getPlayerColor() != null
               && !(getCellAt(cardRow - 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
         result += flipCountNext(otherCard, cardRow - 1, cardCol, CardinalDirection.NORTH, counted);
       }
-      if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.SOUTH)
+      if (opposingCardInBounds(cardRow, cardCol, SOUTH)
+              && getCellAt(cardRow + 1, cardCol).getPlayerColor() != null
               && !(getCellAt(cardRow + 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
-        result += flipCountNext(otherCard, cardRow + 1, cardCol, CardinalDirection.SOUTH, counted);
+        result += flipCountNext(otherCard, cardRow + 1, cardCol, SOUTH, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)
+              && getCellAt(cardRow, cardCol + 1).getPlayerColor() != null
               && !(getCellAt(cardRow, cardCol + 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
         result += flipCountNext(otherCard, cardRow, cardCol + 1, CardinalDirection.EAST, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)
+              && getCellAt(cardRow, cardCol - 1).getPlayerColor() != null
               && !(getCellAt(cardRow, cardCol - 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
         result += flipCountNext(otherCard, cardRow, cardCol - 1, CardinalDirection.WEST, counted);
       }
@@ -376,7 +446,7 @@ public class TTModel implements ThreeTriosModel<Card> {
   public void addTurnListener(ThreeTriosController listener) {
     listeners.add(new TTTurnListener(listener));
   }
-  
+
   private void notifyNewTurn() {
     for (TTTurnListener listener : listeners) {
       listener.newTurn();
@@ -406,14 +476,14 @@ public class TTModel implements ThreeTriosModel<Card> {
    */
   class TTTurnListener implements ModelStatus {
     private final ThreeTriosController features;
-    
+
     public TTTurnListener(ThreeTriosController features) {
       if (features == null) {
         throw new IllegalArgumentException("Features cannot be null");
       }
       this.features = features;
     }
-    
+
     @Override
     public void newTurn() {
       features.refresh();
