@@ -19,22 +19,13 @@ import provider.model.Grid;
 import provider.model.Model;
 import provider.model.Referee;
 
+/**
+ * Two-way adapter that works for both views, since our view and the provider's view are
+ * hooked up to the same model.
+ */
 public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   private final ThreeTriosModel<Card> model;
   private GridAdapter grid;
-
-  //take in our model?
-
-  //construct
-  //adapt Grid from model.getGrid()
-  //adapt each card in List<Cards>
-  //add referee? if needed
-
-  //startGame
-
-
-  //placeCard
-  //call our own models placeCard using given values
 
   public ModelAdapter(ThreeTriosModel<Card> model) {
     this.model = model;
@@ -54,6 +45,11 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
       count++;
     }
     model.startGame(this.grid, deck, grid.numRows(), grid.numCols());
+  }
+
+  @Override
+  public void startGame(List grid, List cards, int rows, int cols) {
+    model.startGame(grid, cards, rows, cols);
   }
 
   @Override
@@ -159,11 +155,6 @@ public class ModelAdapter implements Model, ThreeTriosModel<Card> {
   public int score(CoachColor coach) {
     // model can be null for set up purposes already, helpful to set up dummy player here
     return model.getScore(new TTPlayer(null, CoachColorAdapter.coachColorToPlayerColor(coach)));
-  }
-
-  @Override
-  public void startGame(List grid, List cards, int rows, int cols) {
-    model.startGame(grid, cards, rows, cols);
   }
 
   @Override

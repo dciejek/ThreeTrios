@@ -4,33 +4,10 @@ Playing this game should consist of a place phase, battle phase, and combo phase
 The entirety of the game should be displayed using a text based view.
 
 Quick start:
-PlayerFactory factory = new PlayerFactory();
-Scanner sc = new Scanner(System.in);
-ThreeTriosModel<PlayingCard> model = new TTModel();
-Player<PlayingCard> p1 = factory.stringToPlayer(model, sc.next());
-Player<PlayingCard> p2 = factory.stringToPlayer(model, sc.next());
+Run the main method entering:
+"person person" as the command line arguments
 
-model = new TTModel(p1, p2);
-p1.setModel(model);
-p2.setModel(model);
-
-File cardsFile = new File("docs" + File.separator + "cards1");
-File gridFile = new File("docs" + File.separator + "3x3Grid");
-List<List<Cell<PlayingCard>>> grid = FileHandler.readGrid(gridFile);
-List<PlayingCard> cards = FileHandler.readCards(cardsFile);
-int rows = FileHandler.readRowNum(gridFile);
-int cols = FileHandler.readColNum(gridFile);
-
-model.startGame(grid, cards, rows, cols);
-
-ThreeTriosFrame view = new TTGuiView(model);
-ThreeTriosFrame view2 = new TTGuiView(model);
-
-ThreeTriosController controller = new TTController(model, p1, view);
-ThreeTriosController controller2 = new TTController(model, p2, view2);
-
-controller.playGame();
-controller2.playGame();
+or "corner person" or "flip person" to view strategies able to used by our implementation
 
 
 Key Components:
@@ -107,6 +84,60 @@ Changes for part 3
   intended, view is always proportioned correctly)
 - Multiple views are displayed simultaneously and update synchronously
 
-Changes for HW8
--Fixed typing issues across controller, model, view (was using class type rather than interface)
+Changes for part 4
+-Fixed typing issues across controller, model, and view classes
+    (was using class type rather than interface)
 -Added getScore method to model implemented in all relevant classes
+-Swapped around private TTController helper method signatures for clarity
+-Bug fix in TTBoardPanel mouseClick features.handleClickEvent() takes in y, x instead of x, y
+as handleClick event has the signature (row, col)
+
+Provider Changes:
+-Due to deadline and lack of responses from provider we changed the following ourselves:
+    -Removed unused imports in provider/model/Card
+    -Swapped declarations of Point east & Point west in provider/view/DrawHand in renderCard()
+
+Functional Features of Provider View Implementation:
+-Highlight card
+    - Only given player's hand
+    - Deselect card by selecting again or selecting new card
+-Hovering over unselected cards in hand applies a white highlight
+-No card selected error message displays properly
+-Glass pane blocker (while it is not the player's turn)
+-Empty card cell needed error message displays properly
+-Only placeable on grid
+-Battle phase works (and updates both views)
+-Combo phase works (and updates both views)
+-Synchronous for human players
+-When the game is over, moves are not registered
+
+Provider Adapters:
+-AttackValueAdapter
+    -A class housing static conversion methods that allow for respective
+    AttackValue <-> CardValue enumeration conversions
+-CardAdapter
+    - Two way adapter to mask as both our Card and the provider's Card for the model.
+    - Two way because some of their methods took in the provider's Card type and we needed to
+      convert from that, and vice versa is also true.
+-CoachColorAdapter
+    -A class housing two static conversion methods that allow for respective
+       CoachColor <-> PlayerColor enumeration conversions
+-GridAdapter
+    - Two way adapter that switches between a list of cells and the provider's Grid class.
+    - Two way because their start game takes in a Grid object so we needed a way to represent that
+      and also be able to convert that to ours and initialize their grid in the startGame method,
+      then using that to initialize our grid.
+-GridCellReadOnlyAdapter
+    -Object Adapter used to convert from Cell to the provider's GridCellReadOnly
+    used in their Grid's GridCellReadOnly[][] readOnly2dArray();
+-ModelAdapter
+    - Two way adapter that works for both views, since our view and the provider's view are
+      hooked up to the same model.
+-GameViewAdapter
+    -Class Adapter that implements our view ThreeTriosFrame and extends the interactive provider
+    view GUIPlayerInteractive so that it can be directly utilized with our controller and updated
+    directly by the player.
+    -Class adapter because the GameView interface lacked information regarding all features of the
+    view necessary for a complete synchronous implementation.
+
+No necessary features were UNABLE to be implemented from the provider's code using adapters.

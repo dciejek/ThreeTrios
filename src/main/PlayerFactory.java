@@ -3,7 +3,6 @@ package main;
 import model.Card;
 import model.Player;
 import model.PlayerColor;
-import model.PlayingCard;
 import model.ReadOnlyThreeTriosModel;
 import model.StrategyPlayer;
 import model.TTPlayer;
