@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a cell that can hold a card. Cells can have a PlayingCard inside them.

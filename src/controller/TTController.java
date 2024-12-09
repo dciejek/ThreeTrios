@@ -52,6 +52,11 @@ public class TTController implements ThreeTriosController {
     view.makeVisible();
   }
 
+  /**
+   * Triggers when a cell is clicked at the given row and col.
+   * @param row row of cell clicked, 0 based index
+   * @param col column of cell clicked, 0 based index
+   */
   public void cellClicked(int row, int col) {
     if (model.isGameOver()) {
       gameOverMessage();

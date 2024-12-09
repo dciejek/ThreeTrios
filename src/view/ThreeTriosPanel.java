@@ -42,7 +42,7 @@ public interface ThreeTriosPanel {
   AffineTransform getLogicalToPhysicalTransform();
 
   /**
-   * Returns this panel implementation
+   * Returns this panel implementation.
    * @return this panel
    */
   JPanel getPanel();

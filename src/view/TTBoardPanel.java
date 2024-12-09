@@ -30,7 +30,6 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
   private final ReadOnlyThreeTriosModel<C> model;
   private final int SIZE = Utils.SIZE;
   private final int maxHandSize;
-  private Graphics2D g2d;
   private Point2D highlightedCard;
 
   /**
@@ -49,7 +48,6 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
     super.paintComponent(g);
 
     Graphics2D g2d = (Graphics2D) g;
-    this.g2d = g2d;
 
     g2d.transform(getLogicalToPhysicalTransform());
 
@@ -251,7 +249,7 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
       } else {
         if ((int) modelPt.getX() == 0) {
           System.out.println(
-                  model.getPlayerOne().getColor().toString() + " "+  (int) modelPt.getY());
+                  model.getPlayerOne().getColor().toString() + " " + (int) modelPt.getY());
         } else if ((int) modelPt.getX() == model.getGrid().size() + 1) {
           System.out.println(
                   model.getPlayerTwo().getColor().toString() + " " + (int) modelPt.getY());

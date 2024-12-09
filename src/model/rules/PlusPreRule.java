@@ -34,7 +34,8 @@ public class PlusPreRule implements PreBattleRule {
     if (curr == null || opposing == null) {
       throw new IllegalArgumentException("Cards cannot be null");
     }
-    if (!(totals.contains(curr.getDirection(dir) + opposing.getDirection(dir.oppositeDirection())))) {
+    if (!(totals.contains(curr.getDirection(dir) + opposing.getDirection(
+            dir.oppositeDirection())))) {
       totals.add(curr.getDirection(dir) + opposing.getDirection(dir.oppositeDirection()));
       valToDir.put(curr.getDirection(dir) + opposing.getDirection(dir.oppositeDirection()), dir);
     } else {

@@ -203,6 +203,8 @@ public class TTModel implements ThreeTriosModel<Card> {
           getCellAt(row, col - 1).setPlayerColor(activePlayer.getColor());
           battlePhase(row, col - 1);
           break;
+        default:
+          throw new IllegalArgumentException("Invalid Direction");
       }
     }
     preBattleRules.reset();
@@ -379,22 +381,27 @@ public class TTModel implements ThreeTriosModel<Card> {
     counted.add(this.grid.get(cardRow).get(cardCol));
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)
             && getCellAt(cardRow - 1, cardCol).getPlayerColor() != null
-            && !(getCellAt(cardRow - 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
-      result += flipCountNext(card, cardRow - 1, cardCol, CardinalDirection.NORTH, counted);
+            && !(getCellAt(cardRow - 1, cardCol).getPlayerColor().equals(
+                    this.activePlayer.getColor()))) {
+      result += flipCountNext(card, cardRow - 1,
+              cardCol, CardinalDirection.NORTH, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, SOUTH)
             && getCellAt(cardRow + 1, cardCol).getPlayerColor() != null
-            && !(getCellAt(cardRow + 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
+            && !(getCellAt(cardRow + 1, cardCol).getPlayerColor().equals(
+                    this.activePlayer.getColor()))) {
       result += flipCountNext(card, cardRow + 1, cardCol, SOUTH, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)
             && getCellAt(cardRow, cardCol + 1).getPlayerColor() != null
-            && !(getCellAt(cardRow, cardCol + 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
+            && !(getCellAt(cardRow, cardCol + 1).getPlayerColor().equals(
+                    this.activePlayer.getColor()))) {
       result += flipCountNext(card, cardRow, cardCol + 1, CardinalDirection.EAST, counted);
     }
     if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)
             && getCellAt(cardRow, cardCol - 1).getPlayerColor() != null
-            && !(getCellAt(cardRow, cardCol - 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
+            && !(getCellAt(cardRow, cardCol - 1).getPlayerColor().equals(
+                    this.activePlayer.getColor()))) {
       result += flipCountNext(card, cardRow, cardCol - 1, CardinalDirection.WEST, counted);
     }
     return result;
@@ -415,23 +422,30 @@ public class TTModel implements ThreeTriosModel<Card> {
       counted.add(this.grid.get(cardRow).get(cardCol));
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.NORTH)
               && getCellAt(cardRow - 1, cardCol).getPlayerColor() != null
-              && !(getCellAt(cardRow - 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
-        result += flipCountNext(otherCard, cardRow - 1, cardCol, CardinalDirection.NORTH, counted);
+              && !(getCellAt(cardRow - 1, cardCol).getPlayerColor().equals(
+                      this.activePlayer.getColor()))) {
+        result += flipCountNext(otherCard, cardRow - 1,
+                cardCol, CardinalDirection.NORTH, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, SOUTH)
               && getCellAt(cardRow + 1, cardCol).getPlayerColor() != null
-              && !(getCellAt(cardRow + 1, cardCol).getPlayerColor().equals(this.activePlayer.getColor()))) {
+              && !(getCellAt(cardRow + 1, cardCol).getPlayerColor().equals(
+                      this.activePlayer.getColor()))) {
         result += flipCountNext(otherCard, cardRow + 1, cardCol, SOUTH, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.EAST)
               && getCellAt(cardRow, cardCol + 1).getPlayerColor() != null
-              && !(getCellAt(cardRow, cardCol + 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
-        result += flipCountNext(otherCard, cardRow, cardCol + 1, CardinalDirection.EAST, counted);
+              && !(getCellAt(cardRow, cardCol + 1).getPlayerColor().equals(
+                      this.activePlayer.getColor()))) {
+        result += flipCountNext(otherCard, cardRow,
+                cardCol + 1, CardinalDirection.EAST, counted);
       }
       if (opposingCardInBounds(cardRow, cardCol, CardinalDirection.WEST)
               && getCellAt(cardRow, cardCol - 1).getPlayerColor() != null
-              && !(getCellAt(cardRow, cardCol - 1).getPlayerColor().equals(this.activePlayer.getColor()))) {
-        result += flipCountNext(otherCard, cardRow, cardCol - 1, CardinalDirection.WEST, counted);
+              && !(getCellAt(cardRow, cardCol - 1).getPlayerColor().equals(
+                      this.activePlayer.getColor()))) {
+        result += flipCountNext(otherCard, cardRow,
+                cardCol - 1, CardinalDirection.WEST, counted);
       }
       return result + 1;
     }

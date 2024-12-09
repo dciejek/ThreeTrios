@@ -23,10 +23,10 @@ public class FallenAceRule implements BattleRule {
     }
 
     if (curr.getDirection(dir) == 1
-    && opposing.getDirection(dir.oppositeDirection()) == 10) {
+      && opposing.getDirection(dir.oppositeDirection()) == 10) {
       return true;
     } else if (curr.getDirection(dir) == 10
-    && opposing.getDirection(dir.oppositeDirection()) == 1) {
+      && opposing.getDirection(dir.oppositeDirection()) == 1) {
       return false;
     }
     else {

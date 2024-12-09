@@ -1,6 +1,5 @@
 package model.rules;
 
-import java.util.Objects;
 
 import model.Card;
 import model.CardinalDirection;
@@ -15,7 +14,7 @@ public class NormalRules implements BattleRule {
    * Constructs a default NormalRules.
    */
   public NormalRules() {
-
+    //empty for default
   }
 
   @Override

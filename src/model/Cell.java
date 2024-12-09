@@ -1,6 +1,5 @@
 package model;
 
-import java.util.List;
 
 /**
  * A Cell belonging to the Grid in a game of Three Trios.

@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.*;
+import java.awt.Dimension;
 import java.awt.geom.Point2D;
 
 import javax.swing.JFrame;
