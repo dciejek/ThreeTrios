@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.rules.NormalRules;
+
 /**
  * Tests for Card.
  */
@@ -61,8 +63,10 @@ public class TestCard {
 
   @Test
   public void testIsStrongerCard() {
-    Assert.assertTrue(strongCard.isStrongerCard(weakCard, CardinalDirection.NORTH));
-    Assert.assertFalse(weakCard.isStrongerCard(strongCard, CardinalDirection.SOUTH));
+    Assert.assertTrue(strongCard.isStrongerCard(weakCard, CardinalDirection.NORTH,
+            new NormalRules()));
+    Assert.assertFalse(weakCard.isStrongerCard(strongCard, CardinalDirection.SOUTH,
+            new NormalRules()));
   }
 
   @Test

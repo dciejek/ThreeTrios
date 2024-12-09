@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * A Cell belonging to the Grid in a game of Three Trios.
  * Cell's can hold a Card along with the current Player the card belongs to.
