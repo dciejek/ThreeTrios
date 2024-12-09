@@ -17,6 +17,7 @@ public interface PreBattleRule {
    * @param curr      the current card being compared
    * @param opposing  the card to compare to
    * @param dir       the direction to compare in
+   * @throws IllegalArgumentException   if either cards are null
    */
   void apply(Card curr, Card opposing, CardinalDirection dir);
 

@@ -65,6 +65,7 @@ public class ThreeTriosTest {
     controller2.playGame();
   }
 
+  // Initializes PreBattleRules
   private static PreBattleRule setPreRules(String s) {
 
     if (s.equalsIgnoreCase("same")) {
@@ -74,22 +75,19 @@ public class ThreeTriosTest {
     }
 
     return null;
-
-
   }
 
+  //initializes BattleRules
   private static BattleRule setGameRules(String s) {
     List<String> strs = Arrays.asList(s.split(" "));
-    BattleRule ret;
+    BattleRule ret = new NormalRules();
 
     if (strs.contains("reverse")) {
-      ret = new ReverseRule();
-    } else {
-      ret = new NormalRules();
+      ret = new ReverseRule(ret);
     }
 
     if (strs.contains("fallenAce")) {
-      return new FallenAceRule(ret);
+      ret = new FallenAceRule(ret);
     }
 
     return ret;

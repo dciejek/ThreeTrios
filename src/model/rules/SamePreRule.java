@@ -22,6 +22,10 @@ public class SamePreRule implements PreBattleRule {
 
   @Override
   public void apply(Card curr, Card opposing, CardinalDirection dir) {
+    if (curr == null || opposing == null) {
+      throw new IllegalArgumentException("Cards cannot be null");
+    }
+
     if (curr.getDirection(dir) == opposing.getDirection(dir.oppositeDirection())) {
       winners.add(dir);
     }
