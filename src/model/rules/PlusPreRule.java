@@ -31,13 +31,16 @@ public class PlusPreRule implements PreBattleRule {
 
   @Override
   public void apply(Card curr, Card opposing, CardinalDirection dir) {
-    if (!(totals.contains(curr.getDirection(dir) + curr.getDirection(dir.oppositeDirection())))) {
-      totals.add(curr.getDirection(dir) + curr.getDirection(dir.oppositeDirection()));
-      valToDir.put(curr.getDirection(dir) + curr.getDirection(dir.oppositeDirection()), dir);
+    if (curr == null || opposing == null) {
+      throw new IllegalArgumentException("Cards cannot be null");
+    }
+    if (!(totals.contains(curr.getDirection(dir) + opposing.getDirection(dir.oppositeDirection())))) {
+      totals.add(curr.getDirection(dir) + opposing.getDirection(dir.oppositeDirection()));
+      valToDir.put(curr.getDirection(dir) + opposing.getDirection(dir.oppositeDirection()), dir);
     } else {
       winners.add(dir);
       winners.add(valToDir.get(curr.getDirection(dir)
-              + curr.getDirection(dir.oppositeDirection())));
+              + opposing.getDirection(dir.oppositeDirection())));
     }
   }
 

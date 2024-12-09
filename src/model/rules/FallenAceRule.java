@@ -18,10 +18,18 @@ public class FallenAceRule implements BattleRule {
 
   @Override
   public boolean beatsCard(Card curr, Card opposing, CardinalDirection dir) {
+    if (curr == null || opposing == null) {
+      throw new IllegalArgumentException("Cards cannot be null");
+    }
+
     if (curr.getDirection(dir) == 1
     && opposing.getDirection(dir.oppositeDirection()) == 10) {
       return true;
-    } else {
+    } else if (curr.getDirection(dir) == 10
+    && opposing.getDirection(dir.oppositeDirection()) == 1) {
+      return false;
+    }
+    else {
       return rules.beatsCard(curr, opposing, dir);
     }
   }

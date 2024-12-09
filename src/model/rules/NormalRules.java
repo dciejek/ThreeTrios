@@ -1,5 +1,7 @@
 package model.rules;
 
+import java.util.Objects;
+
 import model.Card;
 import model.CardinalDirection;
 
@@ -18,6 +20,9 @@ public class NormalRules implements BattleRule {
 
   @Override
   public boolean beatsCard(Card curr, Card opposing, CardinalDirection dir) {
+    if (curr == null || opposing == null) {
+      throw new IllegalArgumentException("Cards cannot be null");
+    }
     return curr.getDirection(dir) - opposing.getDirection(dir.oppositeDirection()) > 0;
   }
 }

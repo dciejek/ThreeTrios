@@ -15,6 +15,7 @@ public interface BattleRule {
    * @param opposing  the card being compared to
    * @param dir       the direction to compare in
    * @return          true if curr wins, false if not
+   * @throws IllegalArgumentException   if either cards are null
    */
   boolean beatsCard(Card curr, Card opposing, CardinalDirection dir);
 }

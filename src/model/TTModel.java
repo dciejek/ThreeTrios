@@ -14,10 +14,10 @@ import static model.CardinalDirection.SOUTH;
  * Represents a simple 2 player ThreeTriosModel.
  */
 public class TTModel implements ThreeTriosModel<Card> {
-  protected final List<List<Cell<Card>>> grid;
+  private final List<List<Cell<Card>>> grid;
   private final Player<Card> playerOne;
   private final Player<Card> playerTwo;
-  protected Player<Card> activePlayer;
+  private Player<Card> activePlayer;
   private int playableCells;
   private boolean isStarted;
   private final List<TTTurnListener> listeners;
@@ -57,6 +57,12 @@ public class TTModel implements ThreeTriosModel<Card> {
     preBattleRules = null;
   }
 
+  /**
+   * Constructs a model with two players and a Game Rule.
+   * @param p1    player 1
+   * @param p2    player 2
+   * @param rules the BattleRules for the game
+   */
   public TTModel(Player<Card> p1, Player<Card> p2, BattleRule rules) {
     grid = new ArrayList<>();
     playerOne = p1;
@@ -69,6 +75,13 @@ public class TTModel implements ThreeTriosModel<Card> {
     preBattleRules = null;
   }
 
+  /**
+   * Constructs a model with two players, a Game Rule, and Pre Battle Rule.
+   * @param p1        player 1
+   * @param p2        player 2
+   * @param rules     the BattleRules for the game
+   * @param preRules  the PreBattleRules for the game
+   */
   public TTModel(Player<Card> p1, Player<Card> p2, BattleRule rules, PreBattleRule preRules) {
     grid = new ArrayList<>();
     playerOne = p1;
