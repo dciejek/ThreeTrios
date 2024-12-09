@@ -7,7 +7,6 @@ import model.Card;
 import model.CardinalDirection;
 import model.PlayerColor;
 import model.PlayingCard;
-import model.rules.BattleRule;
 import provider.model.AttackValue;
 import provider.model.CoachColor;
 
@@ -124,8 +123,7 @@ public class CardAdapter implements Card, provider.model.Card {
   }
 
   @Override
-  public boolean isStrongerCard(Card opposing, CardinalDirection dir, BattleRule rule) {
-    //not implemented
-    return false;
+  public boolean isStrongerCard(Card opposing, CardinalDirection dir) {
+    return card.isStrongerCard(opposing, dir);
   }
 }
