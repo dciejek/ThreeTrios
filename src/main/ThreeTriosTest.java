@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,6 +13,13 @@ import model.Cell;
 import model.Player;
 import model.TTModel;
 import model.ThreeTriosModel;
+import model.rules.BattleRule;
+import model.rules.FallenAceRule;
+import model.rules.NormalRules;
+import model.rules.PlusPreRule;
+import model.rules.PreBattleRule;
+import model.rules.ReverseRule;
+import model.rules.SamePreRule;
 import view.TTGuiView;
 import view.ThreeTriosFrame;
 
@@ -28,10 +36,17 @@ public class ThreeTriosTest {
     PlayerFactory factory = new PlayerFactory();
     Scanner sc = new Scanner(System.in);
     ThreeTriosModel<Card> model = new TTModel();
+    System.out.println("Game Rules (press enter for normal):");
+    BattleRule gameRules = setGameRules(sc.nextLine());
+
+    System.out.println("PreBattle Rule (press enter if none):");
+    PreBattleRule preRules = setPreRules(sc.nextLine());
+
+    System.out.println("Player Types:");
     Player<Card> p1 = factory.stringToPlayer(model, sc.next());
     Player<Card> p2 = factory.stringToPlayer(model, sc.next());
 
-    model = new TTModel(p1, p2);
+    model = new TTModel(p1, p2, gameRules, preRules);
 
     File cardsFile = new File("docs" + File.separator + "cards1");
     File gridFile = new File("docs" + File.separator + "3x3Grid");
@@ -48,5 +63,35 @@ public class ThreeTriosTest {
 
     controller.playGame();
     controller2.playGame();
+  }
+
+  private static PreBattleRule setPreRules(String s) {
+
+    if (s.equalsIgnoreCase("same")) {
+      return new SamePreRule();
+    } else if (s.equalsIgnoreCase("plus")) {
+      return new PlusPreRule();
+    }
+
+    return null;
+
+
+  }
+
+  private static BattleRule setGameRules(String s) {
+    List<String> strs = Arrays.asList(s.split(" "));
+    BattleRule ret;
+
+    if (strs.contains("reverse")) {
+      ret = new ReverseRule();
+    } else {
+      ret = new NormalRules();
+    }
+
+    if (strs.contains("fallenAce")) {
+      return new FallenAceRule(ret);
+    }
+
+    return ret;
   }
 }
