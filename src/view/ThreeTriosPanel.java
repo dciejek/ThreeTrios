@@ -4,6 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import javax.swing.JPanel;
+
+import controller.ThreeTriosController;
+
 
 /**
  * A panel displayed in the GUI view of a game of three trios. Able to update the highlighted card.
@@ -38,10 +42,14 @@ public interface ThreeTriosPanel {
   AffineTransform getLogicalToPhysicalTransform();
 
   /**
-   * Draws the highlighted card in a players hand during a game of three trios, if one exists
-   * @param g2d the graphics
-   * @param x 0 based index relative to the board
-   * @param y 0 based index related to the hand index
+   * Returns this panel implementation
+   * @return this panel
    */
-  void drawHighlightedCard(Graphics2D g2d, int x, int y);
+  JPanel getPanel();
+
+  /**
+   * Adds a click listener for the controller to handle click events.
+   * @param listener the controller to listen
+   */
+  void addClickListener(ThreeTriosController listener);
 }

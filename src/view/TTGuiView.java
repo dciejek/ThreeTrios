@@ -16,7 +16,7 @@ import view.decorator.DisplayHints;
  */
 public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
   private final ReadOnlyThreeTriosModel<Card> model;
-  private final TTBoardPanel<Card> panel;
+  private final ThreeTriosPanel panel;
   private DisplayHints hints;
   private static final int SIZE = Utils.SIZE;
   private boolean hintsEnabled;
@@ -35,7 +35,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
     this.setTitle("Current Player: " + model.getCurrentPlayer().getColor().toString());
     this.setSize(getPreferredSize().width, getPreferredSize().height);
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    this.add(panel);
+    this.add(panel.getPanel());
     hintsEnabled = false;
   }
 
@@ -46,7 +46,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
 
   @Override
   public void refresh() {
-    this.repaint();
+    this.paintComponents(this.getGraphics());
   }
 
   @Override
@@ -66,7 +66,7 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
 
   @Override
   public JPanel getPanel() {
-    return panel;
+    return panel.getPanel();
   }
 
   @Override
@@ -77,13 +77,13 @@ public class TTGuiView extends JFrame implements ThreeTriosFrame<Card> {
   @Override
   public void toggleHints() {
     if (!hintsEnabled) {
-      hints = new DisplayHints(panel, model, panel.getGraphics());
-      this.add(hints);
+      hints = new DisplayHints(panel, model, panel.getPanel().getGraphics());
+      add(hints);
       hintsEnabled = true;
     } else {
-      this.remove(hints);
-      refresh();
+      remove(hints);
       hintsEnabled = false;
+      repaint();
     }
   }
 

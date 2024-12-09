@@ -148,6 +148,11 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
     return transform;
   }
 
+  @Override
+  public JPanel getPanel() {
+    return this;
+  }
+
   private AffineTransform getModelToLogicalTransform() {
     AffineTransform transform = new AffineTransform();
     Dimension local = getLocalDimension();
@@ -184,8 +189,7 @@ public class TTBoardPanel<C extends Card> extends JPanel implements ThreeTriosPa
     }
   }
 
-  @Override
-  public void drawHighlightedCard(Graphics2D g2d, int x, int y) {
+  private void drawHighlightedCard(Graphics2D g2d, int x, int y) {
     TTCard cardSquare = new TTCard(model.getCurrentPlayer().getHand().get(y), SIZE);
     cardSquare.select();
     cardSquare.drawCard(g2d, getColor(model.getCurrentPlayer().getColor()),
